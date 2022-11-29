@@ -30,7 +30,7 @@ class LoginPage extends StatelessWidget {
                   context,
                   PageTransition(
                     type: PageTransitionType.bottomToTop,
-                    child: LoginPage(),
+                    child: SelectLoginPage(),
                     duration: Duration(milliseconds: 400),
                   ),
                 );

@@ -34,7 +34,9 @@ class FillButton extends StatelessWidget {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.symmetric(
-          vertical: marginVertical, horizontal: marginHorizontal),
+        vertical: marginVertical,
+        horizontal: marginHorizontal,
+      ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: ghostButton ? Colors.white : backgroundColor,
