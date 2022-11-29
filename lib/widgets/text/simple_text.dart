@@ -34,7 +34,7 @@ class SimpleText extends StatelessWidget {
   final ThemeController themeController = Get.put(ThemeController());
   @override
   Widget build(BuildContext context) {
-    final themeStatus = true;
+    final themeStatus = false;
     /* final themeStatus = Provider.of<ThemeChanger>(context, listen: true); */
     return Padding(
       padding: EdgeInsets.only(
