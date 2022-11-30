@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
 import 'package:inventory_app/data/data.dart';
 import 'package:inventory_app/widgets/buttons/buttons.dart';
 import 'package:inventory_app/widgets/widgets.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:get/get.dart';
 
 part 'welcome_page.dart';
 part 'home/home_page.dart';

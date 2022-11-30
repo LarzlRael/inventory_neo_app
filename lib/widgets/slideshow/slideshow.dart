@@ -164,14 +164,61 @@ class _Slides extends StatefulWidget {
 
 class _SlidesState extends State<_Slides> {
   final pageViewController = PageController();
-  @override
+
+  void onAddButtonTapped(int index) {
+    // use this to animate to the page
+    pageViewController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+
+    // or this to jump to it without animating
+    pageViewController.jumpToPage(index);
+  }
+
   @override
   void initState() {
     super.initState();
-    pageViewController.addListener(() {
+    /* pageViewController.addListener(() {
       Provider.of<_SlideShowModel>(context, listen: false).currentPageValue =
           pageViewController.page!;
-    });
+    }); */
+    Timer.periodic(
+      const Duration(seconds: 2),
+      (Timer timer) {
+        if (Provider.of<_SlideShowModel>(context, listen: false)
+            .leftDirection) {
+          setCurrentPageValueAndChangePage(1);
+          if (Provider.of<_SlideShowModel>(context, listen: false)
+                  .currentPageValue ==
+              widget.slides.length - 1) {
+            Provider.of<_SlideShowModel>(context, listen: false).leftDirection =
+                false;
+          }
+        } else {
+          setCurrentPageValueAndChangePage(-1);
+          if (Provider.of<_SlideShowModel>(context, listen: false)
+                  .currentPageValue ==
+              0) {
+            Provider.of<_SlideShowModel>(context, listen: false).leftDirection =
+                true;
+          }
+        }
+      },
+    );
+  }
+
+  setCurrentPageValueAndChangePage(int index) {
+    Provider.of<_SlideShowModel>(context, listen: false).currentPageValue =
+        pageViewController.page! + index;
+    pageViewController.animateToPage(
+      Provider.of<_SlideShowModel>(context, listen: false)
+          .currentPageValue
+          .toInt(),
+      duration: const Duration(milliseconds: 350),
+      curve: Curves.easeIn,
+    );
   }
 
   @override
@@ -186,6 +233,10 @@ class _SlidesState extends State<_Slides> {
       padding: const EdgeInsets.all(10),
       child: PageView(
         controller: pageViewController,
+        onPageChanged: (index) {
+          Provider.of<_SlideShowModel>(context, listen: false)
+              .currentPageValue = index.toDouble();
+        },
         children: widget.slides
             .map((slide) => _Slide(
                   slide: slide,
@@ -218,7 +269,16 @@ class _SlideShowModel with ChangeNotifier {
   Color _secondaryColor = Colors.white;
   double _primaryBullet = 12;
   double _secondaryBullet = 12;
+  bool _leftDirection = true;
+
+  bool get leftDirection => _leftDirection;
+  set leftDirection(bool value) {
+    _leftDirection = value;
+    notifyListeners();
+  }
+
   double get currentPageValue => _currentPage;
+
   set currentPageValue(double value) {
     _currentPage = value;
     notifyListeners();

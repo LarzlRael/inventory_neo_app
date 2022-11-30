@@ -1,9 +1,15 @@
 part of '../pages.dart';
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /* appBar: AppBarWithBackIcon(
+        appBar: AppBar(),
+        /* title: 'Iniciar sesión', */
+      ), */
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(

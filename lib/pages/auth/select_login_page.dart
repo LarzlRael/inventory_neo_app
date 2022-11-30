@@ -4,6 +4,10 @@ class SelectLoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBarWithBackIcon(
+        appBar: AppBar(),
+        /* title: 'Iniciar sesión', */
+      ),
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -23,7 +27,16 @@ class SelectLoginPage extends StatelessWidget {
                 size: 200,
               ),
               LoginButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.bottomToTop,
+                      child: const HomePage(),
+                      duration: const Duration(milliseconds: 400),
+                    ),
+                  );
+                },
                 paddingVertical: 12,
                 spaceBetweenIconAndText: 15,
                 label: 'Iniciar sesión con Google',
