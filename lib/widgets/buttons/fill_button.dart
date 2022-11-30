@@ -11,10 +11,12 @@ class FillButton extends StatelessWidget {
   final bool ghostButton;
   final double borderRadius;
   final double labelButtonFontSize;
+  final FontWeight? fontWeight;
   const FillButton({
     Key? key,
     required this.onPressed,
     required this.label,
+    this.fontWeight,
     this.labelButtonFontSize = 16.0,
     this.backgroundColor = Colors.blue,
     this.textColor = Colors.white,
@@ -29,7 +31,7 @@ class FillButton extends StatelessWidget {
     final textStyle = TextStyle(
       color: ghostButton ? backgroundColor : textColor,
       fontSize: labelButtonFontSize,
-      fontWeight: FontWeight.bold,
+      fontWeight: fontWeight ?? FontWeight.bold,
     );
     return Container(
       width: double.infinity,

@@ -4,8 +4,12 @@ class Inventory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Inventory'),
+      body: Column(
+        children: [
+          CardItemInventory(),
+          CardItemInventory(),
+          CardItemInventory(),
+        ],
       ),
     );
   }

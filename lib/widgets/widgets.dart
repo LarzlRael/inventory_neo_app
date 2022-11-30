@@ -11,3 +11,9 @@ part 'slideshow/slide_banner_item.dart';
 part 'banner_login.dart';
 
 part 'common/app_bar_with_back_icon.dart';
+
+/* Alerts */
+part 'dialogs/material_dialog.dart';
+
+/* Cards */
+part 'cards/card_item_inventory.dart';

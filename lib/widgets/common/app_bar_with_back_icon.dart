@@ -15,15 +15,8 @@ class AppBarWithBackIcon extends StatelessWidget
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.white,
-      title: title != null
-          ? SimpleText(
-              text: title!,
-              lightThemeColor: Colors.black,
-              darkThemeColor: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            )
-          : null,
+      centerTitle: true,
+      title: appBarTitle(),
       leading: IconButton(
         icon: Icon(
           Icons.arrow_circle_left_outlined,
@@ -37,4 +30,26 @@ class AppBarWithBackIcon extends StatelessWidget
 
   @override
   Size get preferredSize => Size.fromHeight(appBar.preferredSize.height);
+}
+
+Widget appBarTitle() {
+  return Column(
+    children: [
+      SimpleText(
+        text: 'Joyeria Arrieta',
+        lightThemeColor: Colors.black,
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+      ),
+      const SizedBox(
+        height: 3,
+      ),
+      SimpleText(
+        text: 'Propietario',
+        lightThemeColor: Colors.black,
+        fontSize: 12,
+        fontWeight: FontWeight.normal,
+      ),
+    ],
+  );
 }

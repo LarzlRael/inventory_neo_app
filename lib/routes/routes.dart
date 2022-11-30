@@ -5,4 +5,7 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   'home': (_) => HomePage(),
   'welcome': (_) => WelcomePage(),
   'login': (_) => LoginPage(),
+
+  /* Items */
+  'item_detail': (_) => ItemDetailPage(),
 };

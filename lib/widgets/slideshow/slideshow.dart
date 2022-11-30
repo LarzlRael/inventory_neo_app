@@ -188,28 +188,35 @@ class _SlidesState extends State<_Slides> {
       const Duration(seconds: 2),
       (Timer timer) {
         if (Provider.of<_SlideShowModel>(context, listen: false)
-            .leftDirection) {
-          setCurrentPageValueAndChangePage(1);
-          if (Provider.of<_SlideShowModel>(context, listen: false)
-                  .currentPageValue ==
-              widget.slides.length - 1) {
-            Provider.of<_SlideShowModel>(context, listen: false).leftDirection =
-                false;
-          }
+                .currentPageValue <
+            widget.slides.length - 1) {
+          Provider.of<_SlideShowModel>(context, listen: false)
+              .currentPageValue = pageViewController.page! + 1;
+          pageViewController.animateToPage(
+            Provider.of<_SlideShowModel>(context, listen: false)
+                .currentPageValue
+                .toInt(),
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeIn,
+          );
         } else {
-          setCurrentPageValueAndChangePage(-1);
-          if (Provider.of<_SlideShowModel>(context, listen: false)
-                  .currentPageValue ==
-              0) {
-            Provider.of<_SlideShowModel>(context, listen: false).leftDirection =
-                true;
-          }
+          Provider.of<_SlideShowModel>(context, listen: false)
+              .currentPageValue = 0;
+          pageViewController.animateToPage(
+            Provider.of<_SlideShowModel>(context, listen: false)
+                .currentPageValue
+                .toInt(),
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeIn,
+          );
         }
       },
     );
   }
 
-  setCurrentPageValueAndChangePage(int index) {
+  setCurrentPageValueAndChangePage(
+    int index,
+  ) {
     Provider.of<_SlideShowModel>(context, listen: false).currentPageValue =
         pageViewController.page! + index;
     pageViewController.animateToPage(

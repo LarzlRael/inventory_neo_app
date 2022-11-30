@@ -16,3 +16,10 @@ part 'home/bottom_navigation_pages/home.dart';
 part 'home/bottom_navigation_pages/register.dart';
 part 'home/bottom_navigation_pages/profile.dart';
 part 'home/bottom_navigation_pages/inventory.dart';
+
+/* Profile pages */
+
+part 'profile/profile_page.dart';
+
+/* Items  */
+part 'items/item_detail_page.dart';
