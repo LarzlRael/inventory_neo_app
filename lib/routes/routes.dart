@@ -8,4 +8,5 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
 
   /* Items */
   'item_detail': (_) => ItemDetailPage(),
+  'list_items_category': (_) => ListCategoryItems(),
 };
