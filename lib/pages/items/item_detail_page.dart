@@ -97,6 +97,16 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                   ),
                   Expanded(
                     child: FillButton(
+                      label: 'Vendido',
+                      fontWeight: FontWeight.w500,
+                      labelButtonFontSize: 14,
+                      backgroundColor: Colors.orange,
+                      borderRadius: 10,
+                      onPressed: () {},
+                    ),
+                  ),
+                  /* Expanded(
+                    child: FillButton(
                       label: 'Vender',
                       fontWeight: FontWeight.w500,
                       labelButtonFontSize: 14,
@@ -104,9 +114,13 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                       borderRadius: 10,
                       onPressed: () {},
                     ),
-                  ),
+                  ), */
                 ],
-              )
+              ),
+              SimpleText(text: 'Vendido por: Virginia Arrieta', top: 5),
+              SimpleText(text: 'Vendido el 01 de diciembre de 2022', top: 10),
+              SimpleText(text: 'Precio final : 140', top: 10),
+              SimpleText(text: 'Vendido a Juan Quispe', top: 10),
             ],
           ),
         ),

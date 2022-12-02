@@ -19,5 +19,10 @@ part 'dialogs/material_dialog.dart';
 
 /* Cards */
 part 'cards/card_item_inventory.dart';
+part 'cards/card_inventory_vertical.dart';
 
 part 'delegate/items_inventory_delegate.dart';
+
+/* Customers  */
+
+part 'client/client_profile.dart';

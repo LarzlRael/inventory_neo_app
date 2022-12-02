@@ -22,10 +22,22 @@ class Inventory extends StatelessWidget {
       color: Colors.red,
     ),
     CategoryCard(
+      title: 'Collares',
+      urlImage:
+          'https://i.pinimg.com/originals/6b/af/fc/6baffc223f85c454aa61008a4dfd1324.png',
+      color: Colors.red,
+    ),
+    CategoryCard(
       title: 'Conjuntos',
       urlImage:
           'https://www.joyeriasanchez.com/29298-home_default/conjunto-valley-oro-18k.jpg',
       color: Colors.deepPurple,
+    ),
+    CategoryCard(
+      title: 'Manillas',
+      urlImage:
+          'https://www.joyeriasanchez.com/53325-home_default/pulsera-carla-oro-bicolor-18k.jpg',
+      color: Colors.cyanAccent,
     ),
   ];
   @override
@@ -196,9 +208,26 @@ class ListCategoryItems extends StatelessWidget {
       ),
       body: Column(
         children: [
-          CardItemInventory(),
-          CardItemInventory(),
-          CardItemInventory(),
+          CategoryCard(
+            title: 'Anillos',
+            urlImage:
+                'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png',
+            color: Colors.blue,
+          ),
+          Expanded(
+            child: GridView.count(
+              /* shrinkWrap: true, */
+              /* physics: NeverScrollableScrollPhysics(), */
+              /* padding: const EdgeInsets.all(10), */
+              /* childAspectRatio: 3 / 2, */
+              crossAxisCount: 2,
+              children: const [
+                CardItemInventoryVertical(),
+                CardItemInventoryVertical(),
+                CardItemInventoryVertical(),
+              ],
+            ),
+          )
         ],
       ),
     );

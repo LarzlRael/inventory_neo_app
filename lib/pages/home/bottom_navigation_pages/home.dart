@@ -28,18 +28,18 @@ class Home extends StatelessWidget {
                 childAspectRatio: 3 / 2,
                 crossAxisCount: 3,
                 children: const [
-                  ManagementCards(),
-                  ManagementCards(),
-                  ManagementCards(),
-                  ManagementCards(),
-                  ManagementCards(),
-                  ManagementCards(),
+                  ManagementCards(
+                      cardTitle: 'Empleados', cardIcon: Icons.person),
+                  ManagementCards(
+                      cardTitle: 'Clientes', cardIcon: Icons.person),
+                  ManagementCards(
+                      cardTitle: 'Productos', cardIcon: Icons.person),
                 ],
               ),
             ),
             SimpleText(
               text: 'Que tus clientes te conozcan',
-              fontSize: 15,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
               top: 25,
               bottom: 5,
@@ -52,29 +52,33 @@ class Home extends StatelessWidget {
 }
 
 class ManagementCards extends StatelessWidget {
+  final String cardTitle;
+  final IconData cardIcon;
   const ManagementCards({
     Key? key,
+    required this.cardTitle,
+    required this.cardIcon,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      elevation: 5,
+      elevation: 2,
       child: FittedBox(
           child: Container(
         padding: const EdgeInsets.all(5),
         child: Column(
           children: [
-            Icon(Icons.person_add_alt),
+            Icon(cardIcon),
             SizedBox(
               height: 5,
             ),
             SimpleText(
-              text: 'Empleados',
+              text: cardTitle,
               fontSize: 12,
               fontWeight: FontWeight.w400,
             ),
