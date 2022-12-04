@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:inventory_app/controller/theme_controller.dart';
 import 'package:inventory_app/pages/pages.dart';
+import 'package:inventory_app/widgets/buttons/buttons.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 part 'text/simple_text.dart';
@@ -23,6 +24,10 @@ part 'cards/card_inventory_vertical.dart';
 
 part 'delegate/items_inventory_delegate.dart';
 
-/* Customers  */
+/* Clients */
 
 part 'client/client_profile.dart';
+part 'client/client_item.dart';
+
+/* Errors widgets */
+part 'errors/no_information.dart';

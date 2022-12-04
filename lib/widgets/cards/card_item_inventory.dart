@@ -42,14 +42,14 @@ class CardItemInventory extends StatelessWidget {
                     children: [
                       SimpleText(
                         text: 'Arete',
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.w500,
                         lightThemeColor: Colors.grey,
                         bottom: 5,
                       ),
                       SimpleText(
                         text: 'Nombre del producto',
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                       SimpleText(

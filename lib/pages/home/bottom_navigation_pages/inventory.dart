@@ -142,7 +142,7 @@ class CategoryCard extends StatelessWidget {
       child: Container(
         width: 125,
         height: 125,
-        margin: EdgeInsets.only(right: 10),
+        margin: const EdgeInsets.only(right: 10),
         decoration: BoxDecoration(
           /* hex color */
           /* color: const Color(0xffff7648), */
@@ -159,11 +159,12 @@ class CategoryCard extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Positioned(
-                  bottom: 0,
+                Expanded(
                   child: Container(
-                    width: 125,
-                    height: 110,
+                    margin: const EdgeInsets.only(
+                      top: 20,
+                      right: 10,
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: color,
@@ -171,6 +172,8 @@ class CategoryCard extends StatelessWidget {
                   ),
                 ),
                 Positioned(
+                  bottom: 10,
+                  left: 10,
                   child: SimpleText(
                     top: 10,
                     text: title,
@@ -178,8 +181,6 @@ class CategoryCard extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     lightThemeColor: Colors.white,
                   ),
-                  bottom: 10,
-                  left: 10,
                 ),
               ],
             ),
@@ -199,6 +200,8 @@ class CategoryCard extends StatelessWidget {
 }
 
 class ListCategoryItems extends StatelessWidget {
+  const ListCategoryItems({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
