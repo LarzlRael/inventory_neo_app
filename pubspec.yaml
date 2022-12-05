@@ -39,6 +39,13 @@ dependencies:
   provider: ^6.0.2
   # Page transitions
   page_transition: ^2.0.9
+
+  #forms
+  flutter_form_builder: ^7.7.0
+
+  #forms
+  http: ^0.13.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

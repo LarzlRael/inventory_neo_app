@@ -6,11 +6,13 @@ class AppBarWithBackIcon extends StatelessWidget
   final String? title;
   final bool showTitle;
   final String? subTitle;
+  final List<Widget>? actions;
   const AppBarWithBackIcon({
     Key? key,
     this.title,
     this.subTitle,
     this.showTitle = false,
+    this.actions,
     required this.appBar,
   }) : super(key: key);
   @override
@@ -35,6 +37,9 @@ class AppBarWithBackIcon extends StatelessWidget
         ),
         onPressed: () => Navigator.pop(context),
       ),
+      actions: [
+        ...?actions,
+      ],
     );
   }
 

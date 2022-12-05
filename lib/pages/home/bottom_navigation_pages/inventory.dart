@@ -206,8 +206,21 @@ class ListCategoryItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWithBackIcon(
-        title: 'Anillos',
+        title: 'Productos',
         appBar: AppBar(),
+        showTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: ItemsInventoryDelegate(),
+              );
+            },
+            color: Colors.black,
+            icon: Icon(Icons.search),
+          ),
+        ],
       ),
       body: Column(
         children: [

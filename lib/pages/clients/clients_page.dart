@@ -17,6 +17,18 @@ class ClientsPage extends StatelessWidget {
         appBar: AppBar(),
         showTitle: true,
         title: 'Clientes',
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            color: Colors.black,
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: ItemsInventoryDelegate(),
+              );
+            },
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
