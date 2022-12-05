@@ -4,10 +4,14 @@ class AppBarWithBackIcon extends StatelessWidget
     implements PreferredSizeWidget {
   final AppBar appBar;
   final String? title;
+  final bool showTitle;
+  final String? subTitle;
   const AppBarWithBackIcon({
     Key? key,
-    required this.appBar,
     this.title,
+    this.subTitle,
+    this.showTitle = false,
+    required this.appBar,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -16,9 +20,15 @@ class AppBarWithBackIcon extends StatelessWidget
       elevation: 0,
       backgroundColor: Colors.white,
       centerTitle: true,
-      title: appBarTitle(),
+      title: showTitle
+          ? SimpleText(
+              text: title!,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            )
+          : appBarTitle(subTitle),
       leading: IconButton(
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_circle_left_outlined,
           size: 40,
           color: Colors.black,
@@ -32,7 +42,7 @@ class AppBarWithBackIcon extends StatelessWidget
   Size get preferredSize => Size.fromHeight(appBar.preferredSize.height);
 }
 
-Widget appBarTitle() {
+Widget appBarTitle(String? subTitle) {
   return Column(
     children: [
       SimpleText(
@@ -45,7 +55,7 @@ Widget appBarTitle() {
         height: 3,
       ),
       SimpleText(
-        text: 'Propietario',
+        text: subTitle ?? 'Propietario',
         lightThemeColor: Colors.black,
         fontSize: 12,
         fontWeight: FontWeight.normal,

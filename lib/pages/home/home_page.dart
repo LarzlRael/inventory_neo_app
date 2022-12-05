@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
         iconTheme: IconThemeData(
           color: Colors.black, //change your color here
         ),
-        title: appBarTitle(),
+        title: appBarTitle(null),
         backgroundColor: Colors.white,
         centerTitle: true,
         leading: IconButton(

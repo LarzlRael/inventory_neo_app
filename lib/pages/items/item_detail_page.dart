@@ -1,6 +1,8 @@
 part of '../pages.dart';
 
 class ItemDetailPage extends StatefulWidget {
+  const ItemDetailPage({super.key});
+
   @override
   State<ItemDetailPage> createState() => _ItemDetailPageState();
 }

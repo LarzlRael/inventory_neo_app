@@ -29,11 +29,17 @@ class Home extends StatelessWidget {
                 crossAxisCount: 3,
                 children: const [
                   ManagementCards(
-                      cardTitle: 'Empleados', cardIcon: Icons.person),
+                      cardTitle: 'Empleados',
+                      cardIcon: Icons.person,
+                      cardRoute: 'clients'),
                   ManagementCards(
-                      cardTitle: 'Clientes', cardIcon: Icons.person),
+                      cardTitle: 'Clientes',
+                      cardIcon: Icons.person,
+                      cardRoute: 'clients'),
                   ManagementCards(
-                      cardTitle: 'Productos', cardIcon: Icons.person),
+                      cardTitle: 'Productos',
+                      cardIcon: Icons.person,
+                      cardRoute: 'clients'),
                 ],
               ),
             ),
@@ -44,9 +50,6 @@ class Home extends StatelessWidget {
               top: 25,
               bottom: 5,
             ),
-            ClientItem(),
-            ClientItem(),
-            ClientItem(),
           ],
         ),
       ),
@@ -57,37 +60,44 @@ class Home extends StatelessWidget {
 class ManagementCards extends StatelessWidget {
   final String cardTitle;
   final IconData cardIcon;
+  final String cardRoute;
   const ManagementCards({
     Key? key,
     required this.cardTitle,
     required this.cardIcon,
+    required this.cardRoute,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 2,
-      child: FittedBox(
-          child: Container(
-        padding: const EdgeInsets.all(5),
-        child: Column(
-          children: [
-            Icon(cardIcon),
-            SizedBox(
-              height: 5,
-            ),
-            SimpleText(
-              text: cardTitle,
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-            ),
-          ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, cardRoute);
+      },
+      child: Card(
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
         ),
-      )),
+        elevation: 2,
+        child: FittedBox(
+            child: Container(
+          padding: const EdgeInsets.all(5),
+          child: Column(
+            children: [
+              Icon(cardIcon),
+              SizedBox(
+                height: 5,
+              ),
+              SimpleText(
+                text: cardTitle,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+              ),
+            ],
+          ),
+        )),
+      ),
     );
   }
 }

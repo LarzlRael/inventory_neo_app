@@ -36,8 +36,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   # State Management
-  get: ^4.6.5
   provider: ^6.0.2
+  # Page transitions
   page_transition: ^2.0.9
 dev_dependencies:
   flutter_test:

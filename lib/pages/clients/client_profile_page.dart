@@ -1,9 +1,14 @@
-part of '../widgets.dart';
+part of '../pages.dart';
 
-class ClientProfile extends StatelessWidget {
+class ClientProfilePage extends StatelessWidget {
+  const ClientProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBarWithBackIcon(
+        appBar: AppBar(),
+      ),
       backgroundColor: Color(0xffcdd2f9),
       body: SingleChildScrollView(
         child: Column(

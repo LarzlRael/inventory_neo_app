@@ -31,7 +31,6 @@ class SimpleText extends StatelessWidget {
     this.setUniqueColor = false,
   }) : super(key: key);
 
-  final ThemeController themeController = Get.put(ThemeController());
   @override
   Widget build(BuildContext context) {
     final themeStatus = false;
