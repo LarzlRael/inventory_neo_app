@@ -25,8 +25,10 @@ class Request {
         res = await http.get(uri);
         break;
       case RequestType.post:
-      case RequestType.put:
         res = await http.post(uri, body: jsonEncode(body), headers: headers);
+        break;
+      case RequestType.put:
+        res = await http.put(uri, body: jsonEncode(body), headers: headers);
         break;
       case RequestType.delete:
         res = await http.delete(uri);
@@ -52,8 +54,10 @@ class Request {
         res = await http.get(uri, headers: headers);
         break;
       case RequestType.post:
-      case RequestType.put:
         res = await http.post(uri, body: jsonEncode(body), headers: headers);
+        break;
+      case RequestType.put:
+        res = await http.put(uri, body: jsonEncode(body), headers: headers);
         break;
       case RequestType.delete:
         res = await http.delete(uri, headers: headers);
