@@ -31,3 +31,6 @@ part 'errors/no_information.dart';
 /* Forms */
 
 part 'forms/custom_text_field.dart';
+
+/* Loadings */
+part 'loadings/simple_loading.dart';

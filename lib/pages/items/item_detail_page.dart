@@ -69,7 +69,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 lightThemeColor: Colors.black,
               ),
               SimpleText(
-                text: widget.productModel.description,
+                text: removeAllHtmlTags(widget.productModel.description),
                 fontSize: 14,
                 top: 5,
                 bottom: 10,

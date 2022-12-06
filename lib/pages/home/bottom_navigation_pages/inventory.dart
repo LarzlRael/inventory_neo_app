@@ -70,19 +70,17 @@ class Inventory extends StatelessWidget {
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
-            Container(
-              height: 125,
+            Expanded(
               child: FutureBuilder(
                 future: categoriesServices.getCategories(),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<CategoriesModel>> snapshot) {
                   if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return simpleLoading();
                   }
-                  return ListView.builder(
-                    scrollDirection: Axis.horizontal,
+
+                  /* return ListView.builder(
+                    /* scrollDirection: Axis.horizontal, */
                     itemCount: snapshot.data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       return CategoryCard(
@@ -93,7 +91,25 @@ class Inventory extends StatelessWidget {
                         color: Colors.blue,
                       );
                     },
-                  );
+                  ); */
+                  return GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        /* childAspectRatio: 3 / 2, */
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 5,
+                      ),
+                      itemCount: snapshot.data?.length,
+                      itemBuilder: (BuildContext ctx, index) {
+                        return CategoryCard(
+                          id: snapshot.data![index].id.toString(),
+                          title: snapshot.data![index].name,
+                          urlImage:
+                              'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png',
+                          color: Colors.blue,
+                        );
+                      });
                 },
               ),
             )
@@ -257,11 +273,7 @@ class ListCategoryItems extends StatelessWidget {
             builder: (BuildContext context,
                 AsyncSnapshot<List<ProductsModel>> snapshot) {
               if (!snapshot.hasData) {
-                return const Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
+                return simpleLoading();
               }
               if (snapshot.data!.isEmpty) {
                 return const Expanded(

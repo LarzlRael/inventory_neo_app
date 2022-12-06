@@ -39,9 +39,7 @@ class ClientsPage extends StatelessWidget {
               builder: (BuildContext context,
                   AsyncSnapshot<List<ClientModel>> snapshot) {
                 if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return simpleLoading();
                 }
                 final clients = snapshot.data;
                 return Expanded(
