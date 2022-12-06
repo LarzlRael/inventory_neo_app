@@ -1,10 +1,10 @@
 part of 'delegates.dart';
 
-class ItemsInventoryDelegate extends SearchDelegate {
+class ClientsDelegate extends SearchDelegate {
   @override
   final String searchFieldLabel;
 
-  ItemsInventoryDelegate() : searchFieldLabel = 'Buscar joya por nombre';
+  ClientsDelegate() : searchFieldLabel = 'Buscar cliente por nombre';
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [

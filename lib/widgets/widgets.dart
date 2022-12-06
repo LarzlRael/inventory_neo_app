@@ -22,8 +22,6 @@ part 'dialogs/material_dialog.dart';
 part 'cards/card_item_inventory.dart';
 part 'cards/card_inventory_vertical.dart';
 
-part 'delegate/items_inventory_delegate.dart';
-
 /* Clients */
 part 'client/client_item.dart';
 

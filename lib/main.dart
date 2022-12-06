@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:inventory_app/routes/routes.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  await dotenv.load(
+    fileName: "assets/.env",
+  ); // mergeWith optional, you can include Platform.environment for Mobile/Desktop app
+
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

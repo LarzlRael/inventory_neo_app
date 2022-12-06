@@ -25,7 +25,7 @@ class ClientsPage extends StatelessWidget {
             onPressed: () {
               showSearch(
                 context: context,
-                delegate: ItemsInventoryDelegate(),
+                delegate: ClientsDelegate(),
               );
             },
           ),

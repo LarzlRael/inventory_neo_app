@@ -1,7 +1,11 @@
 part of '../widgets.dart';
 
 class CardItemInventoryVertical extends StatelessWidget {
-  const CardItemInventoryVertical({super.key});
+  final ProductsModel productModel;
+  const CardItemInventoryVertical({
+    super.key,
+    required this.productModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +16,7 @@ class CardItemInventoryVertical extends StatelessWidget {
           context,
           PageTransition(
             type: PageTransitionType.rightToLeft,
-            child: ItemDetailPage(),
+            child: ItemDetailPage(productModel: productModel),
             duration: const Duration(milliseconds: 400),
           ),
         );
@@ -34,7 +38,9 @@ class CardItemInventoryVertical extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Image.network(
-                    'https://www.brides.com/thmb/F8B0OXob-vFc8iUDZgjDlt87h4U=/fit-in/1500x640/filters:no_upscale():max_bytes(150000):strip_icc()/ScreenShot2021-07-25at10.21.05JPEG-237dc7b21897494280347b163ebd6a81.jpg',
+                    productModel.images.isNotEmpty
+                        ? productModel.images[0].src
+                        : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
                     height: 150,
                     fit: BoxFit.cover,
                   ),
@@ -48,13 +54,13 @@ class CardItemInventoryVertical extends StatelessWidget {
                         SimpleText(
                           bottom: 2,
                           top: 2,
-                          text: '200BS',
+                          text: productModel.price,
                           fontSize: 15,
                           fontWeight: FontWeight.w700,
                           lightThemeColor: Colors.pink,
                         ),
                         SimpleText(
-                          text: 'Nombre del producto',
+                          text: productModel.name,
                           fontSize: 14,
                           fontWeight: FontWeight.w300,
                         ),

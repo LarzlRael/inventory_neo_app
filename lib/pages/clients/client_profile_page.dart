@@ -10,6 +10,26 @@ class ClientProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            color: Colors.black,
+            tooltip: 'Editar cliente',
+            onPressed: () {
+              Navigator.pushNamed(context, 'client_register_page',
+                  arguments: clientModel);
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete),
+            color: Colors.black,
+            tooltip: 'Eliminar cliente',
+            onPressed: () {
+              Navigator.pushNamed(context, 'client_register_page',
+                  arguments: clientModel);
+            },
+          ),
+        ],
       ),
       backgroundColor: const Color(0xffcdd2f9),
       body: SingleChildScrollView(

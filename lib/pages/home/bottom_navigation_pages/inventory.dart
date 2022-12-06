@@ -2,7 +2,7 @@ part of '../../pages.dart';
 
 class Inventory extends StatelessWidget {
   final pageViewController = PageController();
-  final cardArray = const [
+  /* final cardArray = const [
     CategoryCard(
       title: 'Anillos',
       urlImage:
@@ -39,9 +39,10 @@ class Inventory extends StatelessWidget {
           'https://www.joyeriasanchez.com/53325-home_default/pulsera-carla-oro-bicolor-18k.jpg',
       color: Colors.cyanAccent,
     ),
-  ];
+  ]; */
   @override
   Widget build(BuildContext context) {
+    final categoriesServices = CategoriesServices();
     return Scaffold(
       body: Container(
         padding: EdgeInsets.symmetric(
@@ -71,11 +72,28 @@ class Inventory extends StatelessWidget {
             ),
             Container(
               height: 125,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: cardArray.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return cardArray[index];
+              child: FutureBuilder(
+                future: categoriesServices.getCategories(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<CategoriesModel>> snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CategoryCard(
+                        id: snapshot.data![index].id.toString(),
+                        title: snapshot.data![index].name,
+                        urlImage:
+                            'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png',
+                        color: Colors.blue,
+                      );
+                    },
+                  );
                 },
               ),
             )
@@ -126,18 +144,20 @@ class CategoryCard extends StatelessWidget {
   final String title;
   final String urlImage;
   final Color color;
+  final String id;
   const CategoryCard({
     Key? key,
     required this.title,
     required this.urlImage,
     required this.color,
+    required this.id,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, 'list_items_category');
+        Navigator.pushNamed(context, 'list_items_category', arguments: id);
       },
       child: Container(
         width: 125,
@@ -204,6 +224,8 @@ class ListCategoryItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)!.settings.arguments as String;
+    final productsServices = ProductsServices();
     return Scaffold(
       appBar: AppBarWithBackIcon(
         title: 'Productos',
@@ -224,26 +246,51 @@ class ListCategoryItems extends StatelessWidget {
       ),
       body: Column(
         children: [
-          CategoryCard(
+          /*  CategoryCard(
             title: 'Anillos',
             urlImage:
                 'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png',
             color: Colors.blue,
+          ), */
+          FutureBuilder(
+            future: productsServices.getProductsByCategory(arguments),
+            builder: (BuildContext context,
+                AsyncSnapshot<List<ProductsModel>> snapshot) {
+              if (!snapshot.hasData) {
+                return const Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+              if (snapshot.data!.isEmpty) {
+                return const Expanded(
+                  child: NoInformation(
+                    text: 'No hay productos en esta categoria',
+                    icon: Icons.info_outline,
+                    showButton: false,
+                    iconButton: Icons.add,
+                  ),
+                );
+              }
+
+              return Expanded(
+                child: GridView.count(
+                    /* shrinkWrap: true, */
+                    /* physics: NeverScrollableScrollPhysics(), */
+                    /* padding: const EdgeInsets.all(10), */
+                    /* childAspectRatio: 3 / 2, */
+                    crossAxisCount: 2,
+                    children: snapshot.data!.map<Widget>(
+                      (product) {
+                        return CardItemInventoryVertical(
+                          productModel: product,
+                        );
+                      },
+                    ).toList()),
+              );
+            },
           ),
-          Expanded(
-            child: GridView.count(
-              /* shrinkWrap: true, */
-              /* physics: NeverScrollableScrollPhysics(), */
-              /* padding: const EdgeInsets.all(10), */
-              /* childAspectRatio: 3 / 2, */
-              crossAxisCount: 2,
-              children: const [
-                CardItemInventoryVertical(),
-                CardItemInventoryVertical(),
-                CardItemInventoryVertical(),
-              ],
-            ),
-          )
         ],
       ),
     );

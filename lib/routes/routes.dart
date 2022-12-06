@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_app/models/models.dart';
 import 'package:inventory_app/pages/pages.dart';
 import 'package:inventory_app/widgets/widgets.dart';
 
@@ -8,7 +9,10 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   'login': (_) => const LoginPage(),
 
   /* Items */
-  'item_detail': (_) => const ItemDetailPage(),
+  'item_detail': (BuildContext context) => ItemDetailPage(
+        productModel:
+            ModalRoute.of(context)?.settings.arguments as ProductsModel,
+      ),
   'list_items_category': (_) => const ListCategoryItems(),
 
   /* Client */

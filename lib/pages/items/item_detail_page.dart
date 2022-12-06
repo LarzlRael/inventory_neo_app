@@ -1,7 +1,11 @@
 part of '../pages.dart';
 
 class ItemDetailPage extends StatefulWidget {
-  const ItemDetailPage({super.key});
+  final ProductsModel productModel;
+  const ItemDetailPage({
+    super.key,
+    required this.productModel,
+  });
 
   @override
   State<ItemDetailPage> createState() => _ItemDetailPageState();
@@ -24,7 +28,9 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
-                  'https://m.media-amazon.com/images/I/41Vdpud95BS._SY500_.jpg',
+                  widget.productModel.images.isNotEmpty
+                      ? widget.productModel.images[0].src
+                      : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
                   height: MediaQuery.of(context).size.height * 0.30,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -34,12 +40,12 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SimpleText(
-                    text: 'Arete Gota de vino',
+                    text: widget.productModel.name,
                     fontSize: 22,
                     /* top: 10, */
                     fontWeight: FontWeight.w700,
                   ),
-                  Chip(
+                  const Chip(
                     padding: EdgeInsets.all(0),
                     backgroundColor: Colors.deepPurple,
                     label:
@@ -48,7 +54,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 ],
               ),
               SimpleText(
-                text: 'Aretes',
+                text: widget.productModel.categories[0].name,
                 fontSize: 14,
                 top: 5,
                 bottom: 10,
@@ -63,18 +69,22 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 lightThemeColor: Colors.black,
               ),
               SimpleText(
-                text:
-                    'Cupidatat minim incididunt aute velit et irure culpa consequat nisi esse ad dolore minim labore. Lorem ex adipisicing veniam laboris dolore..',
+                text: widget.productModel.description,
                 fontSize: 14,
                 top: 5,
                 bottom: 10,
                 lightThemeColor: Colors.grey,
               ),
-              textInfo(
+              /* textInfo(
                 'Plata 950',
               ),
               textInfo(
                 'Vino',
+              ), */
+              Column(
+                children: widget.productModel.tags
+                    .map((e) => textInfo(e.name))
+                    .toList(),
               ),
               SimpleText(
                 text: 'Costo de creacion 150 Bs',
@@ -87,7 +97,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
               Row(
                 children: [
                   SimpleText(
-                    text: '200 Bs',
+                    text: widget.productModel.price,
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
                     top: 5,

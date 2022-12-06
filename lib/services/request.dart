@@ -42,9 +42,16 @@ class Request {
     Map<String, dynamic> body,
     String? token,
   ) async {
+    //headers with basic auth
+    String username = dotenv.get('wc_username');
+    String password = dotenv.get('wc_password');
+
+    String basicAuth =
+        'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+
     final headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
+      'Authorization': basicAuth,
     };
 
     final Uri uri = Uri.parse('${Environment.serverHttpUrl}/$url');
