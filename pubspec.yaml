@@ -46,6 +46,11 @@ dependencies:
   #forms
   http: ^0.13.4
 
+  #time converter
+  simple_moment: ^1.1.1
+
+  #launcher
+  url_launcher: ^6.1.6
 dev_dependencies:
   flutter_test:
     sdk: flutter

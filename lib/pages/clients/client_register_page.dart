@@ -35,10 +35,14 @@ class ClientRegisterPage extends StatelessWidget {
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: const [
                   CustomTextField(
-                    label: 'Nombre completo',
-                    name: 'fullname',
+                    label: 'Nombre',
+                    name: 'firstname',
+                  ),
+                  CustomTextField(
+                    label: 'Apellidos',
+                    name: 'firstname',
                   ),
                   const CustomTextField(
                     label: 'Dirección',
@@ -48,7 +52,7 @@ class ClientRegisterPage extends StatelessWidget {
                     label: 'Telefono',
                     name: 'telephone',
                   ),
-                  FormBuilderRadioGroup(
+                  /* FormBuilderRadioGroup(
                     decoration: const InputDecoration(
                       labelText: 'Genero',
                       border: InputBorder.none,
@@ -67,7 +71,7 @@ class ClientRegisterPage extends StatelessWidget {
                         )
                         .toList(growable: false),
                     controlAffinity: ControlAffinity.trailing,
-                  ),
+                  ), */
                 ],
               ),
             ),

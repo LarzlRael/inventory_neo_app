@@ -1,12 +1,17 @@
 part of '../widgets.dart';
 
 class ClientItem extends StatelessWidget {
-  const ClientItem({super.key});
+  final ClientModel clientModel;
+  const ClientItem({
+    super.key,
+    required this.clientModel,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, 'client_profile'),
+      onTap: () => Navigator.pushNamed(context, 'client_profile',
+          arguments: clientModel),
       child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
@@ -33,7 +38,8 @@ class ClientItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SimpleText(
-                        text: 'Juancito Pinto',
+                        text:
+                            clientModel.firstName + ' ' + clientModel.lastName,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         lightThemeColor: Colors.black87,
@@ -41,7 +47,7 @@ class ClientItem extends StatelessWidget {
                         bottom: 5,
                       ),
                       SimpleText(
-                        text: 'Zona villa exaltacion y delmas xxd',
+                        text: clientModel.billing.address1,
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
                       ),

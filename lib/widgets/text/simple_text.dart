@@ -14,7 +14,7 @@ class SimpleText extends StatelessWidget {
   final TextAlign? textAlign;
   final double? lineHeight;
   final bool setUniqueColor;
-  SimpleText({
+  const SimpleText({
     Key? key,
     required this.text,
     this.fontWeight,

@@ -5,11 +5,13 @@ class ClientProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ClientModel clientModel =
+        ModalRoute.of(context)!.settings.arguments as ClientModel;
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
       ),
-      backgroundColor: Color(0xffcdd2f9),
+      backgroundColor: const Color(0xffcdd2f9),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -26,7 +28,8 @@ class ClientProfilePage extends StatelessWidget {
                         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNzpQcuyrPhyGRcfnvBIAnR5rdIhImb3SZydxeWy_d&s'),
                   ),
                   SimpleText(
-                    text: 'Juancito Pinto',
+                    text: '${clientModel.firstName} ${clientModel.lastName}'
+                        .toTitleCase(),
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     top: 10,
@@ -34,7 +37,7 @@ class ClientProfilePage extends StatelessWidget {
                     lightThemeColor: Colors.white,
                   ),
                   SimpleText(
-                    text: 'Zona villa exaltacion y delmas xxd',
+                    text: clientModel.billing.address1,
                     fontSize: 14,
                     fontWeight: FontWeight.w300,
                     lightThemeColor: Colors.white,
@@ -42,21 +45,21 @@ class ClientProfilePage extends StatelessWidget {
                 ],
               ),
             ),
-            _tabSection(context),
+            _tabSection(context, clientModel),
           ],
         ),
       ),
     );
   }
 
-  Widget _tabSection(BuildContext context) {
+  Widget _tabSection(BuildContext context, ClientModel clientModel) {
     return DefaultTabController(
       length: 2,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
-            child: TabBar(
+            child: const TabBar(
               labelColor: Colors.deepPurple,
               tabs: [
                 Tab(text: "Cliente"),
@@ -72,7 +75,7 @@ class ClientProfilePage extends StatelessWidget {
                 cardContainer('Informacion del cliente', [
                   cardInformation(
                     'Telefono',
-                    '75206808',
+                    clientModel.billing.phone,
                     Row(
                       children: [
                         IconButton(
@@ -90,14 +93,14 @@ class ClientProfilePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  cardInformation(
+                  /* cardInformation(
                     'Genero',
                     'Varon',
                     null,
-                  ),
+                  ), */
                   cardInformation(
                     'Cliente desde: ',
-                    '2020-01-01',
+                    literalDate(clientModel.dateCreated),
                     null,
                   ),
                   cardInformation(
