@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:inventory_app/models/models.dart';
 import 'package:inventory_app/pages/pages.dart';
+import 'package:inventory_app/services/services.dart';
 import 'package:inventory_app/widgets/buttons/buttons.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,7 @@ part 'dialogs/material_dialog.dart';
 /* Cards */
 part 'cards/card_item_inventory.dart';
 part 'cards/card_inventory_vertical.dart';
+part 'cards/material_item_card.dart';
 
 /* Clients */
 part 'client/client_item.dart';

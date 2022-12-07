@@ -83,7 +83,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
               ), */
               Column(
                 children: widget.productModel.tags
-                    .map((e) => textInfo(e.name))
+                    .map((e) => textInfo(e.name, tagId: e.id.toString()))
                     .toList(),
               ),
               SimpleText(
@@ -140,13 +140,16 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
     );
   }
 
-  Widget textInfo(String info) {
+  Widget textInfo(String info, {String tagId = ''}) {
     /* list with bullet*/
     return Container(
       margin: const EdgeInsets.only(top: 5, bottom: 5),
       child: InkWell(
         onTap: () {
-          showMyDialog(context);
+          showMyDialogTagMaterial(
+            context,
+            tagId,
+          );
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

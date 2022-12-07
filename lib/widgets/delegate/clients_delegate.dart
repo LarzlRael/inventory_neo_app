@@ -1,6 +1,7 @@
 part of 'delegates.dart';
 
 class ClientsDelegate extends SearchDelegate {
+  final clientsService = ClientsServices();
   @override
   final String searchFieldLabel;
 
@@ -22,40 +23,48 @@ class ClientsDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Text('Resultado');
+    return FutureBuilder(
+      future: clientsService.getClientsWithParameters(query),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<ClientModel>> snapshot) {
+        if (!snapshot.hasData) {
+          return simpleLoading();
+        }
+        final clients = snapshot.data;
+        return Expanded(
+          child: ListView.builder(
+            itemCount: clients?.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ClientItem(
+                clientModel: clients![index],
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    /* historyBloc.getAllHistory();
-
-    if (query.isEmpty) {
-      return StreamBuilder(
-        stream: historyBloc.scansStream,
-        builder:
-            (BuildContext context, AsyncSnapshot<List<HistoryModel>> snapshot) {
-          if (snapshot.hasData) {
-            return listViewBlocHistory(snapshot.data!);
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      );
-    } else {
-      final suggestionList = shopData
-          .where((element) =>
-              element.shopName.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-      return suggestionList.isEmpty
-          ? NoResults(
-              icon: Icons.search_off,
-              message: 'No hay resultados para "$query"',
-              showButton: false,
-              iconButton: Icons.search_off,
-            )
-          : listViewItems(suggestionList);
-    } */
-    return Text('build Suggestions');
+    return FutureBuilder(
+      future: clientsService.getClients(),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<ClientModel>> snapshot) {
+        if (!snapshot.hasData) {
+          return simpleLoading();
+        }
+        final clients = snapshot.data;
+        return ListView.builder(
+          itemCount: clients?.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ClientItem(
+              clientModel: clients![index],
+            );
+          },
+        );
+      },
+    );
   }
 
   /* ListView listViewItems(List<ShopModel> suggestionList) {

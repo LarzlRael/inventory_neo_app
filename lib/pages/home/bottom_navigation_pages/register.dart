@@ -6,7 +6,17 @@ class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text('que fue fente'),
+      body: Column(children: [
+        Expanded(
+          child: GridView.count(
+              /* shrinkWrap: true, */
+              /* physics: NeverScrollableScrollPhysics(), */
+              crossAxisCount: 2,
+              children: registerOptions(context).map((category) {
+                return (category);
+              }).toList()),
+        ),
+      ]),
     );
   }
 }

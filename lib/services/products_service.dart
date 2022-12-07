@@ -10,4 +10,24 @@ class ProductsServices {
     );
     return productsModelFromJson(clientRequest!.body);
   }
+
+  Future<List<ProductsModel>> getAllProducts() async {
+    final clientRequest = await Request.sendRequestWithToken(
+      RequestType.get,
+      'products',
+      {},
+      'xd',
+    );
+    return productsModelFromJson(clientRequest!.body);
+  }
+
+  Future<List<ProductsModel>> searchProductsByName(String query) async {
+    final clientRequest = await Request.sendRequestWithToken(
+      RequestType.get,
+      'products?search=$query',
+      {},
+      'xd',
+    );
+    return productsModelFromJson(clientRequest!.body);
+  }
 }

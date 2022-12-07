@@ -1,6 +1,7 @@
 part of 'delegates.dart';
 
 class ItemsInventoryDelegate extends SearchDelegate {
+  final productsService = ProductsServices();
   @override
   final String searchFieldLabel;
 
@@ -22,108 +23,87 @@ class ItemsInventoryDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Text('Resultado');
+    return FutureBuilder(
+      future: productsService.searchProductsByName(query),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<ProductsModel>> snapshot) {
+        if (!snapshot.hasData) {
+          return simpleLoading();
+        }
+        if (snapshot.data!.isEmpty) {
+          return const Expanded(
+            child: NoInformation(
+              text: 'No se encontraron resultados',
+              icon: Icons.info_outline,
+              showButton: false,
+              iconButton: Icons.add,
+            ),
+          );
+        }
+
+        return Expanded(
+          child: GridView.count(
+              /* shrinkWrap: true, */
+              /* physics: NeverScrollableScrollPhysics(), */
+              /* padding: const EdgeInsets.all(10), */
+              /* childAspectRatio: 3 / 2, */
+              crossAxisCount: 2,
+              children: snapshot.data!.map<Widget>(
+                (product) {
+                  return CardItemInventoryVertical(
+                    productModel: product,
+                  );
+                },
+              ).toList()),
+        );
+      },
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    /* historyBloc.getAllHistory();
-
     if (query.isEmpty) {
-      return StreamBuilder(
-        stream: historyBloc.scansStream,
-        builder:
-            (BuildContext context, AsyncSnapshot<List<HistoryModel>> snapshot) {
-          if (snapshot.hasData) {
-            return listViewBlocHistory(snapshot.data!);
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      );
+      return allProducts();
     } else {
-      final suggestionList = shopData
-          .where((element) =>
-              element.shopName.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-      return suggestionList.isEmpty
-          ? NoResults(
-              icon: Icons.search_off,
-              message: 'No hay resultados para "$query"',
-              showButton: false,
-              iconButton: Icons.search_off,
-            )
-          : listViewItems(suggestionList);
-    } */
-    return Text('build Suggestions');
-  }
-
-  /* ListView listViewItems(List<ShopModel> suggestionList) {
-    return ListView.builder(
-      itemCount: suggestionList.length,
-      itemBuilder: (context, i) {
-        return renderItemList(context, suggestionList[i], true);
-      },
-    );
-  }
-
-  ListView listViewBlocHistory(List<HistoryModel> suggestionList) {
-    final pinterHistory = suggestionList
-        .map((e) => shopData.firstWhere(((shopData) {
-              if (shopData.shopName == (e.querySearched)) {
-                shopData.id = e.id;
-              }
-              return shopData.shopName == (e.querySearched);
-            })))
-        .toList();
-
-    return ListView.builder(
-      itemCount: pinterHistory.length,
-      itemBuilder: (context, i) {
-        return renderItemList(context, pinterHistory[i], false);
-      },
-    );
-  }
-
-  Widget renderItemList(
-      BuildContext context, ShopModel suggestionItem, bool registerHistory) {
-    final double sizeImage = 40;
-    if (!registerHistory) {
-      return ListTile(
-          leading: const Icon(Icons.history),
-          trailing: ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: Image.asset(suggestionItem.imageAsset,
-                width: sizeImage, height: sizeImage),
-          ),
-          title: Text(suggestionItem.shopName.toTitleCase()),
-          onLongPress: () => showAlertDialog(
-                  context,
-                  "Eliminar de historial",
-                  SimpleText(
-                      text:
-                          "¿Desea eliminar ${suggestionItem.shopName.toTitleCase()} de su historial?"),
-                  () async {
-                await historyBloc.deleteHistoryById(suggestionItem.id!);
-                historyBloc.getAllHistory();
-              }),
-          onTap: () => launchURL(suggestionItem.goToUrl));
+      return allProducts();
     }
-    return ListTile(
-      leading: ClipRRect(
-        borderRadius: BorderRadius.circular(5),
-        child: Image.asset(suggestionItem.imageAsset,
-            width: sizeImage, height: sizeImage),
-      ),
-      title: Text(suggestionItem.shopName.toTitleCase()),
-      onTap: () {
-        launchURL(suggestionItem.goToUrl);
-        if (registerHistory) {
-          historyBloc
-              .newHistory(HistoryModel(querySearched: suggestionItem.shopName));
+  }
+
+  Widget allProducts() {
+    return FutureBuilder(
+      future: productsService.getAllProducts(),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<ProductsModel>> snapshot) {
+        if (!snapshot.hasData) {
+          return simpleLoading();
         }
+        if (snapshot.data!.isEmpty) {
+          return const Expanded(
+            child: NoInformation(
+              text: 'No hay productos en esta categoria',
+              icon: Icons.info_outline,
+              showButton: false,
+              iconButton: Icons.add,
+            ),
+          );
+        }
+
+        return Expanded(
+          child: GridView.count(
+              /* shrinkWrap: true, */
+              /* physics: NeverScrollableScrollPhysics(), */
+              /* padding: const EdgeInsets.all(10), */
+              /* childAspectRatio: 3 / 2, */
+              crossAxisCount: 2,
+              children: snapshot.data!.map<Widget>(
+                (product) {
+                  return CardItemInventoryVertical(
+                    productModel: product,
+                  );
+                },
+              ).toList()),
+        );
       },
     );
   }
-*/
 }

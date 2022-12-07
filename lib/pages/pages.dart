@@ -27,8 +27,13 @@ part 'profile/profile_page.dart';
 
 /* Items  */
 part 'items/item_detail_page.dart';
+part 'items/materials_page.dart';
+part 'categories/categories_page.dart';
 
 /* Clients pages */
 part 'clients/clients_page.dart';
 part 'clients/client_profile_page.dart';
 part 'clients/client_register_page.dart';
+
+/* Products */
+part 'products/list_products_page.dart';
