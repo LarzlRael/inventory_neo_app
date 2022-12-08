@@ -29,17 +29,19 @@ class Home extends StatelessWidget {
                 crossAxisCount: 3,
                 children: const [
                   ManagementCards(
-                      cardTitle: 'Empleados',
-                      cardIcon: Icons.person,
-                      cardRoute: 'clients'),
+                    cardTitle: 'Empleados',
+                    cardIcon: Icons.person_pin_circle,
+                    cardRoute: 'clients',
+                  ),
                   ManagementCards(
                       cardTitle: 'Clientes',
                       cardIcon: Icons.person,
                       cardRoute: 'clients'),
                   ManagementCards(
-                      cardTitle: 'Productos',
-                      cardIcon: Icons.person,
-                      cardRoute: 'clients'),
+                    cardTitle: 'Productos',
+                    cardIcon: Icons.production_quantity_limits,
+                    cardRoute: 'list_products_page',
+                  ),
                 ],
               ),
             ),

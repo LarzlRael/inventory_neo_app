@@ -9,7 +9,7 @@ class ListProductsPage extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, 'addProduct');
+          Navigator.pushNamed(context, 'add_product');
         },
         child: const Icon(Icons.add),
       ),

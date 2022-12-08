@@ -51,35 +51,34 @@ class Inventory extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SimpleText(
+            const SimpleText(
               top: 50,
               text: 'Busca tu ',
               fontSize: 25,
               fontWeight: FontWeight.w500,
             ),
-            SimpleText(
+            const SimpleText(
               text: 'Joya',
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),
             searchBar(context),
-            SimpleText(
+            const SimpleText(
               top: 10,
               bottom: 10,
               text: 'Escoge \nuna categoria',
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
-            Expanded(
-              child: FutureBuilder(
-                future: categoriesServices.getCategories(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<CategoriesModel>> snapshot) {
-                  if (!snapshot.hasData) {
-                    return simpleLoading();
-                  }
+            FutureBuilder(
+              future: categoriesServices.getCategories(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<CategoriesModel>> snapshot) {
+                if (!snapshot.hasData) {
+                  return simpleLoading();
+                }
 
-                  /* return ListView.builder(
+                /* return ListView.builder(
                     /* scrollDirection: Axis.horizontal, */
                     itemCount: snapshot.data!.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -92,27 +91,29 @@ class Inventory extends StatelessWidget {
                       );
                     },
                   ); */
-                  return GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        /* childAspectRatio: 3 / 2, */
-                        crossAxisSpacing: 5,
-                        mainAxisSpacing: 5,
-                      ),
-                      itemCount: snapshot.data?.length,
-                      itemBuilder: (BuildContext ctx, index) {
-                        return CategoryCard(
-                          id: snapshot.data![index].id.toString(),
-                          title: snapshot.data![index].name,
-                          urlImage:
-                              'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png',
-                          color: Colors.blue,
-                        );
-                      });
-                },
-              ),
-            )
+                return Expanded(
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      /* childAspectRatio: 3 / 2, */
+                      crossAxisSpacing: 5,
+                      mainAxisSpacing: 5,
+                    ),
+                    itemCount: snapshot.data?.length,
+                    itemBuilder: (BuildContext ctx, index) {
+                      return CategoryCard(
+                        id: snapshot.data![index].id.toString(),
+                        title: snapshot.data![index].name,
+                        urlImage:
+                            'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png',
+                        color: Colors.blue,
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
