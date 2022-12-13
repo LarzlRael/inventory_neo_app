@@ -1,51 +1,32 @@
 part of '../../pages.dart';
 
-class Inventory extends StatelessWidget {
+class Inventory extends StatefulWidget {
+  const Inventory({super.key});
+
+  @override
+  State<Inventory> createState() => _InventoryState();
+}
+
+class _InventoryState extends State<Inventory>
+    with AutomaticKeepAliveClientMixin {
   final pageViewController = PageController();
-  /* final cardArray = const [
-    CategoryCard(
-      title: 'Anillos',
-      urlImage:
-          'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png',
-      color: Colors.blue,
-    ),
-    CategoryCard(
-      title: 'Aretes',
-      urlImage:
-          'https://cdn.shopify.com/s/files/1/0039/6643/5377/products/ES013copy_600x.png?v=1663068249',
-      color: Colors.cyan,
-    ),
-    CategoryCard(
-      title: 'Dijes',
-      urlImage:
-          'https://glauser.vteximg.com.br/arquivos/ids/159291-268-268/DVITDW1210LDBP1B1.png?v=637447716808730000',
-      color: Colors.red,
-    ),
-    CategoryCard(
-      title: 'Collares',
-      urlImage:
-          'https://i.pinimg.com/originals/6b/af/fc/6baffc223f85c454aa61008a4dfd1324.png',
-      color: Colors.red,
-    ),
-    CategoryCard(
-      title: 'Conjuntos',
-      urlImage:
-          'https://www.joyeriasanchez.com/29298-home_default/conjunto-valley-oro-18k.jpg',
-      color: Colors.deepPurple,
-    ),
-    CategoryCard(
-      title: 'Manillas',
-      urlImage:
-          'https://www.joyeriasanchez.com/53325-home_default/pulsera-carla-oro-bicolor-18k.jpg',
-      color: Colors.cyanAccent,
-    ),
-  ]; */
+  final List<CategoriesModel> category = [];
+  @override
+  initState() {
+    super.initState();
+    CategoriesServices().getCategories().then((value) {
+      setState(() {
+        category.addAll(value);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final categoriesServices = CategoriesServices();
+    super.build(context);
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: 15,
         ),
         child: Column(
@@ -70,49 +51,25 @@ class Inventory extends StatelessWidget {
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
-            FutureBuilder(
-              future: categoriesServices.getCategories(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<CategoriesModel>> snapshot) {
-                if (!snapshot.hasData) {
-                  return simpleLoading();
-                }
-
-                /* return ListView.builder(
-                    /* scrollDirection: Axis.horizontal, */
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CategoryCard(
-                        id: snapshot.data![index].id.toString(),
-                        title: snapshot.data![index].name,
-                        urlImage:
-                            'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png',
-                        color: Colors.blue,
-                      );
-                    },
-                  ); */
-                return Expanded(
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
-                      /* childAspectRatio: 3 / 2, */
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 5,
-                    ),
-                    itemCount: snapshot.data?.length,
-                    itemBuilder: (BuildContext ctx, index) {
-                      return CategoryCard(
-                        id: snapshot.data![index].id.toString(),
-                        title: snapshot.data![index].name,
-                        urlImage:
-                            'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png',
-                        color: Colors.blue,
-                      );
-                    },
-                  ),
-                );
-              },
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  /* childAspectRatio: 3 / 2, */
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                ),
+                itemCount: category.length,
+                itemBuilder: (BuildContext ctx, index) {
+                  return CategoryCard(
+                    id: category[index].id.toString(),
+                    title: category[index].name,
+                    urlImage:
+                        'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png',
+                    color: Colors.blue,
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -155,6 +112,10 @@ class Inventory extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 
 class CategoryCard extends StatelessWidget {

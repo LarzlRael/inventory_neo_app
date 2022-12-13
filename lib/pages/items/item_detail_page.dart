@@ -12,12 +12,43 @@ class ItemDetailPage extends StatefulWidget {
 }
 
 class _ItemDetailPageState extends State<ItemDetailPage> {
+  final productsServices = ProductsServices();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
-        /* title: 'Iniciar sesión', */
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.edit,
+              color: Colors.black,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              showConfirmDialog(
+                context,
+                'Eliminar',
+                '¿Estas seguro de eliminar este producto?',
+                () async {
+                  final response = await productsServices.deleteProduct(
+                    widget.productModel.id.toString(),
+                  );
+                  if (response) {
+                    Navigator.pushReplacementNamed(
+                        context, 'list_products_page');
+                  }
+                },
+              );
+            },
+            icon: const Icon(
+              Icons.delete,
+              color: Colors.black,
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(

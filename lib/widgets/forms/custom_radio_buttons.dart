@@ -22,7 +22,7 @@ class CustomRadioButtons extends StatelessWidget {
   }
 }
 
-class FutureMaterialCategory extends StatelessWidget {
+class FutureMaterialCategory extends StatefulWidget {
   final TagsServices tagsServices;
   final String title;
   final String formFieldName;
@@ -36,61 +36,75 @@ class FutureMaterialCategory extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: tagsServices.getAllTags(),
-      builder: (BuildContext context, AsyncSnapshot<List<TagsModel>> snapshot) {
-        if (!snapshot.hasData) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SimpleText(
-              text: title,
-              fontSize: 16,
-              fontWeight: FontWeight.w800,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Card(
-              elevation: 5,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: FormBuilderCheckboxGroup<String>(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    /* hintText: placeholder, */
-                  ),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+  State<FutureMaterialCategory> createState() => _FutureMaterialCategoryState();
+}
 
-                  name: formFieldName,
-                  // initialValue: const ['Dart'],
-                  options: snapshot.data!
-                      .map((tag) => FormBuilderFieldOption(
-                            value: tag.name,
-                            child: Text(tag.name),
-                          ))
-                      .toList(growable: false),
-                  /* onChanged: _onChanged, */
-                  separator: const VerticalDivider(
-                    width: 10,
-                    thickness: 5,
-                    color: Colors.red,
-                  ),
-                  /*    validator: FormBuilderValidators.compose([
+class _FutureMaterialCategoryState extends State<FutureMaterialCategory>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  initState() {
+    super.initState();
+    widget.tagsServices.getAllTags().then((value) {
+      setState(() {
+        tags.addAll(value);
+      });
+    });
+  }
+
+  final List<TagsModel> tags = [];
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SimpleText(
+          text: widget.title,
+          fontSize: 16,
+          fontWeight: FontWeight.w800,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Card(
+          elevation: 5,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: FormBuilderCheckboxGroup<String>(
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                /* hintText: placeholder, */
+              ),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+
+              name: widget.formFieldName,
+              // initialValue: const ['Dart'],
+              options: tags
+                  .map(
+                    (tag) => FormBuilderFieldOption(
+                      value: tag.id.toString(),
+                      child: Text(tag.name),
+                    ),
+                  )
+                  .toList(growable: false),
+              /* onChanged: _onChanged, */
+              separator: const VerticalDivider(
+                width: 10,
+                thickness: 5,
+                color: Colors.red,
+              ),
+              /*    validator: FormBuilderValidators.compose([
                         FormBuilderValidators.minLength(1),
                         FormBuilderValidators.maxLength(3),
                       ]), */
-                ),
-              ),
             ),
-          ],
-        );
-      },
+          ),
+        ),
+      ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -14,3 +14,8 @@ String removeAllHtmlTags(String htmlText) {
 
   return htmlText.replaceAll(exp, '');
 }
+
+bool validateStatus(int? state) {
+  const status = [200, 201, 202, 203, 204];
+  return status.contains(state);
+}

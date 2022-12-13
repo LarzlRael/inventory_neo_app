@@ -39,4 +39,4 @@ part 'forms/custom_radio_buttons.dart';
 /* Loadings */
 part 'loadings/simple_loading.dart';
 /* Notifications */
-part 'notificacion/snackbar_notification.dart';
+part 'notificacion/global_snackbar.dart';

@@ -30,4 +30,24 @@ class ProductsServices {
     );
     return productsModelFromJson(clientRequest!.body);
   }
+
+  Future<bool> createProduct(Map<String, dynamic> body) async {
+    final clientRequest = await Request.sendRequestWithToken(
+      RequestType.post,
+      'products',
+      body,
+      'xd',
+    );
+    return validateStatus(clientRequest!.statusCode);
+  }
+
+  Future<bool> deleteProduct(String idProduct) async {
+    final clientRequest = await Request.sendRequestWithToken(
+      RequestType.delete,
+      'products/$idProduct',
+      {},
+      'xd',
+    );
+    return validateStatus(clientRequest!.statusCode);
+  }
 }

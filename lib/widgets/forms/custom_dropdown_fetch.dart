@@ -22,7 +22,7 @@ class CustomFormBuilderFetchDropdown extends StatelessWidget {
   }
 }
 
-class FutureSubjectCategory extends StatelessWidget {
+class FutureSubjectCategory extends StatefulWidget {
   final CategoriesServices categoriesServices;
   final String title;
   final String formFieldName;
@@ -36,53 +36,65 @@ class FutureSubjectCategory extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<FutureSubjectCategory> createState() => _FutureSubjectCategoryState();
+}
+
+class _FutureSubjectCategoryState extends State<FutureSubjectCategory>
+    with AutomaticKeepAliveClientMixin {
+  final List<CategoriesModel> category = [];
+
+  @override
+  initState() {
+    super.initState();
+    widget.categoriesServices.getCategories().then((value) {
+      setState(() {
+        category.addAll(value);
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: categoriesServices.getCategories(),
-      builder: (BuildContext context,
-          AsyncSnapshot<List<CategoriesModel>> snapshot) {
-        if (!snapshot.hasData) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SimpleText(
-              text: title,
-              fontSize: 16,
-              fontWeight: FontWeight.w800,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Card(
-              elevation: 5,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: FormBuilderDropdown(
-                  name: formFieldName,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    labelStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 18,
-                    ),
-                  ),
-                  /* initialValue: category[0], */
-                  hint: Text(placeholder),
-                  /* validator: FormBuilderValidators.required(), */
-                  items: snapshot.data!
-                      .map((category) => DropdownMenuItem(
-                          value: category.name, child: Text(category.name)))
-                      .toList(),
+    super.build(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SimpleText(
+          text: widget.title,
+          fontSize: 16,
+          fontWeight: FontWeight.w800,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Card(
+          elevation: 5,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: FormBuilderDropdown(
+              name: widget.formFieldName,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                labelStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 18,
                 ),
               ),
+              /* initialValue: category[0], */
+              hint: Text(widget.placeholder),
+              /* validator: FormBuilderValidators.required(), */
+              items: category
+                  .map((category) => DropdownMenuItem(
+                      value: category.id, child: Text(category.name)))
+                  .toList(),
             ),
-          ],
-        );
-      },
+          ),
+        ),
+      ],
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

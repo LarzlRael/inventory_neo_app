@@ -55,3 +55,32 @@ Future<void> showMyDialogTagMaterial(BuildContext context, String tagId) async {
     },
   );
 }
+
+void showConfirmDialog(
+  BuildContext context,
+  String title,
+  String description,
+  Future<dynamic> Function()? onAccept,
+) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: Text(title),
+      content: Text(description),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'Cancel'),
+          child: const Text('Cancelar'),
+        ),
+        TextButton(
+          onPressed: () async {
+            Navigator.pop(context, 'OK');
+            await onAccept!();
+            /* GlobalSnackBar.show(context, 'Comentario eliminado'); */
+          },
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
+}
