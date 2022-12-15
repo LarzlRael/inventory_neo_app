@@ -36,6 +36,8 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                   final response = await productsServices.deleteProduct(
                     widget.productModel.id.toString(),
                   );
+                  GlobalSnackBar.show(
+                      context, "Producto eliminado correctamente");
                   if (response) {
                     Navigator.pushReplacementNamed(
                         context, 'list_products_page');

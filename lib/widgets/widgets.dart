@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 import 'package:inventory_app/models/models.dart';
 import 'package:inventory_app/pages/pages.dart';
 import 'package:inventory_app/services/services.dart';
@@ -35,6 +36,7 @@ part 'errors/no_information.dart';
 part 'forms/custom_text_field.dart';
 part 'forms/custom_dropdown_fetch.dart';
 part 'forms/custom_radio_buttons.dart';
+part 'forms/custom_file_field.dart';
 
 /* Loadings */
 part 'loadings/simple_loading.dart';

@@ -72,27 +72,33 @@ class Request {
     return res;
   }
 
-  /* static Future<http.Response> sendRequestWithFile(
-    String method,
+  static Future<http.Response> uploadFileRequest(
+    RequestType requestType,
     String url,
     Map<String, String> otherFields,
     File file,
-    String token,
-  ) async {
+    String token, {
+    bool useAuxiliarUrl = false,
+  }) async {
     late http.Response res;
-    final Uri uri = Uri.parse('${Environment.serverHttpUrl}/$url');
+    Uri uri;
+    if (useAuxiliarUrl) {
+      uri = Uri.parse('${Environment.auxiliarUrl}/$url');
+    } else {
+      uri = Uri.parse('${Environment.serverHttpUrl}/$url');
+    }
     final mimeType = mime(file.path)!.split('/');
     final headers = {
       'Authorization': 'Bearer $token',
     };
     final uploadFile = await http.MultipartFile.fromPath(
-      'file',
+      'image',
       file.path,
       contentType: MediaType(mimeType[0], mimeType[1]),
     );
 
     final uploadPostRequest = http.MultipartRequest(
-      method,
+      requestType == RequestType.post ? 'POST' : 'PUT',
       uri,
     );
     uploadPostRequest.headers.addAll(headers);
@@ -102,5 +108,5 @@ class Request {
     res = await http.Response.fromStream(streamResponse);
 
     return res;
-  } */
+  }
 }
