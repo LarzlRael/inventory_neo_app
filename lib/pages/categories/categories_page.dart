@@ -10,7 +10,7 @@ class CategoriesPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          Navigator.pushNamed(context, 'add_category_page');
+          Navigator.pushNamed(context, 'add_categories_page');
         },
       ),
       appBar: AppBarWithBackIcon(
@@ -20,56 +20,44 @@ class CategoriesPage extends StatelessWidget {
         showTitle: true,
       ),
       body: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
-          child: Column(
-            children: [
-              Expanded(
-                child: FutureBuilder(
-                  future: categoriesServices.getCategories(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<CategoriesModel>> snapshot) {
-                    if (!snapshot.hasData) {
-                      return simpleLoading();
-                    }
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10,
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder(
+                future: categoriesServices.getCategories(),
+                builder: (
+                  BuildContext context,
+                  AsyncSnapshot<List<CategoriesModel>> snapshot,
+                ) {
+                  if (!snapshot.hasData) {
+                    return simpleLoading();
+                  }
 
-                    /* return ListView.builder(
-                    /* scrollDirection: Axis.horizontal, */
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (BuildContext context, int index) {
+                  return GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      crossAxisSpacing: 5,
+                      mainAxisSpacing: 5,
+                    ),
+                    itemCount: snapshot.data?.length,
+                    itemBuilder: (_, index) {
+                      final category = snapshot.data![index];
                       return CategoryCard(
-                        id: snapshot.data![index].id.toString(),
-                        title: snapshot.data![index].name,
-                        urlImage:
-                            'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png',
-                        color: Colors.blue,
+                        categoriesModel: category,
+                        goToProductsByCategory: true,
                       );
                     },
-                  ); */
-                    return GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 200,
-                          /* childAspectRatio: 3 / 2, */
-                          crossAxisSpacing: 5,
-                          mainAxisSpacing: 5,
-                        ),
-                        itemCount: snapshot.data?.length,
-                        itemBuilder: (BuildContext ctx, index) {
-                          return CategoryCard(
-                            id: snapshot.data![index].id.toString(),
-                            title: snapshot.data![index].name,
-                            urlImage:
-                                'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png',
-                            color: Colors.blue,
-                          );
-                        });
-                  },
-                ),
-              )
-            ],
-          )),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

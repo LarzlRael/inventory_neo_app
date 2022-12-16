@@ -62,11 +62,7 @@ class _InventoryState extends State<Inventory>
                 itemCount: category.length,
                 itemBuilder: (BuildContext ctx, index) {
                   return CategoryCard(
-                    id: category[index].id.toString(),
-                    title: category[index].name,
-                    urlImage:
-                        'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png',
-                    color: Colors.blue,
+                    categoriesModel: category[index],
                   );
                 },
               ),
@@ -114,28 +110,38 @@ class _InventoryState extends State<Inventory>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
 
 class CategoryCard extends StatelessWidget {
-  final String title;
-  final String urlImage;
-  final Color color;
-  final String id;
+  final CategoriesModel categoriesModel;
+  final bool goToProductsByCategory;
   const CategoryCard({
     Key? key,
-    required this.title,
-    required this.urlImage,
-    required this.color,
-    required this.id,
+    required this.categoriesModel,
+    this.goToProductsByCategory = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, 'list_items_category', arguments: id);
+        if (goToProductsByCategory) {
+          Navigator.pushNamed(
+            context,
+            'add_categories_page',
+            arguments: CategoryForm(
+              id: categoriesModel.id,
+              name: categoriesModel.name,
+            ),
+          );
+        } else {
+          Navigator.pushNamed(
+            context,
+            'list_items_category',
+            arguments: categoriesModel.id,
+          );
+        }
       },
       child: Container(
         width: 125,
@@ -165,7 +171,7 @@ class CategoryCard extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: color,
+                      color: Colors.blue,
                     ),
                   ),
                 ),
@@ -174,7 +180,7 @@ class CategoryCard extends StatelessWidget {
                   left: 10,
                   child: SimpleText(
                     top: 10,
-                    text: title,
+                    text: categoriesModel.name,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     lightThemeColor: Colors.white,
@@ -186,7 +192,9 @@ class CategoryCard extends StatelessWidget {
               top: -10,
               right: -5,
               child: Image.network(
-                urlImage,
+                categoriesModel.image == null
+                    ? 'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png'
+                    : categoriesModel.image!.src,
                 width: 100,
               ),
             ),
@@ -202,7 +210,7 @@ class ListCategoryItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = ModalRoute.of(context)!.settings.arguments as String;
+    final arguments = ModalRoute.of(context)!.settings.arguments as int;
     final productsServices = ProductsServices();
     return Scaffold(
       appBar: AppBarWithBackIcon(

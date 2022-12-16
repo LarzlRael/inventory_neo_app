@@ -23,40 +23,43 @@ class ItemsInventoryDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return FutureBuilder(
-      future: productsService.searchProductsByName(query),
-      builder:
-          (BuildContext context, AsyncSnapshot<List<ProductsModel>> snapshot) {
-        if (!snapshot.hasData) {
-          return simpleLoading();
-        }
-        if (snapshot.data!.isEmpty) {
-          return const Expanded(
-            child: NoInformation(
-              text: 'No se encontraron resultados',
-              icon: Icons.info_outline,
-              showButton: false,
-              iconButton: Icons.add,
-            ),
-          );
-        }
+    return Container(
+      padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+      child: FutureBuilder(
+        future: productsService.searchProductsByName(query),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<ProductsModel>> snapshot) {
+          if (!snapshot.hasData) {
+            return simpleLoading();
+          }
+          if (snapshot.data!.isEmpty) {
+            return const Expanded(
+              child: NoInformation(
+                text: 'No se encontraron resultados',
+                icon: Icons.info_outline,
+                showButton: false,
+                iconButton: Icons.add,
+              ),
+            );
+          }
 
-        return Expanded(
-          child: GridView.count(
-              /* shrinkWrap: true, */
-              /* physics: NeverScrollableScrollPhysics(), */
-              /* padding: const EdgeInsets.all(10), */
-              /* childAspectRatio: 3 / 2, */
-              crossAxisCount: 2,
-              children: snapshot.data!.map<Widget>(
-                (product) {
-                  return CardItemInventoryVertical(
-                    productModel: product,
-                  );
-                },
-              ).toList()),
-        );
-      },
+          return Expanded(
+            child: GridView.count(
+                /* shrinkWrap: true, */
+                /* physics: NeverScrollableScrollPhysics(), */
+                /* padding: const EdgeInsets.all(10), */
+                /* childAspectRatio: 3 / 2, */
+                crossAxisCount: 2,
+                children: snapshot.data!.map<Widget>(
+                  (product) {
+                    return CardItemInventoryVertical(
+                      productModel: product,
+                    );
+                  },
+                ).toList()),
+          );
+        },
+      ),
     );
   }
 

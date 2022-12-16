@@ -7,6 +7,12 @@ class CustomFileField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderFilePicker(
+      decoration: const InputDecoration(
+        labelText: "Subir archivo",
+        hintText: "Subir archivo",
+        //
+        border: InputBorder.none,
+      ),
       type: FileType.custom,
       allowMultiple: false,
       allowedExtensions: const ['jpg', 'png', 'pdf'],
@@ -24,6 +30,7 @@ class CustomFileField extends StatelessWidget {
       selector: Row(
         children: const [
           Icon(Icons.upload_file),
+          SizedBox(width: 3),
           SimpleText(
             text: 'Escoger archivo',
             fontSize: 16,

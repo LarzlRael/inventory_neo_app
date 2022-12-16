@@ -1,7 +1,7 @@
 part of 'services.dart';
 
 class ProductsServices {
-  Future<List<ProductsModel>> getProductsByCategory(String category) async {
+  Future<List<ProductsModel>> getProductsByCategory(int category) async {
     final clientRequest = await Request.sendRequestWithToken(
       RequestType.get,
       'products?category=$category',
@@ -31,10 +31,14 @@ class ProductsServices {
     return productsModelFromJson(clientRequest!.body);
   }
 
-  Future<bool> createProduct(Map<String, dynamic> body) async {
+  Future<bool> createOrUpdateProduct(
+    Map<String, dynamic> body, {
+    bool edit = false,
+    int? idProduct,
+  }) async {
     final clientRequest = await Request.sendRequestWithToken(
-      RequestType.post,
-      'products',
+      edit ? RequestType.put : RequestType.post,
+      edit ? 'products/$idProduct' : 'products',
       body,
       'xd',
     );
@@ -51,3 +55,5 @@ class ProductsServices {
     return validateStatus(clientRequest!.statusCode);
   }
 }
+
+/* {"code":"rest_invalid_param","message":"Par\u00e1metro(s) no v\u00e1lido(s): categories, tags","data":{"status":400,"params":{"categories":"categories[0][id] no es del tipo integer.","tags":"tags[0][id] no es del tipo integer."},"details":{"categories":{"code":"rest_invalid_type","message":"categories[0][id] no es del tipo integer.","data":{"param":"categories[0][id]"}},"tags":{"code":"rest_invalid_type","message":"tags[0][id] no es del tipo integer.","data":{"param":"tags[0][id]"}}}}} */

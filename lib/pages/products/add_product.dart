@@ -1,79 +1,127 @@
 part of '../pages.dart';
 
+class ItemDetails {
+  int? idProduct;
+  String name;
+  String price;
+  String description;
+  String category;
+  List<int> idTags;
+  ItemDetails({
+    required this.name,
+    required this.price,
+    required this.description,
+    required this.category,
+    required this.idTags,
+    this.idProduct,
+  });
+}
+
 class AddProduct extends StatefulWidget {
   const AddProduct({super.key});
 
   @override
-  State<AddProduct> createState() => _AddProductState();
+  State<AddProduct> createState() => _AddCategoriesState();
 }
 
-class _AddProductState extends State<AddProduct>
+class _AddCategoriesState extends State<AddProduct>
     with AutomaticKeepAliveClientMixin {
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
+    final itemDetails = ItemDetails(
+      idProduct: null,
+      name: '',
+      price: '',
+      description: '',
+      category: 'que fue gente',
+      idTags: [],
+    );
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as ItemDetails?;
+    if (arguments != null) {
+      itemDetails.idProduct = arguments.idProduct;
+      itemDetails.name = arguments.name;
+      itemDetails.price = arguments.price;
+      itemDetails.description = arguments.description;
+      itemDetails.category = arguments.category;
+      itemDetails.idTags = arguments.idTags;
+    }
     super.build(context);
     final formKey = GlobalKey<FormBuilderState>();
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
-        title: 'Agregar producto',
+        title: itemDetails.idProduct == null
+            ? 'Agregar producto'
+            : 'Editar producto',
         showTitle: true,
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            FormBuilder(
-              /* enabled: !_isLoading, */
-              key: formKey,
-              // enabled: false,
-              onChanged: () {
-                /*  _formKey.currentState!.save();
-                debugPrint(_formKey.currentState!.value.toString()); */
-              },
-              autovalidateMode: AutovalidateMode.disabled,
-
-              skipDisabled: true,
-              child: Column(
-                children: const [
-                  CustomTextField(
-                    label: 'Nombre del producto',
-                    name: 'name',
-                  ),
-                  CustomTextField(
-                    label: 'Precio',
-                    name: 'regular_price',
-                    keyboardType: TextInputType.number,
-                  ),
-                  CustomTextField(
-                    label: 'Descripcion',
-                    name: 'description',
-                  ),
-                  CustomFormBuilderFetchDropdown(
-                    title: 'Categoria',
-                    formFieldName: 'category',
-                    placeholder: 'Seleccione una categoria',
-                  ),
-                  CustomRadioButtons(
-                    formFieldName: 'tags',
-                    placeholder: 'Seleccione una categoria',
-                    title: 'Materiales',
-                  ),
-                  CustomFileField(
-                    name: 'file',
-                  ),
-                ],
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Column(
+            children: [
+              FormBuilder(
+                /* enabled: !_isLoading, */
+                key: formKey,
+                initialValue: {
+                  'name': itemDetails.name,
+                  'regular_price': itemDetails.price,
+                  'description': itemDetails.description,
+                  /* 'category': itemDetails.category, */
+                  /* 'tags': itemDetails.idTags, */
+                  /* 'file': itemDetails.file, */
+                },
+                onChanged: () {
+                  /*  _formKey.currentState!.save();
+                  debugPrint(_formKey.currentState!.value.toString()); */
+                },
+                autovalidateMode: AutovalidateMode.disabled,
+                skipDisabled: true,
+                child: Column(
+                  children: const [
+                    CustomTextField(
+                      label: 'Nombre del producto',
+                      name: 'name',
+                    ),
+                    CustomTextField(
+                      label: 'Precio',
+                      name: 'regular_price',
+                      keyboardType: TextInputType.number,
+                    ),
+                    CustomTextField(
+                      label: 'Descripcion',
+                      name: 'description',
+                    ),
+                    CustomFormBuilderFetchDropdown(
+                      title: 'Categoria',
+                      formFieldName: 'category',
+                      placeholder: 'Seleccione una categoria',
+                    ),
+                    CustomRadioButtons(
+                      formFieldName: 'tags',
+                      placeholder: 'Seleccione una categoria',
+                      title: 'Materiales',
+                    ),
+                    CustomFileField(
+                      name: 'file',
+                    ),
+                  ],
+                ),
               ),
-            ),
-            !_isLoading
-                ? FillButton(
-                    onPressed: () {
-                      register(formKey);
-                    },
-                    label: 'Registrar',
-                  )
-                : Center(child: const CircularProgressIndicator()),
-          ],
+              !_isLoading
+                  ? FillButton(
+                      onPressed: () {
+                        register(formKey, idProduct: itemDetails.idProduct);
+                      },
+                      label: itemDetails.idProduct == null
+                          ? 'Registrar'
+                          : 'Editar',
+                    )
+                  : const Center(child: CircularProgressIndicator()),
+            ],
+          ),
         ),
       ),
     );
@@ -94,7 +142,7 @@ class _AddProductState extends State<AddProduct>
     return jsonDecode(uploadFile.body)['secure_url'];
   }
 
-  void register(GlobalKey<FormBuilderState> formkey) async {
+  void register(GlobalKey<FormBuilderState> formkey, {int? idProduct}) async {
     formkey.currentState!.save();
     final productoService = ProductsServices();
 
@@ -124,7 +172,12 @@ class _AddProductState extends State<AddProduct>
     setState(() {
       _isLoading = true;
     });
-    final correct = await productoService.createProduct(json);
+
+    final correct = await productoService.createOrUpdateProduct(
+      json,
+      edit: idProduct != null,
+      idProduct: idProduct,
+    );
 
     if (!mounted) return;
     if (correct) {

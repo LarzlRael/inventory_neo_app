@@ -84,7 +84,7 @@ class _FutureMaterialCategoryState extends State<FutureMaterialCategory>
                   .map(
                     (tag) => FormBuilderFieldOption(
                       value: tag.id.toString(),
-                      child: Text(tag.name),
+                      child: MaterialItemCard(tag: tag),
                     ),
                   )
                   .toList(growable: false),

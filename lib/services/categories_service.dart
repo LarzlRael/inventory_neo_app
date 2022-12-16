@@ -10,4 +10,14 @@ class CategoriesServices {
     );
     return categoriesModelFromJson(clientRequest!.body);
   }
+
+  Future<bool> newCategory(Map<String, dynamic> body) async {
+    final clientRequest = await Request.sendRequestWithToken(
+      RequestType.post,
+      'products/categories',
+      body,
+      'xd',
+    );
+    return validateStatus(clientRequest!.statusCode);
+  }
 }

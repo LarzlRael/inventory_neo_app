@@ -81,12 +81,10 @@ class Request {
     bool useAuxiliarUrl = false,
   }) async {
     late http.Response res;
-    Uri uri;
-    if (useAuxiliarUrl) {
-      uri = Uri.parse('${Environment.auxiliarUrl}/$url');
-    } else {
-      uri = Uri.parse('${Environment.serverHttpUrl}/$url');
-    }
+    Uri uri = useAuxiliarUrl
+        ? Uri.parse('${Environment.auxiliarUrl}/$url')
+        : Uri.parse('${Environment.serverHttpUrl}/$url');
+
     final mimeType = mime(file.path)!.split('/');
     final headers = {
       'Authorization': 'Bearer $token',

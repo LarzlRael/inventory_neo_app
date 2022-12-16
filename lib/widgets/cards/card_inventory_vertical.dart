@@ -22,9 +22,8 @@ class CardItemInventoryVertical extends StatelessWidget {
         );
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 0, left: 5, right: 5),
+        margin: const EdgeInsets.only(bottom: 0, left: 5, right: 5),
         /* height: MediaQuery.of(context).size.width * 0.9, */
-        /*  */
 
         child: Card(
           elevation: 0,

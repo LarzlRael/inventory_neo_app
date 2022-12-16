@@ -84,8 +84,14 @@ class _FutureSubjectCategoryState extends State<FutureSubjectCategory>
               hint: Text(widget.placeholder),
               /* validator: FormBuilderValidators.required(), */
               items: category
-                  .map((category) => DropdownMenuItem(
-                      value: category.id, child: Text(category.name)))
+                  .map(
+                    (category) => DropdownMenuItem(
+                      value: category.id,
+                      child: Text(
+                        category.name,
+                      ),
+                    ),
+                  )
                   .toList(),
             ),
           ),

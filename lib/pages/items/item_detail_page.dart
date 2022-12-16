@@ -20,7 +20,21 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
         appBar: AppBar(),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                'add_product',
+                arguments: ItemDetails(
+                  idProduct: widget.productModel.id,
+                  category: widget.productModel.categories.first.name,
+                  name: widget.productModel.name,
+                  price: widget.productModel.price,
+                  description:
+                      removeAllHtmlTags(widget.productModel.description),
+                  idTags: [],
+                ),
+              );
+            },
             icon: const Icon(
               Icons.edit,
               color: Colors.black,
@@ -28,7 +42,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
           ),
           IconButton(
             onPressed: () {
-              showConfirmDialog(
+              dialogFormCategory(
                 context,
                 'Eliminar',
                 '¿Estas seguro de eliminar este producto?',

@@ -41,3 +41,6 @@ part 'clients/client_register_page.dart';
 /* Products */
 part 'products/list_products_page.dart';
 part 'products/add_product.dart';
+
+/* Categories */
+part 'products/add_category_page.dart';

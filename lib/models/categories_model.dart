@@ -27,7 +27,7 @@ class CategoriesModel {
   int parent;
   String description;
   String display;
-  dynamic image;
+  ImageClass? image;
   int menuOrder;
   int count;
   LinksCategories links;
@@ -40,7 +40,8 @@ class CategoriesModel {
         parent: json["parent"],
         description: json["description"],
         display: json["display"],
-        image: json["image"],
+        image:
+            json["image"] == null ? null : ImageClass.fromJson(json["image"]),
         menuOrder: json["menu_order"],
         count: json["count"],
         links: LinksCategories.fromJson(json["_links"]),
