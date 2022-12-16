@@ -25,21 +25,18 @@ class ClientsDelegate extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     return FutureBuilder(
       future: clientsService.getClientsWithParameters(query),
-      builder:
-          (BuildContext context, AsyncSnapshot<List<ClientModel>> snapshot) {
+      builder: (_, AsyncSnapshot<List<ClientModel>> snapshot) {
         if (!snapshot.hasData) {
           return simpleLoading();
         }
         final clients = snapshot.data;
-        return Expanded(
-          child: ListView.builder(
-            itemCount: clients?.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ClientItem(
-                clientModel: clients![index],
-              );
-            },
-          ),
+        return ListView.builder(
+          itemCount: clients?.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ClientItem(
+              clientModel: clients![index],
+            );
+          },
         );
       },
     );

@@ -168,7 +168,7 @@ class _AddCategoriesState extends State<AddProduct>
               })
           .toList()
     };
-    debugPrint(json.toString());
+    /* debugPrint(json.toString()); */
     setState(() {
       _isLoading = true;
     });

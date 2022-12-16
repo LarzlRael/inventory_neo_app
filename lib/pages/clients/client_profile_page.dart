@@ -115,45 +115,43 @@ class ClientProfilePage extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.6,
             child: TabBarView(
               children: [
-                Expanded(
-                  child: cardContainer('Informacion del cliente', [
-                    cardInformation(
-                      'Telefono',
-                      clientModel.billing.phone,
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.phone_android_rounded),
-                            onPressed: () {},
-                            padding: EdgeInsets.zero,
-                            constraints: BoxConstraints(),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.message_rounded),
-                            padding: EdgeInsets.zero,
-                            constraints: BoxConstraints(),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
+                cardContainer('Informacion del cliente', [
+                  cardInformation(
+                    'Telefono',
+                    clientModel.billing.phone,
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.phone_android_rounded),
+                          onPressed: () {},
+                          padding: EdgeInsets.zero,
+                          constraints: BoxConstraints(),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.message_rounded),
+                          padding: EdgeInsets.zero,
+                          constraints: BoxConstraints(),
+                          onPressed: () {},
+                        ),
+                      ],
                     ),
-                    /* cardInformation(
-                      'Genero',
-                      'Varon',
-                      null,
-                    ), */
-                    cardInformation(
-                      'Cliente desde: ',
-                      literalDate(clientModel.dateCreated),
-                      null,
-                    ),
-                    cardInformation(
-                      'Ultima compra realizada en',
-                      '2020-01-02',
-                      null,
-                    ),
-                  ]),
-                ),
+                  ),
+                  /* cardInformation(
+                    'Genero',
+                    'Varon',
+                    null,
+                  ), */
+                  cardInformation(
+                    'Cliente desde: ',
+                    literalDate(clientModel.dateCreated),
+                    null,
+                  ),
+                  cardInformation(
+                    'Ultima compra realizada en',
+                    '2020-01-02',
+                    null,
+                  ),
+                ]),
                 cardContainer(
                   'Historial de compras',
                   [
