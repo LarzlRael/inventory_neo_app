@@ -42,7 +42,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
           ),
           IconButton(
             onPressed: () {
-              dialogFormCategory(
+              showConfirmDialog(
                 context,
                 'Eliminar',
                 '¿Estas seguro de eliminar este producto?',
@@ -50,6 +50,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                   final response = await productsServices.deleteProduct(
                     widget.productModel.id.toString(),
                   );
+
                   GlobalSnackBar.show(
                       context, "Producto eliminado correctamente");
                   if (response) {

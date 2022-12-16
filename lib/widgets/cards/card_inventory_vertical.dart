@@ -28,47 +28,43 @@ class CardItemInventoryVertical extends StatelessWidget {
         child: Card(
           elevation: 0,
           /* margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), */
-          child: Flexible(
-            /* padding: EdgeInsets.all(10), */
-
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Image.network(
-                    productModel.images.isNotEmpty
-                        ? productModel.images[0].src
-                        : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
-                    height: 150,
-                    fit: BoxFit.cover,
-                  ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Image.network(
+                  productModel.images.isNotEmpty
+                      ? productModel.images[0].src
+                      : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
+                  height: 150,
+                  fit: BoxFit.cover,
                 ),
-                Row(
-                  children: [
-                    Column(
-                      /* mainAxisAlignment: MainAxisAlignment.start, */
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SimpleText(
-                          bottom: 2,
-                          top: 2,
-                          text: productModel.price,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          lightThemeColor: Colors.pink,
-                        ),
-                        SimpleText(
-                          text: productModel.name,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              ],
-            ),
+              ),
+              Row(
+                children: [
+                  Column(
+                    /* mainAxisAlignment: MainAxisAlignment.start, */
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SimpleText(
+                        bottom: 2,
+                        top: 2,
+                        text: productModel.price,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        lightThemeColor: Colors.pink,
+                      ),
+                      SimpleText(
+                        text: productModel.name,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            ],
           ),
         ),
       ),

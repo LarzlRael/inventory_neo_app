@@ -25,18 +25,18 @@ class CategoriesPage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Expanded(
-              child: FutureBuilder(
-                future: categoriesServices.getCategories(),
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<List<CategoriesModel>> snapshot,
-                ) {
-                  if (!snapshot.hasData) {
-                    return simpleLoading();
-                  }
+            FutureBuilder(
+              future: categoriesServices.getCategories(),
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<List<CategoriesModel>> snapshot,
+              ) {
+                if (!snapshot.hasData) {
+                  return simpleLoading();
+                }
 
-                  return GridView.builder(
+                return Flexible(
+                  child: GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 200,
@@ -51,9 +51,9 @@ class CategoriesPage extends StatelessWidget {
                         goToProductsByCategory: true,
                       );
                     },
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           ],
         ),

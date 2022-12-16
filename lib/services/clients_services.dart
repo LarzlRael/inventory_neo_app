@@ -20,4 +20,36 @@ class ClientsServices {
     );
     return clientModelFromJson(clientRequest!.body);
   }
+
+  Future<bool> addClient(Map<String, dynamic> body) async {
+    final clientRequest = await Request.sendRequestWithToken(
+      RequestType.post,
+      'customers',
+      body,
+      'xd',
+    );
+    return validateStatus(clientRequest!.statusCode);
+  }
+
+  Future<bool> editClient(int idClient, Map<String, dynamic> body) async {
+    final clientRequest = await Request.sendRequestWithToken(
+      RequestType.put,
+      'customers/$idClient',
+      body,
+      'xd',
+    );
+    return validateStatus(clientRequest!.statusCode);
+  }
+
+  Future<bool> deleteClient(
+    int idClient,
+  ) async {
+    final clientRequest = await Request.sendRequestWithToken(
+      RequestType.delete,
+      'customers/$idClient',
+      {},
+      'xd',
+    );
+    return validateStatus(clientRequest!.statusCode);
+  }
 }

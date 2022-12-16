@@ -163,16 +163,14 @@ class CategoryCard extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                      top: 20,
-                      right: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.blue,
-                    ),
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: 20,
+                    right: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.blue,
                   ),
                 ),
                 Positioned(

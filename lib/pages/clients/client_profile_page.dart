@@ -5,6 +5,7 @@ class ClientProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cientServices = ClientsServices();
     final ClientModel clientModel =
         ModalRoute.of(context)!.settings.arguments as ClientModel;
     return Scaffold(
@@ -17,7 +18,14 @@ class ClientProfilePage extends StatelessWidget {
             tooltip: 'Editar cliente',
             onPressed: () {
               Navigator.pushNamed(context, 'client_register_page',
-                  arguments: clientModel);
+                  arguments: ClientData(
+                    idClient: clientModel.id,
+                    address: clientModel.billing.address1,
+                    email: clientModel.email,
+                    lastName: clientModel.lastName,
+                    name: clientModel.firstName,
+                    phone: clientModel.billing.phone,
+                  ));
             },
           ),
           IconButton(
@@ -25,8 +33,23 @@ class ClientProfilePage extends StatelessWidget {
             color: Colors.black,
             tooltip: 'Eliminar cliente',
             onPressed: () {
-              Navigator.pushNamed(context, 'client_register_page',
-                  arguments: clientModel);
+              showConfirmDialog(
+                context,
+                'Eliminar',
+                '¿Estás seguro de eliminar este cliente?',
+                () async {
+                  final response = await cientServices.deleteClient(
+                    clientModel.id,
+                  );
+
+                  GlobalSnackBar.show(
+                      context, "Producto eliminado correctamente");
+                  if (response) {
+                    Navigator.pushReplacementNamed(
+                        context, 'list_products_page');
+                  }
+                },
+              );
             },
           ),
         ],
@@ -92,43 +115,45 @@ class ClientProfilePage extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.6,
             child: TabBarView(
               children: [
-                cardContainer('Informacion del cliente', [
-                  cardInformation(
-                    'Telefono',
-                    clientModel.billing.phone,
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.phone_android_rounded),
-                          onPressed: () {},
-                          padding: EdgeInsets.zero,
-                          constraints: BoxConstraints(),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.message_rounded),
-                          padding: EdgeInsets.zero,
-                          constraints: BoxConstraints(),
-                          onPressed: () {},
-                        ),
-                      ],
+                Expanded(
+                  child: cardContainer('Informacion del cliente', [
+                    cardInformation(
+                      'Telefono',
+                      clientModel.billing.phone,
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.phone_android_rounded),
+                            onPressed: () {},
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.message_rounded),
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  /* cardInformation(
-                    'Genero',
-                    'Varon',
-                    null,
-                  ), */
-                  cardInformation(
-                    'Cliente desde: ',
-                    literalDate(clientModel.dateCreated),
-                    null,
-                  ),
-                  cardInformation(
-                    'Ultima compra realizada en',
-                    '2020-01-02',
-                    null,
-                  ),
-                ]),
+                    /* cardInformation(
+                      'Genero',
+                      'Varon',
+                      null,
+                    ), */
+                    cardInformation(
+                      'Cliente desde: ',
+                      literalDate(clientModel.dateCreated),
+                      null,
+                    ),
+                    cardInformation(
+                      'Ultima compra realizada en',
+                      '2020-01-02',
+                      null,
+                    ),
+                  ]),
+                ),
                 cardContainer(
                   'Historial de compras',
                   [
@@ -193,7 +218,7 @@ class ClientProfilePage extends StatelessWidget {
         ),
         elevation: 5,
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
