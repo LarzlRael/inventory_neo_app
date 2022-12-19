@@ -15,10 +15,16 @@ class _InventoryState extends State<Inventory>
   initState() {
     super.initState();
     CategoriesServices().getCategories().then((value) {
-      setState(() {
-        category.addAll(value);
-      });
+      if (mounted) {
+        setState(() {
+          category.addAll(value);
+        });
+      }
     });
+  }
+
+  void setStateIfMounted(f) {
+    if (mounted) setState(f);
   }
 
   @override
@@ -209,7 +215,6 @@ class ListCategoryItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)!.settings.arguments as int;
-    final productsServices = ProductsServices();
     return Scaffold(
       appBar: AppBarWithBackIcon(
         title: 'Productos',
@@ -224,7 +229,7 @@ class ListCategoryItems extends StatelessWidget {
               );
             },
             color: Colors.black,
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
           ),
         ],
       ),
@@ -237,7 +242,7 @@ class ListCategoryItems extends StatelessWidget {
             color: Colors.blue,
           ), */
           FutureBuilder(
-            future: productsServices.getProductsByCategory(arguments),
+            future: getProductsByCategory(arguments),
             builder: (BuildContext context,
                 AsyncSnapshot<List<ProductsModel>> snapshot) {
               if (!snapshot.hasData) {
@@ -274,5 +279,12 @@ class ListCategoryItems extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<List<ProductsModel>> getProductsByCategory(int category) async {
+    final clientRequest = await getAction(
+      'products?category=$category',
+    );
+    return productsModelFromJson(clientRequest!.body);
   }
 }

@@ -11,7 +11,11 @@ class ProfilePage extends StatelessWidget {
         /* title: 'Iniciar sesión', */
       ),
       body: Center(
-        child: Text('ProfilePage'),
+        child: Container(
+          color: Colors.blue,
+          width: 500,
+          height: 300,
+        ),
       ),
     );
   }

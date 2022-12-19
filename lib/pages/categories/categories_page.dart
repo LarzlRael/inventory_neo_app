@@ -5,7 +5,6 @@ class CategoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categoriesServices = CategoriesServices();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
@@ -26,7 +25,7 @@ class CategoriesPage extends StatelessWidget {
         child: Column(
           children: [
             FutureBuilder(
-              future: categoriesServices.getCategories(),
+              future: getCategories(),
               builder: (
                 BuildContext context,
                 AsyncSnapshot<List<CategoriesModel>> snapshot,
@@ -59,5 +58,15 @@ class CategoriesPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<List<CategoriesModel>> getCategories() async {
+    final clientRequest = await Request.sendRequestWithToken(
+      RequestType.get,
+      'products/categories',
+      {},
+      'xd',
+    );
+    return categoriesModelFromJson(clientRequest!.body);
   }
 }

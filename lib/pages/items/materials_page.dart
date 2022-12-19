@@ -5,7 +5,7 @@ class MaterialsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tagsServices = TagsServices();
+    /* final tagsServices = TagsServices(); */
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         tooltip: 'Agregar material',
@@ -25,7 +25,7 @@ class MaterialsPage extends StatelessWidget {
         child: Column(
           children: [
             FutureBuilder(
-              future: tagsServices.getAllTags(),
+              future: getAllTags(),
               builder: (BuildContext context,
                   AsyncSnapshot<List<TagsModel>> snapshot) {
                 if (!snapshot.hasData) {
@@ -46,5 +46,10 @@ class MaterialsPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<List<TagsModel>> getAllTags() async {
+    final clientRequest = await getAction('products/tags');
+    return tagsModelFromJson(clientRequest!.body);
   }
 }

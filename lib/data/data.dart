@@ -35,5 +35,13 @@ List<Widget> registerOptions(BuildContext context) {
         Navigator.pushNamed(context, 'materials_page');
       },
     ),
+    CircleButton(
+      color: Colors.brown,
+      icon: Icons.person_add,
+      text: 'Agregar cliente',
+      onPressed: () {
+        Navigator.pushNamed(context, 'client_register_page');
+      },
+    ),
   ];
 }

@@ -5,7 +5,8 @@ class ClientsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final clientsService = ClientsServices();
+    /* final clientsService = ClientsServices(); */
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         tooltip: 'Agregar cliente',
@@ -35,7 +36,7 @@ class ClientsPage extends StatelessWidget {
         child: Column(
           children: [
             FutureBuilder(
-              future: clientsService.getClients(),
+              future: getClients(),
               builder: (BuildContext context,
                   AsyncSnapshot<List<ClientModel>> snapshot) {
                 if (!snapshot.hasData) {
@@ -59,4 +60,9 @@ class ClientsPage extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<List<ClientModel>> getClients() async {
+  final clientRequest = await getAction('customers');
+  return clientModelFromJson(clientRequest!.body);
 }

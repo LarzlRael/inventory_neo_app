@@ -13,7 +13,7 @@ class Request {
   static Future<http.Response?> sendRequest(
     RequestType method,
     String url,
-    Map<String, String>? body,
+    Map<String, dynamic>? body,
   ) async {
     final headers = {
       'Content-Type': 'application/json',
