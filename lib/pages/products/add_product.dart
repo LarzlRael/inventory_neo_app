@@ -148,6 +148,8 @@ class _AddCategoriesState extends State<AddProduct>
 
     final json = {
       "name": formkey.currentState!.value['name'],
+      "manage_stock": true,
+      "stock_quantity": 1,
       "type": "simple",
       "regular_price": formkey.currentState!.value['regular_price'],
       "description": formkey.currentState!.value['description'],

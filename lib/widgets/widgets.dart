@@ -23,6 +23,7 @@ part 'dialogs/material_dialog.dart';
 /* Cards */
 part 'cards/card_item_inventory.dart';
 part 'cards/card_inventory_vertical.dart';
+part 'cards/card_inventory_selectable.dart';
 part 'cards/material_item_card.dart';
 
 /* Clients */

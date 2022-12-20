@@ -42,6 +42,11 @@ class Home extends StatelessWidget {
                     cardIcon: Icons.production_quantity_limits,
                     cardRoute: 'list_products_page',
                   ),
+                  ManagementCards(
+                    cardTitle: 'Vender producto',
+                    cardIcon: Icons.sell,
+                    cardRoute: 'sell_products',
+                  ),
                 ],
               ),
             ),

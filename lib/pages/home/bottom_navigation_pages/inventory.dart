@@ -23,10 +23,6 @@ class _InventoryState extends State<Inventory>
     });
   }
 
-  void setStateIfMounted(f) {
-    if (mounted) setState(f);
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -106,7 +102,7 @@ class _InventoryState extends State<Inventory>
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+          children: const [
             SimpleText(text: 'Buscar un producto...'),
             Icon(Icons.search),
           ],
@@ -161,7 +157,7 @@ class CategoryCard extends StatelessWidget {
             BoxShadow(
               color: Colors.black.withOpacity(0.05),
               blurRadius: 10,
-              offset: Offset(0, 5),
+              offset: const Offset(0, 5),
             ),
           ],
         ),
