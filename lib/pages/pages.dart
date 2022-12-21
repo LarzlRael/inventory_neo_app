@@ -37,6 +37,7 @@ part 'categories/categories_page.dart';
 
 /* Clients pages */
 part 'clients/clients_page.dart';
+part 'clients/clients_page_selectable.dart';
 part 'clients/client_profile_page.dart';
 part 'clients/client_register_page.dart';
 

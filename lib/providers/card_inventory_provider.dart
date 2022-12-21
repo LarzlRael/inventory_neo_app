@@ -5,16 +5,23 @@ class CardInventoryProvider extends ChangeNotifier {
   List<ProductsModel> products = [];
   double total = 0;
   List<int> _productsId = [];
+  ClientModel? _client;
+
+  set setClient(ClientModel clientModel) {
+    _client = clientModel;
+    notifyListeners();
+  }
+
+  get getClient => _client;
+
   addProduct(ProductsModel product) {
     if (_productsId.contains(product.id)) {
-      products.remove(product);
+      products.removeWhere((element) => element.id == product.id);
       _productsId.remove(product.id);
     } else {
       products.add(product);
       _productsId.add(product.id);
     }
-    debugPrint(_productsId.toString());
-    debugPrint('total productsId: ${_productsId.length}');
     getTotal();
     notifyListeners();
   }
@@ -37,6 +44,7 @@ class CardInventoryProvider extends ChangeNotifier {
   clearProducts() {
     products = [];
     _productsId = [];
+    _client = null;
     total = 0;
     notifyListeners();
   }

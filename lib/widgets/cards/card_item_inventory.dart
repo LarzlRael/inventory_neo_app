@@ -9,14 +9,16 @@ class CardItemInventory extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         /* Navigator.pushNamed(context, 'item_detail'); */
-        /* Navigator.push(
+        Navigator.push(
           context,
           PageTransition(
             type: PageTransitionType.rightToLeft,
-            child: ItemDetailPage(),
+            child: ItemDetailPage(
+              productModel: productModel,
+            ),
             duration: const Duration(milliseconds: 400),
           ),
-        ); */
+        );
       },
       child: Card(
         elevation: 5,

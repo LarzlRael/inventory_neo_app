@@ -15,6 +15,8 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
   final productsServices = ProductsServices();
   @override
   Widget build(BuildContext context) {
+    final cardInventoryProvider =
+        Provider.of<CardInventoryProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
@@ -88,7 +90,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SimpleText(
-                    text: widget.productModel.name,
+                    text: widget.productModel.name.toTitleCase(),
                     fontSize: 22,
                     /* top: 10, */
                     fontWeight: FontWeight.w700,
@@ -108,7 +110,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 bottom: 10,
                 lightThemeColor: Colors.grey,
               ),
-              SimpleText(
+              const SimpleText(
                 text: 'Descripcion y detalles',
                 fontSize: 17,
                 fontWeight: FontWeight.w700,
@@ -117,7 +119,8 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 lightThemeColor: Colors.black,
               ),
               SimpleText(
-                text: removeAllHtmlTags(widget.productModel.description),
+                text: removeAllHtmlTags(
+                    widget.productModel.description.toCapitalize()),
                 fontSize: 14,
                 top: 5,
                 bottom: 10,
@@ -134,14 +137,14 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                     .map((e) => textInfo(e.name, tagId: e.id.toString()))
                     .toList(),
               ),
-              SimpleText(
+              /*  SimpleText(
                 text: 'Costo de creacion 150 Bs',
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
                 top: 10,
                 bottom: 5,
                 lightThemeColor: Colors.black,
-              ),
+              ), */
               Row(
                 children: [
                   SimpleText(
@@ -157,12 +160,18 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                   ),
                   Expanded(
                     child: FillButton(
-                      label: 'Vendido',
+                      label: 'Vender Producto',
                       fontWeight: FontWeight.w500,
                       labelButtonFontSize: 14,
                       backgroundColor: Colors.orange,
                       borderRadius: 10,
-                      onPressed: () {},
+                      onPressed: () {
+                        cardInventoryProvider.addProduct(widget.productModel);
+                        Navigator.pushNamed(
+                          context,
+                          'sell_products',
+                        );
+                      },
                     ),
                   ),
                   /* Expanded(
@@ -177,10 +186,17 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                   ), */
                 ],
               ),
-              SimpleText(text: 'Vendido por: Virginia Arrieta', top: 5),
+              /* SimpleText(text: 'Vendido por: Virginia Arrieta', top: 5),
               SimpleText(text: 'Vendido el 01 de diciembre de 2022', top: 10),
               SimpleText(text: 'Precio final : 140', top: 10),
-              SimpleText(text: 'Vendido a Juan Quispe', top: 10),
+              */
+              SimpleText(
+                text:
+                    'Producto agregado el ${literalDateWithMount(widget.productModel.dateCreated!)}',
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                top: 10,
+              ),
             ],
           ),
         ),

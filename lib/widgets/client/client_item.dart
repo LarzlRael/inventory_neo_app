@@ -2,16 +2,27 @@ part of '../widgets.dart';
 
 class ClientItem extends StatelessWidget {
   final ClientModel clientModel;
+  final Function? onTap;
   const ClientItem({
     super.key,
     required this.clientModel,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, 'client_profile',
-          arguments: clientModel),
+      onTap: () {
+        if (onTap != null) {
+          onTap!();
+        } else {
+          Navigator.pushNamed(
+            context,
+            'client_profile',
+            arguments: clientModel,
+          );
+        }
+      },
       child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
@@ -33,13 +44,13 @@ class ClientItem extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SimpleText(
-                        text:
-                            clientModel.firstName + ' ' + clientModel.lastName,
+                        text: '${clientModel.firstName} ${clientModel.lastName}'
+                            .toTitleCase(),
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         lightThemeColor: Colors.black87,

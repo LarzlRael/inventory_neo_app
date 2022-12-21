@@ -7,6 +7,7 @@ class SellProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     final cardInventoryProvider =
         Provider.of<CardInventoryProvider>(context, listen: true);
+    final clientSelect = cardInventoryProvider.getClient != null;
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
@@ -19,7 +20,8 @@ class SellProducts extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
             Text(
-                'Productos Seleccionados: ${cardInventoryProvider.getListProductsId.length}'),
+              'Productos Seleccionados: ${cardInventoryProvider.getProducts.length}',
+            ),
             FillButton(
                 onPressed: () {
                   showBottomSheet(context, cardInventoryProvider);
@@ -30,7 +32,18 @@ class SellProducts extends StatelessWidget {
                   cardInventoryProvider.clearProducts();
                 },
                 label: 'Limpiar'),
+            FillButton(
+                onPressed: () {
+                  showBottomFindClientSheet(context, cardInventoryProvider);
+                },
+                backgroundColor: clientSelect ? Colors.orange : Colors.blue,
+                label: clientSelect ? 'Cambiar cliente' : 'Buscar cliente'),
             const SizedBox(height: 20),
+            cardInventoryProvider.getClient != null
+                ? ClientItem(
+                    clientModel: cardInventoryProvider.getClient!,
+                  )
+                : const SizedBox(),
             Expanded(
               child: ListView.builder(
                 itemCount: cardInventoryProvider.getProducts.length,
@@ -71,5 +84,18 @@ class SellProducts extends StatelessWidget {
           .toList(),
     };
     debugPrint(mapxd.toString());
+  }
+
+  showBottomFindClientSheet(
+      BuildContext context, CardInventoryProvider cardInventoryProvider) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return Container(
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: const ClientsPageSelectable());
+      },
+    );
   }
 }
