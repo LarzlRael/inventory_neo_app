@@ -119,8 +119,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 lightThemeColor: Colors.black,
               ),
               SimpleText(
-                text: removeAllHtmlTags(
-                    widget.productModel.description.toCapitalize()),
+                text: removeAllHtmlTags(widget.productModel.description),
                 fontSize: 14,
                 top: 5,
                 bottom: 10,
@@ -190,13 +189,22 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
               SimpleText(text: 'Vendido el 01 de diciembre de 2022', top: 10),
               SimpleText(text: 'Precio final : 140', top: 10),
               */
-              SimpleText(
-                text:
-                    'Producto agregado el ${literalDateWithMount(widget.productModel.dateCreated!)}',
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-                top: 10,
-              ),
+
+              widget.productModel.manageStock
+                  ? SimpleText(
+                      text:
+                          'Cantidad disponible: ${widget.productModel.stockQuantity}',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      top: 10,
+                    )
+                  : SimpleText(
+                      text:
+                          'Producto agregado el ${literalDateWithMount(widget.productModel.dateCreated!)}',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      top: 10,
+                    ),
             ],
           ),
         ),

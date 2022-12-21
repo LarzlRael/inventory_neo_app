@@ -48,3 +48,5 @@ part 'products/sell_products.dart';
 
 /* Categories */
 part 'products/add_category_page.dart';
+/* Sells */
+part 'sell/sell_history.dart';

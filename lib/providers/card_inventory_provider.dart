@@ -12,7 +12,7 @@ class CardInventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  get getClient => _client;
+  ClientModel? get getClient => _client;
 
   addProduct(ProductsModel product) {
     if (_productsId.contains(product.id)) {

@@ -31,13 +31,13 @@ class CardInventorySelectableItems extends StatelessWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
               ),
-              /* const Spacer(),
+              const Spacer(),
               IconButton(
                 onPressed: () {
-                  cardInventoryProvider.clearProducts();
+                  Navigator.pop(context);
                 },
                 icon: const Icon(Icons.clear),
-              ), */
+              ),
             ],
           ),
           FutureBuilder(

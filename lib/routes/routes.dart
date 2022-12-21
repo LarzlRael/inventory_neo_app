@@ -26,5 +26,7 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   'list_products_page': (_) => const ListProductsPage(),
   'add_product': (_) => const AddProduct(),
   'add_categories_page': (_) => const AddCategoryPage(),
+  /* Sells */
   'sell_products': (_) => const SellProducts(),
+  'sell_history': (_) => const SellHistory(),
 };

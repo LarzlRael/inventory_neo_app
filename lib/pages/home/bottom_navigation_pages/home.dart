@@ -47,6 +47,11 @@ class Home extends StatelessWidget {
                     cardIcon: Icons.sell,
                     cardRoute: 'sell_products',
                   ),
+                  ManagementCards(
+                    cardTitle: 'Historial de ventas',
+                    cardIcon: Icons.history,
+                    cardRoute: 'sell_history',
+                  ),
                 ],
               ),
             ),
