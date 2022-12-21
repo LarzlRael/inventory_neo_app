@@ -1,38 +1,15 @@
 part of '../widgets.dart';
 
-class CardInventorySelectableItems extends StatefulWidget {
-  const CardInventorySelectableItems({super.key});
-
-  @override
-  State<CardInventorySelectableItems> createState() =>
-      _CardInventorySelectableItemsState();
-}
-
-class _CardInventorySelectableItemsState
-    extends State<CardInventorySelectableItems> {
-  List<ProductsModel> products = [];
-  double total = 0;
-  addProduct(ProductsModel product) {
-    if (products.contains(product)) {
-      products.remove(product);
-    } else {
-      products.add(product);
-    }
-    setState(() {
-      if (products.isEmpty) {
-        total = 0;
-      } else {
-        total = products
-            .map((e) => double.parse(e.price))
-            .reduce((value, element) => value + element);
-        products = products;
-      }
-    });
-  }
+class CardInventorySelectableItems extends StatelessWidget {
+  const CardInventorySelectableItems({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     final productsServices = ProductsServices();
+    final cardInventoryProvider =
+        Provider.of<CardInventoryProvider>(context, listen: true);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15),
       height: MediaQuery.of(context).size.height * 0.9,
@@ -40,8 +17,29 @@ class _CardInventorySelectableItemsState
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Productos Seleccionados: ${products.length}'),
-          Text('Productos Seleccionados: ${total}'),
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.chevron_left_sharp),
+              ),
+              SimpleText(
+                text:
+                    'Productos Seleccionados: ${cardInventoryProvider.getProducts.length}',
+                fontSize: 16,
+                fontWeight: FontWeight.w800,
+              ),
+              /* const Spacer(),
+              IconButton(
+                onPressed: () {
+                  cardInventoryProvider.clearProducts();
+                },
+                icon: const Icon(Icons.clear),
+              ), */
+            ],
+          ),
           FutureBuilder(
             future: productsServices.getAllProducts(),
             builder: (
@@ -63,9 +61,8 @@ class _CardInventorySelectableItemsState
                   itemBuilder: (_, index) {
                     final product = snapshot.data![index];
                     return CardInventorySelectable(
-                      callback: addProduct,
                       productModel: product,
-                      enableMultiSelect: true,
+                      cardInventoryProvider: cardInventoryProvider,
                     );
                   },
                 ),
@@ -80,13 +77,11 @@ class _CardInventorySelectableItemsState
 
 class CardInventorySelectable extends StatefulWidget {
   final ProductsModel productModel;
-  final void Function(ProductsModel product) callback;
-  final bool enableMultiSelect;
+  final CardInventoryProvider cardInventoryProvider;
   const CardInventorySelectable({
     super.key,
     required this.productModel,
-    required this.enableMultiSelect,
-    required this.callback,
+    required this.cardInventoryProvider,
   });
 
   @override
@@ -95,17 +90,26 @@ class CardInventorySelectable extends StatefulWidget {
 }
 
 class _CardInventorySelectableState extends State<CardInventorySelectable> {
-  bool isSelectable = false;
+  late bool isSelectable;
+
+  @override
+  void initState() {
+    setState(() {
+      isSelectable = widget.cardInventoryProvider.getListProductsId
+          .contains(widget.productModel.id);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (widget.enableMultiSelect) {
-          setState(() {
-            isSelectable = !isSelectable;
-          });
-          widget.callback(widget.productModel);
-        }
+        setState(() {
+          isSelectable = !isSelectable;
+        });
+
+        widget.cardInventoryProvider.addProduct(widget.productModel);
       },
       child: Stack(
         children: [
@@ -153,21 +157,19 @@ class _CardInventorySelectableState extends State<CardInventorySelectable> {
                             ),
                           ],
                         ),
-                        widget.enableMultiSelect
-                            ? SizedBox(
-                                width: 24,
-                                height: 24,
-                                child: Checkbox(
-                                  value: isSelectable,
-                                  onChanged: (value) {
-                                    /*  widget.callback(widget.productModel);
+                        SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: Checkbox(
+                            value: isSelectable,
+                            onChanged: (value) {
+                              /*  widget.callback(widget.productModel);
                                     setState(() {
                                       isSelectable = value!;
                                     }); */
-                                  },
-                                ),
-                              )
-                            : const SizedBox(),
+                            },
+                          ),
+                        ),
                       ],
                     )
                   ],

@@ -1,7 +1,8 @@
 part of '../widgets.dart';
 
 class CardItemInventory extends StatelessWidget {
-  const CardItemInventory({super.key});
+  final ProductsModel productModel;
+  const CardItemInventory({super.key, required this.productModel});
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +22,16 @@ class CardItemInventory extends StatelessWidget {
         elevation: 5,
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
-                  'https://i.pinimg.com/originals/49/6f/bf/496fbfb4cd35c4a14e8cff20fdac2faa.jpg',
+                  productModel.images.isNotEmpty
+                      ? productModel.images[0].src
+                      : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
                   height: 75,
                   width: 100,
                   fit: BoxFit.cover,
@@ -41,26 +44,26 @@ class CardItemInventory extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SimpleText(
-                        text: 'Arete',
+                        text: productModel.categories[0].name,
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                         lightThemeColor: Colors.grey,
                         bottom: 5,
                       ),
                       SimpleText(
-                        text: 'Nombre del producto',
+                        text: productModel.name,
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                       SimpleText(
                         top: 5,
-                        text: '200',
+                        text: productModel.price,
                         fontSize: 15,
                         fontWeight: FontWeight.w700,
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   const Icon(

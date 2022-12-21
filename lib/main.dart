@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:inventory_app/providers/card_inventory_provider.dart';
 import 'package:inventory_app/routes/routes.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   await dotenv.load(
@@ -15,11 +17,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      routes: appRoutes,
-      initialRoute: 'home',
-      debugShowCheckedModeBanner: false,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CardInventoryProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Material App',
+        routes: appRoutes,
+        initialRoute: 'home',
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

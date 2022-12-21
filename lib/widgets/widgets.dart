@@ -9,6 +9,8 @@ import 'package:inventory_app/services/services.dart';
 import 'package:inventory_app/widgets/buttons/buttons.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+
+import '../providers/card_inventory_provider.dart';
 part 'text/simple_text.dart';
 /* Slides and banners */
 part 'slideshow/slideshow.dart';
