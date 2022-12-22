@@ -26,6 +26,15 @@ class CardInventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  deleteProduct(ProductsModel product) {
+    if (_productsId.contains(product.id)) {
+      products.removeWhere((element) => element.id == product.id);
+      _productsId.remove(product.id);
+    }
+    getTotal();
+    notifyListeners();
+  }
+
   getTotal() {
     if (products.isEmpty) {
       total = 0;
@@ -46,6 +55,11 @@ class CardInventoryProvider extends ChangeNotifier {
     _productsId = [];
     _client = null;
     total = 0;
+    notifyListeners();
+  }
+
+  clearClient() {
+    _client = null;
     notifyListeners();
   }
 }

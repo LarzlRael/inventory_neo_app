@@ -67,13 +67,13 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
                   bottom: 10,
                   fontSize: 18,
                   fontWeight: FontWeight.w600),
-              SimpleText(
+              const SimpleText(
                 text:
-                    'If you are creating project for and existing client please skip this step',
+                    'Por favor, rellene los campos para registrar un nuevo cliente',
                 fontSize: 14,
                 lightThemeColor: Colors.black54,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               FormBuilder(
                 initialValue: {
                   'first_name': clientData.name,

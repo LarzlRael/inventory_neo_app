@@ -3,10 +3,12 @@ part of '../widgets.dart';
 class ClientItem extends StatelessWidget {
   final ClientModel clientModel;
   final Function? onTap;
+  final Widget? trailing;
   const ClientItem({
     super.key,
     required this.clientModel,
     this.onTap,
+    this.trailing,
   });
 
   @override
@@ -24,19 +26,25 @@ class ClientItem extends StatelessWidget {
         }
       },
       child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            child: Row(children: [
-              Container(
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            children: [
+              SizedBox(
                 width: 50,
                 height: 50,
                 child: CircleAvatar(
-                  radius: 75,
-                  backgroundImage: NetworkImage(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNzpQcuyrPhyGRcfnvBIAnR5rdIhImb3SZydxeWy_d&s'),
+                  radius: 70,
+                  child: SimpleText(
+                    text:
+                        '${clientModel.firstName[0].toUpperCase()}${clientModel.lastName[0].toUpperCase()}',
+                    fontSize: 17,
+                    lightThemeColor: Colors.white,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -58,7 +66,7 @@ class ClientItem extends StatelessWidget {
                         bottom: 5,
                       ),
                       SimpleText(
-                        text: clientModel.billing.address1,
+                        text: clientModel.billing.address1.toCapitalize(),
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
                       ),
@@ -66,8 +74,11 @@ class ClientItem extends StatelessWidget {
                   ),
                 ),
               ),
-            ]),
-          )),
+              if (trailing != null) trailing!,
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

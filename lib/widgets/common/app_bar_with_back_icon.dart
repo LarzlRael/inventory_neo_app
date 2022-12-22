@@ -50,7 +50,7 @@ class AppBarWithBackIcon extends StatelessWidget
 Widget appBarTitle(String? subTitle) {
   return Column(
     children: [
-      SimpleText(
+      const SimpleText(
         text: 'Joyeria Arrieta',
         lightThemeColor: Colors.black,
         fontSize: 15,

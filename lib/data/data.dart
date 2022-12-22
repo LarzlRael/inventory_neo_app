@@ -3,10 +3,10 @@ import 'package:inventory_app/pages/pages.dart';
 import 'package:inventory_app/widgets/buttons/buttons.dart';
 
 final List<Widget> bottomItemsWithLogin = <Widget>[
-  Home(),
-  Register(),
-  Inventory(),
-  Profile(),
+  const Home(),
+  const Register(),
+  const Inventory(),
+  const Profile(),
 ];
 
 List<Widget> registerOptions(BuildContext context) {
@@ -56,10 +56,10 @@ final statusList = {
   'failed': 'Fallido',
 };
 final statusListTransalteEn = {
+  'Completado': 'completed',
   'Pendiente': 'pending',
   'Procesando': 'processing',
   'En espera': 'on-hold',
-  'Completado': 'completed',
   'Cancelado': 'cancelled',
   'Reembolsado': 'refunded',
   'Fallido': 'failed',

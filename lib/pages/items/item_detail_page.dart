@@ -12,7 +12,7 @@ class ItemDetailPage extends StatefulWidget {
 }
 
 class _ItemDetailPageState extends State<ItemDetailPage> {
-  final productsServices = ProductsServices();
+  final productBloc = ProductsBloc();
   @override
   Widget build(BuildContext context) {
     final cardInventoryProvider =
@@ -49,15 +49,20 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 'Eliminar',
                 '¿Estas seguro de eliminar este producto?',
                 () async {
-                  final response = await productsServices.deleteProduct(
+                  final response = await productBloc.deleteProduct(
                     widget.productModel.id.toString(),
                   );
 
-                  GlobalSnackBar.show(
-                      context, "Producto eliminado correctamente");
+                  if (!mounted) return;
                   if (response) {
-                    Navigator.pushReplacementNamed(
-                        context, 'list_products_page');
+                    GlobalSnackBar.show(
+                        context, "Producto eliminado correctamente");
+                    Navigator.pop(
+                      context,
+                    );
+                  } else {
+                    GlobalSnackBar.show(
+                        context, "No se pudo eliminar el producto");
                   }
                 },
               );
@@ -154,7 +159,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                     bottom: 5,
                     lightThemeColor: Colors.black,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 60,
                   ),
                   Expanded(
@@ -227,12 +232,12 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           /* mainAxisAlignment: MainAxisAlignment.center, */
           children: [
-            Icon(
+            const Icon(
               Icons.circle,
               size: 10,
               color: Colors.black,
             ),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
             SimpleText(

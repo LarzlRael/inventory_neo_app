@@ -14,6 +14,7 @@ class _SellProductsState extends State<SellProducts> {
     final cardInventoryProvider =
         Provider.of<CardInventoryProvider>(context, listen: true);
     final clientSelect = cardInventoryProvider.getClient != null;
+    final productsSelect = cardInventoryProvider.getProducts.isEmpty;
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
@@ -46,8 +47,12 @@ class _SellProductsState extends State<SellProducts> {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            Text(
-              'Productos Seleccionados: ${cardInventoryProvider.getProducts.length}',
+            SimpleText(
+              text:
+                  'Productos Seleccionados: ${cardInventoryProvider.getProducts.length}',
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              bottom: 5,
             ),
 
             /*  FillButton(
@@ -68,34 +73,64 @@ class _SellProductsState extends State<SellProducts> {
                         },
                         backgroundColor:
                             clientSelect ? Colors.orange : Colors.blue,
-                        label:
-                            clientSelect ? 'Cambiar cliente' : 'Buscar cliente',
+                        label: clientSelect
+                            ? 'Cambiar cliente'
+                            : 'Seleccionar cliente',
                       ),
                       FillButton(
                         onPressed: () {
                           showBottomSheet(context, cardInventoryProvider);
                         },
-                        label: 'Buscar productos',
+                        label: productsSelect
+                            ? 'Buscar productos'
+                            : 'Cambiar productos',
+                        backgroundColor:
+                            !productsSelect ? Colors.orange : Colors.blue,
                       ),
                     ],
                   ),
             const SizedBox(height: 20),
             cardInventoryProvider.getClient != null
-                ? ClientItem(
-                    clientModel: cardInventoryProvider.getClient!,
+                ? Column(
+                    children: [
+                      const SimpleText(
+                        text: 'Cliente',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        bottom: 0,
+                      ),
+                      ClientItem(
+                          clientModel: cardInventoryProvider.getClient!,
+                          trailing: IconButton(
+                            icon: const Icon(Icons.cancel_rounded,
+                                color: Colors.red),
+                            onPressed: () {
+                              cardInventoryProvider.clearClient();
+                            },
+                          )),
+                    ],
                   )
-                : const SizedBox(),
-            Expanded(
-              child: ListView.builder(
-                itemCount: cardInventoryProvider.getProducts.length,
-                itemBuilder: (_, index) {
-                  final product = cardInventoryProvider.getProducts[index];
-                  return CardItemInventory(
-                    productModel: product,
-                  );
-                },
-              ),
-            ),
+                : const SimpleText(
+                    text: 'Selecciona un cliente',
+                  ),
+            cardInventoryProvider.getProducts.isNotEmpty
+                ? Expanded(
+                    child: ListView.builder(
+                      itemCount: cardInventoryProvider.getProducts.length,
+                      itemBuilder: (_, index) {
+                        final product =
+                            cardInventoryProvider.getProducts[index];
+                        return CardItemInventory(
+                          productModel: product,
+                        );
+                      },
+                    ),
+                  )
+                : const SimpleText(
+                    text:
+                        'Selecciona productos, para agregarlos a la lista de venta',
+                    top: 20,
+                  ),
           ],
         ),
       ),
@@ -134,7 +169,7 @@ class _SellProductsState extends State<SellProducts> {
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
             height: MediaQuery.of(context).size.height * 0.8,
             child: const ClientsPageSelectable());
       },
@@ -167,6 +202,7 @@ class _SellProductsState extends State<SellProducts> {
     setState(() {
       _isLoading = false;
     });
+    if (!mounted) return;
     if (validateStatus(result?.statusCode)) {
       cardInventoryProvider.clearProducts();
 

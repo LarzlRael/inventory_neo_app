@@ -1,6 +1,8 @@
 part of '../../pages.dart';
 
 class Profile extends StatelessWidget {
+  const Profile({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +11,7 @@ class Profile extends StatelessWidget {
         child: Center(
           child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
@@ -33,35 +35,32 @@ class Profile extends StatelessWidget {
               children: [
                 /* icon with opacitiy color */
                 Positioned(
+                  top: -20,
+                  right: 0,
                   child: Icon(
                     Icons.home,
                     color: Colors.yellow.withOpacity(0.4),
                     size: 100,
                   ),
-                  top: -20,
-                  right: 0,
                 ),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: Container(
-                    /* color: Colors.brown, */
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.home,
-                          color: Colors.black.withOpacity(0.3),
-                          size: 50,
-                        ),
-                        const Text('Profile'),
-                        const SizedBox(width: 10),
-                        Icon(
-                          Icons.chevron_right,
-                          color: Colors.black,
-                          /* size: 10, */
-                        ),
-                      ],
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.home,
+                        color: Colors.black.withOpacity(0.3),
+                        size: 50,
+                      ),
+                      const Text('Profile'),
+                      const SizedBox(width: 10),
+                      const Icon(
+                        Icons.chevron_right,
+                        color: Colors.black,
+                        /* size: 10, */
+                      ),
+                    ],
                   ),
                 )
               ],

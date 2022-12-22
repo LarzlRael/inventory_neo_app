@@ -15,11 +15,11 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.6,
               width: double.infinity,
               /*  */
-              child: BannerLogin(),
+              child: const BannerLogin(),
             ),
             /* FillButton(
               onPressed: () {},
@@ -36,8 +36,8 @@ class LoginPage extends StatelessWidget {
                   context,
                   PageTransition(
                     type: PageTransitionType.bottomToTop,
-                    child: SelectLoginPage(),
-                    duration: Duration(milliseconds: 400),
+                    child: const SelectLoginPage(),
+                    duration: const Duration(milliseconds: 400),
                   ),
                 );
               },
@@ -47,7 +47,7 @@ class LoginPage extends StatelessWidget {
               backgroundColor: Colors.blue,
               borderRadius: 100,
             ),
-            SimpleText(
+            const SimpleText(
               text: '¿Necesitas ayuda?, Contactanos',
             )
           ],

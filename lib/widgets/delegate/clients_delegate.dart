@@ -14,7 +14,6 @@ class ClientsDelegate extends SearchDelegate {
 
   @override
   Widget? buildLeading(BuildContext context) {
-    /* TODO return something */
     return IconButton(
         onPressed: () => close(context, null),
         icon: const Icon(Icons.arrow_back_ios));

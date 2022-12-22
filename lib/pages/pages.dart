@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:inventory_app/bloc/blocs.dart';
 import 'package:inventory_app/data/data.dart';
 import 'package:inventory_app/models/models.dart';
 import 'package:inventory_app/providers/card_inventory_provider.dart';

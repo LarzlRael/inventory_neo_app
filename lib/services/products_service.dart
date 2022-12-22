@@ -55,5 +55,3 @@ class ProductsServices {
     return validateStatus(clientRequest!.statusCode);
   }
 }
-
-/* {"code":"rest_invalid_param","message":"Par\u00e1metro(s) no v\u00e1lido(s): categories, tags","data":{"status":400,"params":{"categories":"categories[0][id] no es del tipo integer.","tags":"tags[0][id] no es del tipo integer."},"details":{"categories":{"code":"rest_invalid_type","message":"categories[0][id] no es del tipo integer.","data":{"param":"categories[0][id]"}},"tags":{"code":"rest_invalid_type","message":"tags[0][id] no es del tipo integer.","data":{"param":"tags[0][id]"}}}}} */

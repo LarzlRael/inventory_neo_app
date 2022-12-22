@@ -6,6 +6,8 @@ class CardItemInventory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cardInventoryProvider =
+        Provider.of<CardInventoryProvider>(context, listen: true);
     return GestureDetector(
       onTap: () {
         /* Navigator.pushNamed(context, 'item_detail'); */
@@ -26,7 +28,7 @@ class CardItemInventory extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(10),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            /* mainAxisAlignment: MainAxisAlignment.spaceBetween, */
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
@@ -38,6 +40,9 @@ class CardItemInventory extends StatelessWidget {
                   width: 100,
                   fit: BoxFit.cover,
                 ),
+              ),
+              const SizedBox(
+                width: 20,
               ),
               Row(
                 children: [
@@ -53,7 +58,7 @@ class CardItemInventory extends StatelessWidget {
                         bottom: 5,
                       ),
                       SimpleText(
-                        text: productModel.name,
+                        text: productModel.name.toCapitalize(),
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
@@ -68,12 +73,20 @@ class CardItemInventory extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  const Icon(
-                    Icons.arrow_forward_ios,
-                    size: 15,
-                  ),
                 ],
-              )
+              ),
+              const Spacer(),
+              IconButton(
+                tooltip: 'Eliminar producto',
+                onPressed: () {
+                  cardInventoryProvider.deleteProduct(productModel);
+                },
+                icon: const Icon(
+                  Icons.cancel_sharp,
+                  size: 20,
+                  color: Colors.red,
+                ),
+              ),
             ],
           ),
         ),

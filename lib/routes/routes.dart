@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_app/models/models.dart';
 import 'package:inventory_app/pages/pages.dart';
-import 'package:inventory_app/widgets/widgets.dart';
 
 final Map<String, Widget Function(BuildContext)> appRoutes = {
   'home': (_) => const HomePage(),

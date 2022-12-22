@@ -96,7 +96,7 @@ void dialogFormCategory(
     builder: (BuildContext context) => AlertDialog(
       title: Text(title),
       content: Column(
-        children: [
+        children: const [
           Text('que fue gente'),
         ],
       ),
@@ -188,7 +188,7 @@ showOfferDialog(
                       child: FormBuilder(
                         key: formKey,
                         child: Column(
-                          children: [
+                          children: const [
                             /* CustomTextField(
                               label: 'Nombre',
                               name: 'firstname',

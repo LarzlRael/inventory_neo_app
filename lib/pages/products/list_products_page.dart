@@ -5,7 +5,8 @@ class ListProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productsServices = ProductsServices();
+    final productBloc = ProductsBloc();
+    productBloc.getProducts();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -33,8 +34,8 @@ class ListProductsPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          FutureBuilder(
-            future: productsServices.getAllProducts(),
+          StreamBuilder(
+            stream: productBloc.productsStream,
             builder: (BuildContext context,
                 AsyncSnapshot<List<ProductsModel>> snapshot) {
               if (!snapshot.hasData) {

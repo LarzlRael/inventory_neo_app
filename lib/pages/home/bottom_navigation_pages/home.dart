@@ -11,14 +11,14 @@ class Home extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SimpleText(
+            const SimpleText(
               text: 'Gestiona tu negocio',
               fontSize: 15,
               fontWeight: FontWeight.w700,
               top: 5,
               bottom: 5,
             ),
-            Container(
+            SizedBox(
               /* fit: FlexFit.tight, */
               height: MediaQuery.of(context).size.height * 0.2,
               child: GridView.count(
@@ -98,7 +98,7 @@ class ManagementCards extends StatelessWidget {
           child: Column(
             children: [
               Icon(cardIcon),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               SimpleText(

@@ -43,7 +43,7 @@ class ClientProfilePage extends StatelessWidget {
                   );
 
                   GlobalSnackBar.show(
-                      context, "Producto eliminado correctamente");
+                      context, "Cliente eliminado correctamente");
                   if (response) {
                     Navigator.pushReplacementNamed(
                         context, 'list_products_page');
@@ -65,11 +65,16 @@ class ClientProfilePage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const CircleAvatar(
-                    radius: 75,
-                    backgroundImage: NetworkImage(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNzpQcuyrPhyGRcfnvBIAnR5rdIhImb3SZydxeWy_d&s'),
-                  ),
+                  CircleAvatar(
+                      radius: 75,
+                      child: SimpleText(
+                        text:
+                            "${clientModel.firstName[0]}${clientModel.lastName[0]}"
+                                .toUpperCase(),
+                        fontSize: 50,
+                        fontWeight: FontWeight.w700,
+                        lightThemeColor: Colors.white,
+                      )),
                   SimpleText(
                     text: '${clientModel.firstName} ${clientModel.lastName}'
                         .toTitleCase(),
@@ -101,14 +106,12 @@ class ClientProfilePage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Container(
-            child: const TabBar(
-              labelColor: Colors.deepPurple,
-              tabs: [
-                Tab(text: "Cliente"),
-                Tab(text: "Compras"),
-              ],
-            ),
+          const TabBar(
+            labelColor: Colors.deepPurple,
+            tabs: [
+              Tab(text: "Cliente"),
+              Tab(text: "Compras"),
+            ],
           ),
           SizedBox(
             //Add this to give height
@@ -122,15 +125,15 @@ class ClientProfilePage extends StatelessWidget {
                     Row(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.phone_android_rounded),
+                          icon: const Icon(Icons.phone_android_rounded),
                           onPressed: () {},
                           padding: EdgeInsets.zero,
-                          constraints: BoxConstraints(),
+                          constraints: const BoxConstraints(),
                         ),
                         IconButton(
-                          icon: Icon(Icons.message_rounded),
+                          icon: const Icon(Icons.message_rounded),
                           padding: EdgeInsets.zero,
-                          constraints: BoxConstraints(),
+                          constraints: const BoxConstraints(),
                           onPressed: () {},
                         ),
                       ],

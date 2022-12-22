@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black, //change your color here
         ),
         title: appBarTitle(null),
@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           },
-          icon: Icon(Icons.menu_rounded),
+          icon: const Icon(Icons.menu_rounded),
           //replace with our own icon data.
         ),
       ),

@@ -19,7 +19,7 @@ class SelectLoginPage extends StatelessWidget {
             /* crossAxisAlignment: CrossAxisAlignment.end, */
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SimpleText(
+              const SimpleText(
                 /* textAlign: TextAlign.center, */
                 text: '¡Hola de nuevo!',
                 fontSize: 14,

@@ -46,7 +46,7 @@ class ClientsPage extends StatelessWidget {
                 return Expanded(
                   child: ListView.builder(
                     itemCount: clients?.length,
-                    itemBuilder: (BuildContext context, int index) {
+                    itemBuilder: (_, int index) {
                       return ClientItem(
                         clientModel: clients![index],
                       );
