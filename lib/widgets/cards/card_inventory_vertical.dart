@@ -23,8 +23,7 @@ class CardItemInventoryVertical extends StatelessWidget {
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 0, left: 5, right: 5),
-        /* height: MediaQuery.of(context).size.width * 0.9, */
-
+        /* height: 300, */
         child: Card(
           elevation: 0,
           /* margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), */
@@ -37,7 +36,7 @@ class CardItemInventoryVertical extends StatelessWidget {
                   productModel.images.isNotEmpty
                       ? productModel.images[0].src
                       : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
-                  height: 150,
+                  height: 100,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -56,7 +55,7 @@ class CardItemInventoryVertical extends StatelessWidget {
                         lightThemeColor: Colors.pink,
                       ),
                       SimpleText(
-                        text: productModel.name.toCapitalize(),
+                        text: productModel.name,
                         fontSize: 13,
                         fontWeight: FontWeight.w300,
                       ),

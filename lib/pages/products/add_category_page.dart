@@ -11,10 +11,10 @@ class AddCategoryPage extends StatefulWidget {
   const AddCategoryPage({super.key});
 
   @override
-  State<AddCategoryPage> createState() => _AddProductState();
+  State<AddCategoryPage> createState() => _AddCategoryState();
 }
 
-class _AddProductState extends State<AddCategoryPage>
+class _AddCategoryState extends State<AddCategoryPage>
     with AutomaticKeepAliveClientMixin {
   bool _isLoading = false;
   final categoryForm = CategoryForm(name: '', id: null);
@@ -66,7 +66,7 @@ class _AddProductState extends State<AddCategoryPage>
               !_isLoading
                   ? FillButton(
                       onPressed: () {
-                        register(formKey);
+                        register(formKey, categoryForm.id);
                       },
                       label: categoryForm.id == null ? 'Registrar' : 'Editar',
                     )
@@ -93,9 +93,8 @@ class _AddProductState extends State<AddCategoryPage>
     return jsonDecode(uploadFile.body)['secure_url'];
   }
 
-  void register(GlobalKey<FormBuilderState> formkey) async {
+  void register(GlobalKey<FormBuilderState> formkey, int? idCategory) async {
     formkey.currentState!.save();
-    final categoriesServices = CategoriesServices();
 
     final json = {
       "name": formkey.currentState!.value['name'],
@@ -107,10 +106,42 @@ class _AddProductState extends State<AddCategoryPage>
     setState(() {
       _isLoading = true;
     });
-    final correct = await categoriesServices.newCategory(json);
+    if (idCategory != null) {
+      await updateCategory(idCategory, json);
+    } else {
+      await postCategory(json);
+    }
+  }
 
-    if (!mounted) return;
-    if (correct) {
+  updateCategory(int idCategory, Map<String, dynamic> json) async {
+    final update = await putAction('products/categories/$idCategory', json);
+
+    if (validateStatus(update!.statusCode)) {
+      GlobalSnackBar.show(
+        context,
+        'Actualizacion exitosa',
+        backgroundColor: Colors.green,
+      );
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.pushReplacementNamed(context, 'list_products_page');
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      GlobalSnackBar.show(
+        context,
+        'Error al actualizar',
+        backgroundColor: Colors.red,
+      );
+    }
+  }
+
+  postCategory(Map<String, dynamic> json) async {
+    final categoriesServices = CategoriesServices();
+    final newCategory = await categoriesServices.newCategory(json);
+    if (newCategory) {
       GlobalSnackBar.show(
         context,
         'Registro exitoso',
