@@ -1,11 +1,26 @@
 part of '../pages.dart';
 
-class SellDetail extends StatelessWidget {
-  const SellDetail({super.key});
+class SellDetail extends StatefulWidget {
+  final OrdersModel args;
+  const SellDetail({
+    super.key,
+    required this.args,
+  });
+
+  @override
+  State<SellDetail> createState() => _SellDetailState();
+}
+
+class _SellDetailState extends State<SellDetail> {
+  late String dropdownValue;
+  @override
+  void initState() {
+    dropdownValue = statusList[widget.args.status]!;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as OrdersModel;
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
@@ -16,7 +31,7 @@ class SellDetail extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            tranlateStatus(args.status),
+            tranlateStatus(widget.args.status),
             const SizedBox(
               height: 10,
             ),
@@ -24,45 +39,71 @@ class SellDetail extends StatelessWidget {
               radius: 40,
               child: SimpleText(
                 text:
-                    '${args.billing.firstName[0].toUpperCase()}${args.billing.lastName[0].toUpperCase()}',
+                    '${widget.args.billing.firstName[0].toUpperCase()}${widget.args.billing.lastName[0].toUpperCase()}',
                 fontSize: 25,
                 lightThemeColor: Colors.white,
               ),
             ),
             const SizedBox(height: 10),
             SimpleText(
-              text: '${args.billing.firstName} ${args.billing.lastName}'
-                  .toTitleCase(),
+              text:
+                  '${widget.args.billing.firstName} ${widget.args.billing.lastName}'
+                      .toTitleCase(),
             ),
             SimpleText(
-              text: args.billing.address1.toCapitalize(),
+              text: widget.args.billing.address1.toCapitalize(),
               top: 10,
               bottom: 10,
             ),
             SimpleText(
-              text: 'Productos: ${args.lineItems.length}',
+              text: 'Productos: ${widget.args.lineItems.length}',
               fontWeight: FontWeight.bold,
+            ),
+            DropdownButton<String>(
+              value: dropdownValue,
+              icon: const Icon(Icons.arrow_downward),
+              elevation: 16,
+              style: const TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              onChanged: (String? value) async {
+                // This is called when the user selects an item.
+                setState(() {
+                  dropdownValue = value!;
+                });
+                await updateStatus(widget.args.id, value);
+              },
+              items:
+                  statusListList.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
             ),
             ListView.builder(
               shrinkWrap: true,
-              itemCount: args.lineItems.length,
+              itemCount: widget.args.lineItems.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  title: Text(args.lineItems[index].name.toCapitalize()),
+                  title: Text(widget.args.lineItems[index].name.toCapitalize()),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SimpleText(
-                        text: 'Cantidad: ${args.lineItems[index].quantity}',
+                        text:
+                            'Cantidad: ${widget.args.lineItems[index].quantity}',
                         bottom: 5,
                       ),
-                      Text('${args.lineItems[index].price}'),
+                      Text('${widget.args.lineItems[index].price}'),
                     ],
                   ),
                   leading: Image.network(
-                    args.lineItems[0].imageProduct!.src == ""
+                    widget.args.lineItems[0].imageProduct!.src == ""
                         ? "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
-                        : args.lineItems[0].imageProduct!.src,
+                        : widget.args.lineItems[0].imageProduct!.src,
                     width: 80,
                     height: 80,
                     fit: BoxFit.cover,
@@ -74,5 +115,21 @@ class SellDetail extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  updateStatus(orderId, dropdownValue) async {
+    final orderBloc = OrdersBloc();
+    final res = await putAction(
+        'orders/$orderId', {'status': statusListTransalteEn[dropdownValue]});
+
+    if (res!.statusCode == 200) {
+      orderBloc.getOrders();
+      GlobalSnackBar.show(context, 'Estado actualizado',
+          backgroundColor: Colors.green);
+      /* Navigator.pop(context); */
+    } else {
+      GlobalSnackBar.show(context, 'Error al cambiar estado',
+          backgroundColor: Colors.red);
+    }
   }
 }

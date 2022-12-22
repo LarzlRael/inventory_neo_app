@@ -2,9 +2,10 @@ part of '../pages.dart';
 
 class SellHistory extends StatelessWidget {
   const SellHistory({super.key});
-
   @override
   Widget build(BuildContext context) {
+    final orderBloc = OrdersBloc();
+    orderBloc.getOrders();
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
@@ -22,8 +23,8 @@ class SellHistory extends StatelessWidget {
             /* SellHistoryCard(),
             SellHistoryCard(),
             SellHistoryCard(), */
-            FutureBuilder(
-              future: getOrders(),
+            StreamBuilder(
+              stream: orderBloc.odersList,
               builder: (BuildContext context,
                   AsyncSnapshot<List<OrdersModel>> snapshot) {
                 if (!snapshot.hasData) {
@@ -109,15 +110,6 @@ class SellHistoryCard extends StatelessWidget {
 }
 
 Widget tranlateStatus(String status) {
-  final statusList = {
-    'pending': 'Pendiente',
-    'processing': 'Procesando',
-    'on-hold': 'En espera',
-    'completed': 'Completado',
-    'cancelled': 'Cancelado',
-    'refunded': 'Reembolsado',
-    'failed': 'Fallido',
-  };
   return SimpleText(
     text: statusList[status]!,
     lightThemeColor: Colors.grey,
@@ -128,4 +120,25 @@ Widget tranlateStatus(String status) {
 Future<List<OrdersModel>> getOrders() async {
   final res = await getAction('/orders');
   return ordersModelFromJson(res!.body);
+}
+
+class OrdersBloc {
+  static final OrdersBloc _singleton = OrdersBloc._internal();
+  OrdersBloc._internal();
+
+  factory OrdersBloc() {
+    return _singleton;
+  }
+  final _ordersLists = StreamController<List<OrdersModel>>.broadcast();
+
+  Stream<List<OrdersModel>> get odersList => _ordersLists.stream;
+  dispose() {
+    _ordersLists.close();
+  }
+
+  getOrders() async {
+    final res = await getAction('/orders');
+    final orders = ordersModelFromJson(res!.body);
+    _ordersLists.sink.add(orders);
+  }
 }

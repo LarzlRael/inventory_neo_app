@@ -45,3 +45,31 @@ List<Widget> registerOptions(BuildContext context) {
     ),
   ];
 }
+
+final statusList = {
+  'completed': 'Completado',
+  'pending': 'Pendiente',
+  'on-hold': 'En espera',
+  'cancelled': 'Cancelado',
+  'processing': 'Procesando',
+  'refunded': 'Reembolsado',
+  'failed': 'Fallido',
+};
+final statusListTransalteEn = {
+  'Pendiente': 'pending',
+  'Procesando': 'processing',
+  'En espera': 'on-hold',
+  'Completado': 'completed',
+  'Cancelado': 'cancelled',
+  'Reembolsado': 'refunded',
+  'Fallido': 'failed',
+};
+final statusListList = [
+  'Completado',
+  'En espera',
+  'Pendiente',
+  'Cancelado',
+  'Procesando',
+  'Reembolsado',
+  'Fallido',
+];

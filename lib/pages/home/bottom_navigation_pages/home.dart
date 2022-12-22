@@ -55,7 +55,7 @@ class Home extends StatelessWidget {
                 ],
               ),
             ),
-            SimpleText(
+            const SimpleText(
               text: 'Que tus clientes te conozcan',
               fontSize: 16,
               fontWeight: FontWeight.w700,

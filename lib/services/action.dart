@@ -9,7 +9,7 @@ Future<http.Response?> postAction(String url, Map<String, dynamic> body) async {
 }
 
 Future<http.Response?> putAction(String url, Map<String, dynamic> body) async {
-  return await Request.sendRequest(RequestType.put, url, body);
+  return await Request.sendRequestWithToken(RequestType.put, url, body, '');
 }
 
 Future<http.Response?> deleteAction(String url) async {
