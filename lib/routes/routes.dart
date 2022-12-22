@@ -29,4 +29,5 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   /* Sells */
   'sell_products': (_) => const SellProducts(),
   'sell_history': (_) => const SellHistory(),
+  'sell_detail': (_) => const SellDetail(),
 };

@@ -225,9 +225,9 @@ class LineItem {
     required this.totalTax,
     required this.taxes,
     required this.metaData,
-    required this.sku,
     required this.price,
     required this.parentName,
+    required this.imageProduct,
   });
 
   int id;
@@ -242,8 +242,9 @@ class LineItem {
   String totalTax;
   List<dynamic> taxes;
   List<MetaDatum> metaData;
-  String sku;
-  int price;
+  ImageOrder? imageProduct;
+
+  dynamic price;
 
   dynamic parentName;
 
@@ -261,8 +262,9 @@ class LineItem {
         taxes: List<dynamic>.from(json["taxes"].map((x) => x)),
         metaData: List<MetaDatum>.from(
             json["meta_data"].map((x) => MetaDatum.fromJson(x))),
-        sku: json["sku"] == null ? null : json["sku"],
         price: json["price"],
+        imageProduct:
+            json["image"] == null ? null : ImageOrder.fromJson(json["image"]),
         parentName: json["parent_name"],
       );
 
@@ -279,12 +281,31 @@ class LineItem {
         "total_tax": totalTax,
         "taxes": List<dynamic>.from(taxes.map((x) => x)),
         "meta_data": List<dynamic>.from(metaData.map((x) => x.toJson())),
-        "sku": sku == null ? null : sku,
         "price": price,
+        "image": imageProduct == null ? null : imageProduct!.toJson(),
         "parent_name": parentName,
       };
 }
 
+class ImageOrder {
+  ImageOrder({
+    required this.id,
+    required this.src,
+  });
+
+  dynamic id;
+  String src;
+
+  factory ImageOrder.fromJson(Map<String, dynamic> json) => ImageOrder(
+        id: json["id"],
+        src: json["src"] == null ? null : json["src"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id == null ? null : id,
+        "src": src == null ? null : src,
+      };
+}
 /* class Image {
   Image({
     required this.id,
