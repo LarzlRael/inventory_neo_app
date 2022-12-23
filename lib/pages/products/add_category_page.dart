@@ -3,8 +3,8 @@ part of '../pages.dart';
 class CategoryForm {
   String name;
   int? id;
-  String? urlImage;
-  CategoryForm({required this.name, required this.id});
+  String? image;
+  CategoryForm({required this.name, required this.id, this.image});
 }
 
 class AddCategoryPage extends StatefulWidget {
@@ -18,6 +18,13 @@ class _AddCategoryState extends State<AddCategoryPage>
     with AutomaticKeepAliveClientMixin {
   bool _isLoading = false;
   final categoryForm = CategoryForm(name: '', id: null);
+  late CategoriesBloc categoriesBloc;
+  @override
+  void initState() {
+    categoriesBloc = CategoriesBloc();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final arguments =
@@ -25,7 +32,7 @@ class _AddCategoryState extends State<AddCategoryPage>
     if (arguments != null) {
       categoryForm.name = arguments.name;
       categoryForm.id = arguments.id;
-      categoryForm.urlImage = arguments.urlImage;
+      categoryForm.image = arguments.image;
     }
     super.build(context);
     final formKey = GlobalKey<FormBuilderState>();
@@ -35,6 +42,39 @@ class _AddCategoryState extends State<AddCategoryPage>
         title:
             categoryForm.id == null ? 'Agregar categorias' : 'Editar categoria',
         showTitle: true,
+        actions: [
+          categoryForm.id == null
+              ? const SizedBox()
+              : IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  onPressed: () {
+                    showConfirmDialog(
+                      context,
+                      'Eliminar categoria',
+                      '¿Estas seguro de eliminar esta categoria?',
+                      () async {
+                        final response = await deleteAction(
+                            'products/categories/${categoryForm.id}?force=true');
+                        if (!mounted) return;
+                        if (validateStatus(response!.statusCode)) {
+                          GlobalSnackBar.show(
+                              context, "Categoria eliminado correctamente",
+                              backgroundColor: Colors.green);
+                          Navigator.pop(
+                            context,
+                          );
+                          categoriesBloc.getCategories();
+                        } else {
+                          GlobalSnackBar.show(
+                            context,
+                            "No se pudo eliminar el producto",
+                            backgroundColor: Colors.red,
+                          );
+                        }
+                      },
+                    );
+                  }),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -44,8 +84,9 @@ class _AddCategoryState extends State<AddCategoryPage>
               FormBuilder(
                 initialValue: {
                   'name': categoryForm.name,
-                  'file': categoryForm.urlImage,
+                  'file': categoryForm.image,
                   'id': categoryForm.id,
+                  'imageUrl': categoryForm.image,
                 },
                 key: formKey,
                 onChanged: () {},
@@ -63,6 +104,16 @@ class _AddCategoryState extends State<AddCategoryPage>
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              categoryForm.image != null
+                  ? Image.network(
+                      categoryForm.image ?? '',
+                      height: 200,
+                      width: 200,
+                    )
+                  : const SizedBox(),
               !_isLoading
                   ? FillButton(
                       onPressed: () {
@@ -70,7 +121,7 @@ class _AddCategoryState extends State<AddCategoryPage>
                       },
                       label: categoryForm.id == null ? 'Registrar' : 'Editar',
                     )
-                  : const Center(child: CircularProgressIndicator()),
+                  : simpleLoading(),
             ],
           ),
         ),
@@ -95,14 +146,21 @@ class _AddCategoryState extends State<AddCategoryPage>
 
   void register(GlobalKey<FormBuilderState> formkey, int? idCategory) async {
     formkey.currentState!.save();
-
+    bool isFile = formkey.currentState!.value['file'] != null;
     final json = {
       "name": formkey.currentState!.value['name'],
-      "image": {
-        "src":
-            await getUrlFileResult(formkey.currentState!.value['file'][0].path),
-      },
+      idCategory != null ? "id" : "": idCategory,
     };
+    if (isFile && formkey.currentState!.value['file'].length > 0) {
+      json.addAll(
+        {
+          "image": await getUrlFileResult(
+              formkey.currentState!.value['file'][0].path)
+        },
+      );
+    }
+    debugPrint(json.toString());
+
     setState(() {
       _isLoading = true;
     });
@@ -113,51 +171,53 @@ class _AddCategoryState extends State<AddCategoryPage>
     }
   }
 
-  updateCategory(int idCategory, Map<String, dynamic> json) async {
-    final update = await putAction('products/categories/$idCategory', json);
+  updateCategory(
+    int idCategory,
+    Map<String, dynamic> json,
+  ) async {
+    final updateCategory =
+        await putAction('products/categories/$idCategory', json);
 
-    if (validateStatus(update!.statusCode)) {
-      GlobalSnackBar.show(
-        context,
-        'Actualizacion exitosa',
-        backgroundColor: Colors.green,
-      );
-      setState(() {
-        _isLoading = false;
-      });
-      Navigator.pushReplacementNamed(context, 'list_products_page');
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
-      GlobalSnackBar.show(
-        context,
-        'Error al actualizar',
-        backgroundColor: Colors.red,
-      );
-    }
+    responsePost(
+      validateStatus(updateCategory!.statusCode),
+      'Categoria actualizada',
+      'Error al actualizar registro',
+    );
   }
 
-  postCategory(Map<String, dynamic> json) async {
-    final categoriesServices = CategoriesServices();
-    final newCategory = await categoriesServices.newCategory(json);
-    if (newCategory) {
+  postCategory(
+    Map<String, dynamic> json,
+  ) async {
+    final newCategory = await postAction('products/categories/', json);
+
+    responsePost(
+      validateStatus(newCategory!.statusCode),
+      'Categoria registrada',
+      'Error al registrar',
+    );
+  }
+
+  responsePost(bool isok, String messageSuccess, String messageError) {
+    if (isok) {
       GlobalSnackBar.show(
         context,
-        'Registro exitoso',
+        messageSuccess,
         backgroundColor: Colors.green,
       );
       setState(() {
         _isLoading = false;
       });
-      Navigator.pushReplacementNamed(context, 'list_products_page');
+      categoriesBloc.getCategories();
+      Navigator.pop(
+        context,
+      );
     } else {
       setState(() {
         _isLoading = false;
       });
       GlobalSnackBar.show(
         context,
-        'Error al registrar',
+        messageError,
         backgroundColor: Colors.red,
       );
     }

@@ -24,7 +24,7 @@ class SellHistory extends StatelessWidget {
             SellHistoryCard(),
             SellHistoryCard(), */
             StreamBuilder(
-              stream: orderBloc.odersList,
+              stream: orderBloc.ordersList,
               builder: (BuildContext context,
                   AsyncSnapshot<List<OrdersModel>> snapshot) {
                 if (!snapshot.hasData) {

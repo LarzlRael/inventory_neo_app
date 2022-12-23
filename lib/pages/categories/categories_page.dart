@@ -5,6 +5,8 @@ class CategoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categoriesBloc = CategoriesBloc();
+    categoriesBloc.getCategories();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
@@ -24,8 +26,8 @@ class CategoriesPage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            FutureBuilder(
-              future: getCategories(),
+            StreamBuilder(
+              stream: categoriesBloc.categoriesStream,
               builder: (
                 BuildContext context,
                 AsyncSnapshot<List<CategoriesModel>> snapshot,

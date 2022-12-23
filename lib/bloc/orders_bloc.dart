@@ -9,7 +9,7 @@ class OrdersBloc {
   }
   final _ordersLists = StreamController<List<OrdersModel>>.broadcast();
 
-  Stream<List<OrdersModel>> get odersList => _ordersLists.stream;
+  Stream<List<OrdersModel>> get ordersList => _ordersLists.stream;
   dispose() {
     _ordersLists.close();
   }

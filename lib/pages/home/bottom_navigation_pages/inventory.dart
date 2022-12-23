@@ -135,6 +135,9 @@ class CategoryCard extends StatelessWidget {
             arguments: CategoryForm(
               id: categoriesModel.id,
               name: categoriesModel.name,
+              image: categoriesModel.image != null
+                  ? categoriesModel.image!.src
+                  : null,
             ),
           );
         } else {
@@ -193,7 +196,7 @@ class CategoryCard extends StatelessWidget {
               right: -5,
               child: Image.network(
                 categoriesModel.image == null
-                    ? 'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png'
+                    ? 'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg'
                     : categoriesModel.image!.src,
                 width: 100,
               ),

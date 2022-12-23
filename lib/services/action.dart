@@ -13,5 +13,5 @@ Future<http.Response?> putAction(String url, Map<String, dynamic> body) async {
 }
 
 Future<http.Response?> deleteAction(String url) async {
-  return await Request.sendRequest(RequestType.delete, url, {});
+  return await Request.sendRequestWithToken(RequestType.delete, url, {}, '');
 }
