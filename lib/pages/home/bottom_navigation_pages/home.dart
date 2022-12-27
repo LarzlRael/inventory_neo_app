@@ -20,7 +20,7 @@ class Home extends StatelessWidget {
             ),
             SizedBox(
               /* fit: FlexFit.tight, */
-              height: MediaQuery.of(context).size.height * 0.2,
+              height: MediaQuery.of(context).size.height * 0.25,
               child: GridView.count(
                 /* shrinkWrap: true, */
                 /* physics: NeverScrollableScrollPhysics(), */

@@ -50,7 +50,7 @@ class CardInventorySelectableItems extends StatelessWidget {
                 return simpleLoading();
               }
 
-              return Flexible(
+              /* return Flexible(
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 200,
@@ -66,6 +66,22 @@ class CardInventorySelectableItems extends StatelessWidget {
                     );
                   },
                 ),
+              ); */
+              return Flexible(
+                child: GridView.count(
+                    /* shrinkWrap: true, */
+                    /* physics: NeverScrollableScrollPhysics(), */
+                    /* padding: const EdgeInsets.all(10), */
+                    childAspectRatio: 3 / 2,
+                    crossAxisCount: 2,
+                    children: snapshot.data!.map<Widget>(
+                      (product) {
+                        return CardInventorySelectable(
+                          productModel: product,
+                          cardInventoryProvider: cardInventoryProvider,
+                        );
+                      },
+                    ).toList()),
               );
             },
           ),
@@ -94,10 +110,12 @@ class _CardInventorySelectableState extends State<CardInventorySelectable> {
 
   @override
   void initState() {
-    setState(() {
-      isSelectable = widget.cardInventoryProvider.getListProductsId
-          .contains(widget.productModel.id);
-    });
+    setState(
+      () {
+        isSelectable = widget.cardInventoryProvider.getListProductsId
+            .contains(widget.productModel.id);
+      },
+    );
     super.initState();
   }
 
@@ -111,76 +129,66 @@ class _CardInventorySelectableState extends State<CardInventorySelectable> {
 
         widget.cardInventoryProvider.addProduct(widget.productModel);
       },
-      child: Stack(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 0, left: 5, right: 5),
-            /* height: MediaQuery.of(context).size.width * 0.9, */
-            color: isSelectable ? Colors.blue : Colors.white,
-            child: Card(
-              elevation: 0,
-              /* margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), */
-              child: Container(
-                /* color: _isSelected ? Colors.blue : Colors.white, */
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: Image.network(
-                        widget.productModel.images.isNotEmpty
-                            ? widget.productModel.images[0].src
-                            : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
-                        height: 150,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          /* mainAxisAlignment: MainAxisAlignment.start, */
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SimpleText(
-                              bottom: 2,
-                              top: 2,
-                              text: widget.productModel.price,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              lightThemeColor: Colors.pink,
-                            ),
-                            SimpleText(
-                              text: widget.productModel.name,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: Checkbox(
-                            value: isSelectable,
-                            onChanged: (value) {
-                              /*  widget.callback(widget.productModel);
-                                    setState(() {
-                                      isSelectable = value!;
-                                    }); */
-                            },
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+      child: Card(
+        elevation: 5,
+        /* margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), */
+        child: Column(
+          /* mainAxisAlignment: MainAxisAlignment.spaceAround, */
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                widget.productModel.images.isNotEmpty
+                    ? widget.productModel.images[0].src
+                    : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
+                /* height: 75, */
+                width: 50,
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-          /* Container(
-            color: Colors.blue.withOpacity(.7),
-          ), */
-        ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    /* mainAxisAlignment: MainAxisAlignment.start, */
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SimpleText(
+                        bottom: 2,
+                        top: 2,
+                        text: widget.productModel.price,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        lightThemeColor: Colors.pink,
+                      ),
+                      SimpleText(
+                        text: widget.productModel.name.toCapitalize(),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: Checkbox(
+                    value: isSelectable,
+                    onChanged: (value) {
+                      setState(() {
+                        isSelectable = !isSelectable;
+                      });
+
+                      widget.cardInventoryProvider
+                          .addProduct(widget.productModel);
+                    },
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

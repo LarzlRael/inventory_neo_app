@@ -7,3 +7,13 @@ Widget simpleLoading() {
     ),
   );
 }
+
+Widget simpleLoadingWithScaffold() {
+  return const Scaffold(
+    body: Expanded(
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    ),
+  );
+}

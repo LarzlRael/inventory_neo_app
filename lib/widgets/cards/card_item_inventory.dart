@@ -57,10 +57,14 @@ class CardItemInventory extends StatelessWidget {
                         lightThemeColor: Colors.grey,
                         bottom: 5,
                       ),
-                      SimpleText(
-                        text: productModel.name.toCapitalize(),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
+                      Container(
+                        width: 170,
+                        child: SimpleText(
+                          text: productModel.name.toCapitalize(),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          bottom: 5,
+                        ),
                       ),
                       SimpleText(
                         top: 5,

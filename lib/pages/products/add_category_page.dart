@@ -43,88 +43,104 @@ class _AddCategoryState extends State<AddCategoryPage>
             categoryForm.id == null ? 'Agregar categorias' : 'Editar categoria',
         showTitle: true,
         actions: [
-          categoryForm.id == null
-              ? const SizedBox()
-              : IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () {
-                    showConfirmDialog(
-                      context,
-                      'Eliminar categoria',
-                      '¿Estas seguro de eliminar esta categoria?',
-                      () async {
-                        final response = await deleteAction(
-                            'products/categories/${categoryForm.id}?force=true');
-                        if (!mounted) return;
-                        if (validateStatus(response!.statusCode)) {
-                          GlobalSnackBar.show(
-                              context, "Categoria eliminado correctamente",
-                              backgroundColor: Colors.green);
-                          Navigator.pop(
-                            context,
-                          );
-                          categoriesBloc.getCategories();
-                        } else {
-                          GlobalSnackBar.show(
-                            context,
-                            "No se pudo eliminar el producto",
-                            backgroundColor: Colors.red,
-                          );
-                        }
-                      },
-                    );
-                  }),
+          Visibility(
+            visible: categoryForm.id != null,
+            child: IconButton(
+              icon: const Icon(Icons.delete, color: Colors.red),
+              onPressed: () {
+                showConfirmDialog(
+                  context,
+                  'Eliminar categoria',
+                  '¿Estas seguro de eliminar esta categoria?',
+                  () async {
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    final response = await deleteAction(
+                        'products/categories/${categoryForm.id}?force=true');
+                    setState(() {
+                      _isLoading = false;
+                    });
+                    if (!mounted) return;
+                    if (validateStatus(response!.statusCode)) {
+                      GlobalSnackBar.show(
+                          context, "Categoria eliminado correctamente",
+                          backgroundColor: Colors.green);
+                      Navigator.pop(
+                        context,
+                      );
+                      categoriesBloc.getCategories();
+                    } else {
+                      GlobalSnackBar.show(
+                        context,
+                        "No se pudo eliminar esta categoria",
+                        backgroundColor: Colors.red,
+                      );
+                      setState(() {
+                        _isLoading = false;
+                      });
+                    }
+                  },
+                );
+              },
+            ),
+          )
         ],
       ),
       body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Column(
-            children: [
-              FormBuilder(
-                initialValue: {
-                  'name': categoryForm.name,
-                  'file': categoryForm.image,
-                  'id': categoryForm.id,
-                  'imageUrl': categoryForm.image,
-                },
-                key: formKey,
-                onChanged: () {},
-                autovalidateMode: AutovalidateMode.disabled,
-                skipDisabled: true,
+        child: !_isLoading
+            ? Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Column(
-                  children: const [
-                    CustomTextField(
-                      label: 'Nombre de categoria',
-                      name: 'name',
+                  children: [
+                    FormBuilder(
+                      initialValue: {
+                        'name': categoryForm.name,
+                        'file': categoryForm.image,
+                        'id': categoryForm.id,
+                        'imageUrl': categoryForm.image,
+                      },
+                      key: formKey,
+                      onChanged: () {},
+                      autovalidateMode: AutovalidateMode.disabled,
+                      skipDisabled: true,
+                      child: Column(
+                        children: const [
+                          CustomTextField(
+                            label: 'Nombre de categoria',
+                            name: 'name',
+                          ),
+                          CustomFileField(
+                            name: 'file',
+                          ),
+                        ],
+                      ),
                     ),
-                    CustomFileField(
-                      name: 'file',
+                    const SizedBox(
+                      height: 20,
                     ),
+                    Visibility(
+                      visible: categoryForm.image != null,
+                      child: Image.network(
+                        categoryForm.image ?? '',
+                        height: 200,
+                        width: 200,
+                      ),
+                    ),
+                    !_isLoading
+                        ? FillButton(
+                            onPressed: () {
+                              register(formKey, categoryForm.id);
+                            },
+                            label: categoryForm.id == null
+                                ? 'Registrar'
+                                : 'Editar',
+                          )
+                        : simpleLoading(),
                   ],
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              categoryForm.image != null
-                  ? Image.network(
-                      categoryForm.image ?? '',
-                      height: 200,
-                      width: 200,
-                    )
-                  : const SizedBox(),
-              !_isLoading
-                  ? FillButton(
-                      onPressed: () {
-                        register(formKey, categoryForm.id);
-                      },
-                      label: categoryForm.id == null ? 'Registrar' : 'Editar',
-                    )
-                  : simpleLoading(),
-            ],
-          ),
-        ),
+              )
+            : simpleLoading(),
       ),
     );
   }
@@ -147,6 +163,9 @@ class _AddCategoryState extends State<AddCategoryPage>
   void register(GlobalKey<FormBuilderState> formkey, int? idCategory) async {
     formkey.currentState!.save();
     bool isFile = formkey.currentState!.value['file'] != null;
+    setState(() {
+      _isLoading = true;
+    });
     final json = {
       "name": formkey.currentState!.value['name'],
       idCategory != null ? "id" : "": idCategory,
@@ -154,16 +173,15 @@ class _AddCategoryState extends State<AddCategoryPage>
     if (isFile && formkey.currentState!.value['file'].length > 0) {
       json.addAll(
         {
-          "image": await getUrlFileResult(
-              formkey.currentState!.value['file'][0].path)
+          "image": {
+            "src": await getUrlFileResult(
+                formkey.currentState!.value['file'][0].path)
+          }
         },
       );
     }
     debugPrint(json.toString());
 
-    setState(() {
-      _isLoading = true;
-    });
     if (idCategory != null) {
       await updateCategory(idCategory, json);
     } else {

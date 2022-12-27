@@ -26,6 +26,7 @@ class AddProduct extends StatefulWidget {
 
 class _AddCategoriesState extends State<AddProduct>
     with AutomaticKeepAliveClientMixin {
+  final productsBloc = ProductsBloc();
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -144,6 +145,8 @@ class _AddCategoriesState extends State<AddProduct>
 
   void register(GlobalKey<FormBuilderState> formkey, {int? idProduct}) async {
     formkey.currentState!.save();
+
+    bool isFile = formkey.currentState!.value['file'] != null;
     final productoService = ProductsServices();
 
     final json = {
@@ -158,19 +161,24 @@ class _AddCategoriesState extends State<AddProduct>
           "id": formkey.currentState!.value['category'],
         },
       ],
-      "images": [
-        {
-          "src": await getUrlFileResult(
-              formkey.currentState!.value['file'][0].path),
-        }
-      ],
       "tags": formkey.currentState!.value['tags']
           .map((e) => {
                 "id": e,
               })
           .toList()
     };
-    /* debugPrint(json.toString()); */
+    if (isFile && formkey.currentState!.value['file'].length > 0) {
+      json.addAll(
+        {
+          "image": [
+            {
+              "src": await getUrlFileResult(
+                  formkey.currentState!.value['file'][0].path)
+            }
+          ]
+        },
+      );
+    }
     setState(() {
       _isLoading = true;
     });
@@ -188,14 +196,20 @@ class _AddCategoriesState extends State<AddProduct>
         'Registro exitoso',
         backgroundColor: Colors.green,
       );
-      setState(() {
-        _isLoading = false;
-      });
-      Navigator.pushReplacementNamed(context, 'list_products_page');
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+
+      Navigator.pushNamed(context, 'list_products_page');
+      productsBloc.getProducts();
     } else {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
       GlobalSnackBar.show(
         context,
         'Error al registrar',

@@ -56,10 +56,12 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                   if (!mounted) return;
                   if (response) {
                     GlobalSnackBar.show(
-                        context, "Producto eliminado correctamente");
-                    Navigator.pop(
                       context,
+                      "Producto eliminado correctamente",
+                      backgroundColor: Colors.green,
                     );
+                    /* productBloc.getProducts(); */
+                    Navigator.pop(context);
                   } else {
                     GlobalSnackBar.show(
                         context, "No se pudo eliminar el producto");
@@ -80,18 +82,27 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  widget.productModel.images.isNotEmpty
-                      ? widget.productModel.images[0].src
-                      : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
-                  height: MediaQuery.of(context).size.height * 0.30,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+              Hero(
+                tag: widget.productModel.id,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(
+                    widget.productModel.images.isNotEmpty
+                        ? widget.productModel.images[0].src
+                        : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
+                    height: MediaQuery.of(context).size.height * 0.30,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-              Row(
+              SimpleText(
+                text: widget.productModel.name.toTitleCase(),
+                fontSize: 22,
+                /* top: 10, */
+                fontWeight: FontWeight.w700,
+              ),
+              /* Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SimpleText(
@@ -107,7 +118,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                         Text('Cholita', style: TextStyle(color: Colors.white)),
                   ),
                 ],
-              ),
+              ), */
               SimpleText(
                 text: widget.productModel.categories[0].name,
                 fontSize: 14,

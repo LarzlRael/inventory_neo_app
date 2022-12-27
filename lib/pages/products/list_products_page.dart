@@ -53,19 +53,31 @@ class ListProductsPage extends StatelessWidget {
               }
 
               return Expanded(
-                child: GridView.count(
-                    /* shrinkWrap: true, */
-                    /* physics: NeverScrollableScrollPhysics(), */
-                    /* padding: const EdgeInsets.all(10), */
-                    /* childAspectRatio: 3 / 2, */
-                    crossAxisCount: 2,
+                child: GridView.builder(
+                  /* shrinkWrap: true, */
+                  /* physics: NeverScrollableScrollPhysics(), */
+                  /* padding: const EdgeInsets.all(10), */
+                  /* childAspectRatio: 3 / 2, */
+                  /* crossAxisCount: 2,
                     children: snapshot.data!.map<Widget>(
                       (product) {
                         return CardItemInventoryVertical(
                           productModel: product,
                         );
                       },
-                    ).toList()),
+                    ).toList()), */
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 250,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
+                  ),
+                  itemCount: snapshot.data?.length,
+                  itemBuilder: (_, int index) {
+                    return CardItemInventoryVertical(
+                      productModel: snapshot.data![index],
+                    );
+                  },
+                ),
               );
             },
           ),

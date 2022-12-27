@@ -1,13 +1,13 @@
 part of '../pages.dart';
 
-class SellProducts extends StatefulWidget {
-  const SellProducts({super.key});
+class SellProductsPage extends StatefulWidget {
+  const SellProductsPage({super.key});
 
   @override
-  State<SellProducts> createState() => _SellProductsState();
+  State<SellProductsPage> createState() => _SellProductsPageState();
 }
 
-class _SellProductsState extends State<SellProducts> {
+class _SellProductsPageState extends State<SellProductsPage> {
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -100,14 +100,17 @@ class _SellProductsState extends State<SellProducts> {
                         bottom: 0,
                       ),
                       ClientItem(
-                          clientModel: cardInventoryProvider.getClient!,
-                          trailing: IconButton(
-                            icon: const Icon(Icons.cancel_rounded,
-                                color: Colors.red),
-                            onPressed: () {
-                              cardInventoryProvider.clearClient();
-                            },
-                          )),
+                        clientModel: cardInventoryProvider.getClient!,
+                        trailing: IconButton(
+                          icon: const Icon(
+                            Icons.cancel_rounded,
+                            color: Colors.red,
+                          ),
+                          onPressed: () {
+                            cardInventoryProvider.clearClient();
+                          },
+                        ),
+                      ),
                     ],
                   )
                 : const SimpleText(
