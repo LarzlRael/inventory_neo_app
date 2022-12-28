@@ -57,10 +57,12 @@ class CardItemInventory extends StatelessWidget {
                         lightThemeColor: Colors.grey,
                         bottom: 5,
                       ),
-                      Container(
-                        width: 170,
+                      SizedBox(
+                        width: 150,
                         child: SimpleText(
-                          text: productModel.name.toCapitalize(),
+                          text: productModel.name.length > 30
+                              ? '${productModel.name.substring(0, 30)}...'
+                              : productModel.name,
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
                           bottom: 5,

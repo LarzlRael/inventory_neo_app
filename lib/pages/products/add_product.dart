@@ -5,8 +5,8 @@ class ItemDetails {
   String name;
   String price;
   String description;
-  String category;
-  List<int> idTags;
+  int category;
+  List<String> idTags;
   ItemDetails({
     required this.name,
     required this.price,
@@ -35,7 +35,7 @@ class _AddCategoriesState extends State<AddProduct>
       name: '',
       price: '',
       description: '',
-      category: 'que fue gente',
+      category: 0,
       idTags: [],
     );
     final arguments =
@@ -70,8 +70,8 @@ class _AddCategoriesState extends State<AddProduct>
                   'name': itemDetails.name,
                   'regular_price': itemDetails.price,
                   'description': itemDetails.description,
-                  /* 'category': itemDetails.category, */
-                  /* 'tags': itemDetails.idTags, */
+                  'category': itemDetails.category,
+                  'tags': itemDetails.idTags,
                   /* 'file': itemDetails.file, */
                 },
                 onChanged: () {
@@ -81,7 +81,7 @@ class _AddCategoriesState extends State<AddProduct>
                 autovalidateMode: AutovalidateMode.disabled,
                 skipDisabled: true,
                 child: Column(
-                  children: const [
+                  children: [
                     CustomTextField(
                       label: 'Nombre del producto',
                       name: 'name',
@@ -104,6 +104,7 @@ class _AddCategoriesState extends State<AddProduct>
                       formFieldName: 'tags',
                       placeholder: 'Seleccione una categoria',
                       title: 'Materiales',
+                      options: itemDetails.idTags,
                     ),
                     CustomFileField(
                       name: 'file',

@@ -11,7 +11,9 @@ class CardInventorySelectableItems extends StatelessWidget {
     final cardInventoryProvider =
         Provider.of<CardInventoryProvider>(context, listen: true);
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 15),
+      padding: const EdgeInsets.symmetric(
+        vertical: 15,
+      ),
       height: MediaQuery.of(context).size.height * 0.9,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

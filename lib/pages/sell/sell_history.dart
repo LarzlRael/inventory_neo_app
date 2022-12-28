@@ -80,7 +80,9 @@ class SellHistoryCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SimpleText(
-                  text: order.lineItems[0].name.toCapitalize(),
+                  text: order.lineItems[0].name.length > 20
+                      ? '${order.lineItems[0].name.substring(0, 20).toCapitalize()}...'
+                      : order.lineItems[0].name.toCapitalize(),
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                 ),

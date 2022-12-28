@@ -28,12 +28,14 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 'add_product',
                 arguments: ItemDetails(
                   idProduct: widget.productModel.id,
-                  category: widget.productModel.categories.first.name,
+                  category: widget.productModel.categories.first.id,
                   name: widget.productModel.name,
                   price: widget.productModel.price,
                   description:
                       removeAllHtmlTags(widget.productModel.description),
-                  idTags: [],
+                  idTags: widget.productModel.tags
+                      .map((e) => e.id.toString())
+                      .toList(),
                 ),
               );
             },

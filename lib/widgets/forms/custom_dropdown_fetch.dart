@@ -42,6 +42,7 @@ class FutureSubjectCategory extends StatefulWidget {
 class _FutureSubjectCategoryState extends State<FutureSubjectCategory>
     with AutomaticKeepAliveClientMixin {
   final List<CategoriesModel> category = [];
+  bool _isLoading = true;
 
   @override
   initState() {
@@ -49,6 +50,7 @@ class _FutureSubjectCategoryState extends State<FutureSubjectCategory>
     widget.categoriesServices.getCategories().then((value) {
       setState(() {
         category.addAll(value);
+        _isLoading = false;
       });
     });
   }
@@ -56,48 +58,50 @@ class _FutureSubjectCategoryState extends State<FutureSubjectCategory>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SimpleText(
-          text: widget.title,
-          fontSize: 16,
-          fontWeight: FontWeight.w800,
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Card(
-          elevation: 5,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: FormBuilderDropdown(
-              name: widget.formFieldName,
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                labelStyle: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 18,
-                ),
+    return !_isLoading
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SimpleText(
+                text: widget.title,
+                fontSize: 16,
+                fontWeight: FontWeight.w800,
               ),
-              /* initialValue: category[0], */
-              hint: Text(widget.placeholder),
-              /* validator: FormBuilderValidators.required(), */
-              items: category
-                  .map(
-                    (category) => DropdownMenuItem(
-                      value: category.id,
-                      child: Text(
-                        category.name,
+              const SizedBox(
+                width: 10,
+              ),
+              Card(
+                elevation: 5,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: FormBuilderDropdown(
+                    name: widget.formFieldName,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      labelStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 18,
                       ),
                     ),
-                  )
-                  .toList(),
-            ),
-          ),
-        ),
-      ],
-    );
+                    /* initialValue: category[0], */
+                    hint: Text(widget.placeholder),
+                    /* validator: FormBuilderValidators.required(), */
+                    items: category
+                        .map(
+                          (category) => DropdownMenuItem(
+                            value: category.id,
+                            child: Text(
+                              category.name,
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ),
+            ],
+          )
+        : const Center(child: CircularProgressIndicator());
   }
 
   @override
