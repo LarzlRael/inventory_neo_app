@@ -29,6 +29,11 @@ class _AddCategoriesState extends State<AddProduct> {
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
+    final categoriesMaterialProviders =
+        Provider.of<CategoriesMaterialProviders>(
+      context,
+      listen: false,
+    );
     final itemDetails = ItemDetails(
       idProduct: null,
       name: '',
@@ -98,12 +103,14 @@ class _AddCategoriesState extends State<AddProduct> {
                       title: 'Categoria',
                       formFieldName: 'category',
                       placeholder: 'Seleccione una categoria',
+                      categories: categoriesMaterialProviders.getCategories,
                     ),
                     CustomRadioButtons(
                       formFieldName: 'tags',
                       placeholder: 'Seleccione una categoria',
                       title: 'Materiales',
                       options: itemDetails.idTags,
+                      materiales: categoriesMaterialProviders.getMateriales,
                     ),
                     CustomFileField(
                       name: 'file',
@@ -201,11 +208,8 @@ class _AddCategoriesState extends State<AddProduct> {
         'Registro exitoso',
         backgroundColor: Colors.green,
       );
-
-      if (mounted) {
-        Navigator.pushNamed(context, 'list_products_page');
-        productsBloc.getProducts();
-      }
+      Navigator.pushNamed(context, 'list_products_page');
+      productsBloc.getProducts();
     } else {
       setState(() {
         _isLoading = false;

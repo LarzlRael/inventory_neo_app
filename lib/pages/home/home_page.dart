@@ -11,6 +11,10 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final categoriesMaterialProviders =
+        Provider.of<CategoriesMaterialProviders>(context, listen: false);
+    categoriesMaterialProviders.setCategoriesWithFetch();
+    categoriesMaterialProviders.setMaterialTagsFetch();
     return Scaffold(
       appBar: AppBar(
         elevation: 1,

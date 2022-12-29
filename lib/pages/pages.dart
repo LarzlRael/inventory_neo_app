@@ -8,6 +8,7 @@ import 'package:inventory_app/bloc/blocs.dart';
 import 'package:inventory_app/data/data.dart';
 import 'package:inventory_app/models/models.dart';
 import 'package:inventory_app/providers/card_inventory_provider.dart';
+import 'package:inventory_app/providers/categories_material_providers.dart';
 import 'package:inventory_app/services/services.dart';
 import 'package:inventory_app/utils/utils.dart';
 import 'package:inventory_app/widgets/buttons/buttons.dart';

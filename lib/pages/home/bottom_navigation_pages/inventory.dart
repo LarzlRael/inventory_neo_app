@@ -1,31 +1,13 @@
 part of '../../pages.dart';
 
-class Inventory extends StatefulWidget {
-  const Inventory({super.key});
+class Inventory extends StatelessWidget {
+  Inventory({super.key});
 
-  @override
-  State<Inventory> createState() => _InventoryState();
-}
-
-class _InventoryState extends State<Inventory>
-    with AutomaticKeepAliveClientMixin {
   final pageViewController = PageController();
-  final List<CategoriesModel> category = [];
-  @override
-  initState() {
-    super.initState();
-    CategoriesServices().getCategories().then((value) {
-      if (mounted) {
-        setState(() {
-          category.addAll(value);
-        });
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    final inventoryProvider = Provider.of<CategoriesMaterialProviders>(context);
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(
@@ -61,10 +43,10 @@ class _InventoryState extends State<Inventory>
                   crossAxisSpacing: 5,
                   mainAxisSpacing: 5,
                 ),
-                itemCount: category.length,
+                itemCount: inventoryProvider.getCategories.length,
                 itemBuilder: (BuildContext ctx, index) {
                   return CategoryCard(
-                    categoriesModel: category[index],
+                    categoriesModel: inventoryProvider.getCategories[index],
                   );
                 },
               ),
@@ -110,9 +92,6 @@ class _InventoryState extends State<Inventory>
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
 
 class CategoryCard extends StatelessWidget {

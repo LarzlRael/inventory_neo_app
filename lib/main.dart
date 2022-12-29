@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:inventory_app/providers/card_inventory_provider.dart';
+import 'package:inventory_app/providers/categories_material_providers.dart';
 import 'package:inventory_app/routes/routes.dart';
 import 'package:provider/provider.dart';
 
@@ -20,11 +21,12 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CardInventoryProvider()),
+        ChangeNotifierProvider(create: (_) => CategoriesMaterialProviders()),
       ],
       child: MaterialApp(
         title: 'Material App',
         routes: appRoutes,
-        initialRoute: 'login',
+        initialRoute: 'home',
         debugShowCheckedModeBanner: false,
       ),
     );

@@ -4,66 +4,83 @@ class CustomFormBuilderFetchDropdown extends StatelessWidget {
   final String title;
   final String formFieldName;
   final String placeholder;
+  final List<CategoriesModel> categories;
   const CustomFormBuilderFetchDropdown({
     Key? key,
     required this.title,
     required this.formFieldName,
     required this.placeholder,
+    required this.categories,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final categoriesServices = CategoriesServices();
-    return FutureSubjectCategory(
-        title: title,
-        categoriesServices: categoriesServices,
-        formFieldName: formFieldName,
-        placeholder: placeholder);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SimpleText(
+          text: title,
+          fontSize: 16,
+          fontWeight: FontWeight.w800,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Card(
+          elevation: 5,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: FormBuilderDropdown(
+              name: formFieldName,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                labelStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 18,
+                ),
+              ),
+              /* initialValue: category[0], */
+              hint: Text(placeholder),
+              /* validator: FormBuilderValidators.required(), */
+              items: categories
+                  .map(
+                    (category) => DropdownMenuItem(
+                      value: category.id,
+                      child: Text(
+                        category.name,
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
-class FutureSubjectCategory extends StatefulWidget {
-  final CategoriesServices categoriesServices;
+/* class FutureSubjectCategory extends StatelessWidget {
   final String title;
   final String formFieldName;
   final String placeholder;
-  const FutureSubjectCategory({
+  FutureSubjectCategory({
     Key? key,
-    required this.categoriesServices,
     required this.title,
     required this.formFieldName,
     required this.placeholder,
   }) : super(key: key);
 
-  @override
-  State<FutureSubjectCategory> createState() => _FutureSubjectCategoryState();
-}
-
-class _FutureSubjectCategoryState extends State<FutureSubjectCategory>
-    with AutomaticKeepAliveClientMixin {
   final List<CategoriesModel> category = [];
-  bool _isLoading = true;
-
-  @override
-  initState() {
-    super.initState();
-    widget.categoriesServices.getCategories().then((value) {
-      setState(() {
-        category.addAll(value);
-        _isLoading = false;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return !_isLoading
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SimpleText(
-                text: widget.title,
+                text: title,
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
               ),
@@ -75,7 +92,7 @@ class _FutureSubjectCategoryState extends State<FutureSubjectCategory>
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: FormBuilderDropdown(
-                    name: widget.formFieldName,
+                    name: formFieldName,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       labelStyle: TextStyle(
@@ -84,7 +101,7 @@ class _FutureSubjectCategoryState extends State<FutureSubjectCategory>
                       ),
                     ),
                     /* initialValue: category[0], */
-                    hint: Text(widget.placeholder),
+                    hint: Text(placeholder),
                     /* validator: FormBuilderValidators.required(), */
                     items: category
                         .map(
@@ -103,7 +120,5 @@ class _FutureSubjectCategoryState extends State<FutureSubjectCategory>
           )
         : const Center(child: CircularProgressIndicator());
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
+ */

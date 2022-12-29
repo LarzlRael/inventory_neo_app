@@ -5,7 +5,7 @@ import 'package:inventory_app/widgets/buttons/buttons.dart';
 final List<Widget> bottomItemsWithLogin = <Widget>[
   const Home(),
   const Register(),
-  const Inventory(),
+  Inventory(),
   const Profile(),
 ];
 
