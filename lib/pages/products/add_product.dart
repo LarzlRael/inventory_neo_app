@@ -24,8 +24,7 @@ class AddProduct extends StatefulWidget {
   State<AddProduct> createState() => _AddCategoriesState();
 }
 
-class _AddCategoriesState extends State<AddProduct>
-    with AutomaticKeepAliveClientMixin {
+class _AddCategoriesState extends State<AddProduct> {
   final productsBloc = ProductsBloc();
   bool _isLoading = false;
   @override
@@ -35,7 +34,7 @@ class _AddCategoriesState extends State<AddProduct>
       name: '',
       price: '',
       description: '',
-      category: 0,
+      category: 15,
       idTags: [],
     );
     final arguments =
@@ -48,7 +47,6 @@ class _AddCategoriesState extends State<AddProduct>
       itemDetails.category = arguments.category;
       itemDetails.idTags = arguments.idTags;
     }
-    super.build(context);
     final formKey = GlobalKey<FormBuilderState>();
     return Scaffold(
       appBar: AppBarWithBackIcon(
@@ -85,6 +83,7 @@ class _AddCategoriesState extends State<AddProduct>
                     CustomTextField(
                       label: 'Nombre del producto',
                       name: 'name',
+                      keyboardType: TextInputType.emailAddress,
                     ),
                     CustomTextField(
                       label: 'Precio',
@@ -121,7 +120,9 @@ class _AddCategoriesState extends State<AddProduct>
                           ? 'Registrar'
                           : 'Editar',
                     )
-                  : const Center(child: CircularProgressIndicator()),
+                  : const Center(
+                      child: CircularProgressIndicator(),
+                    ),
             ],
           ),
         ),
@@ -189,6 +190,9 @@ class _AddCategoriesState extends State<AddProduct>
       edit: idProduct != null,
       idProduct: idProduct,
     );
+    setState(() {
+      _isLoading = false;
+    });
 
     if (!mounted) return;
     if (correct) {
@@ -197,20 +201,16 @@ class _AddCategoriesState extends State<AddProduct>
         'Registro exitoso',
         backgroundColor: Colors.green,
       );
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
 
-      Navigator.pushNamed(context, 'list_products_page');
-      productsBloc.getProducts();
-    } else {
       if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
+        Navigator.pushNamed(context, 'list_products_page');
+        productsBloc.getProducts();
       }
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+
       GlobalSnackBar.show(
         context,
         'Error al registrar',
@@ -218,7 +218,4 @@ class _AddCategoriesState extends State<AddProduct>
       );
     }
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

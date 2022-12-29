@@ -30,6 +30,7 @@ class CustomTextField extends StatelessWidget {
             child: FormBuilderTextField(
               autovalidateMode: AutovalidateMode.always,
               name: name,
+              textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(
                 /* labelText: 'Nombre completo', */
                 /* Remove border */
