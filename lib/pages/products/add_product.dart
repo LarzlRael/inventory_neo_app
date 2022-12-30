@@ -67,7 +67,7 @@ class _AddCategoriesState extends State<AddProduct> {
           child: Column(
             children: [
               FormBuilder(
-                /* enabled: !_isLoading, */
+                enabled: !_isLoading,
                 key: formKey,
                 initialValue: {
                   'name': itemDetails.name,

@@ -128,11 +128,10 @@ class _CardInventorySelectableState extends State<CardInventorySelectable> {
         setState(() {
           isSelectable = !isSelectable;
         });
-
         widget.cardInventoryProvider.addProduct(widget.productModel);
       },
       child: Card(
-        elevation: 5,
+        elevation: 2,
         /* margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), */
         child: Column(
           /* mainAxisAlignment: MainAxisAlignment.spaceAround, */
@@ -144,11 +143,39 @@ class _CardInventorySelectableState extends State<CardInventorySelectable> {
                     ? widget.productModel.images[0].src
                     : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
                 /* height: 75, */
-                width: 50,
+                width: 65,
                 fit: BoxFit.cover,
               ),
             ),
-            Row(
+            ListTile(
+              subtitle: SimpleText(
+                text: widget.productModel.name.length > 30
+                    ? '${widget.productModel.name.substring(0, 30).toCapitalize()}...'
+                    : widget.productModel.name.toCapitalize(),
+                fontSize: 12,
+                fontWeight: FontWeight.w300,
+              ),
+              title: SimpleText(
+                text: widget.productModel.price,
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                lightThemeColor: Colors.pink,
+              ),
+              trailing: Checkbox(
+                value: isSelectable,
+                onChanged: (value) {
+                  setState(
+                    () {
+                      isSelectable = !isSelectable;
+                    },
+                  );
+                  widget.cardInventoryProvider.addProduct(
+                    widget.productModel,
+                  );
+                },
+              ),
+            ),
+            /* Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
@@ -172,7 +199,7 @@ class _CardInventorySelectableState extends State<CardInventorySelectable> {
                     ],
                   ),
                 ),
-                SizedBox(
+                /* SizedBox(
                   width: 24,
                   height: 24,
                   child: Checkbox(
@@ -186,9 +213,9 @@ class _CardInventorySelectableState extends State<CardInventorySelectable> {
                           .addProduct(widget.productModel);
                     },
                   ),
-                ),
+                ), */
               ],
-            )
+            ) */
           ],
         ),
       ),

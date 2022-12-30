@@ -59,7 +59,9 @@ class CardItemInventoryVertical extends StatelessWidget {
                             lightThemeColor: Colors.pink,
                           ),
                           SimpleText(
-                            text: productModel.name.toCapitalize(),
+                            text: productModel.name.length > 60
+                                ? '${productModel.name.substring(0, 60).toCapitalize()}...'
+                                : productModel.name.toCapitalize(),
                             fontSize: 13,
                             fontWeight: FontWeight.w300,
                           ),

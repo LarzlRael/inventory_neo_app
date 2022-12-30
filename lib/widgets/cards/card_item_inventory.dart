@@ -23,13 +23,57 @@ class CardItemInventory extends StatelessWidget {
         );
       },
       child: Card(
-        elevation: 5,
+        elevation: 2,
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            /* mainAxisAlignment: MainAxisAlignment.spaceBetween, */
+        child: ListTile(
+          leading: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.network(
+              productModel.images.isNotEmpty
+                  ? productModel.images[0].src
+                  : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
+              height: 75,
+              width: 100,
+              fit: BoxFit.cover,
+            ),
+          ),
+          title: SimpleText(
+            text: productModel.name.toCapitalize(),
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            bottom: 5,
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SimpleText(
+                text: productModel.categories[0].name.toCapitalize(),
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                lightThemeColor: Colors.grey,
+                bottom: 5,
+              ),
+              SimpleText(
+                top: 5,
+                text: productModel.price,
+                fontSize: 15,
+                fontWeight: FontWeight.w700,
+              ),
+            ],
+          ),
+          trailing: IconButton(
+            icon: const Icon(Icons.cancel, color: Colors.red),
+            onPressed: () {
+              cardInventoryProvider.deleteProduct(productModel);
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/* children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
@@ -93,10 +137,4 @@ class CardItemInventory extends StatelessWidget {
                   color: Colors.red,
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+            ], */
