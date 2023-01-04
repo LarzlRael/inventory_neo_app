@@ -29,9 +29,11 @@ class NoInformation extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, size: 150, color: Colors.black),
-            const SizedBox(height: 15),
-            Text(text),
-            const SizedBox(height: 15),
+            SimpleText(
+              text: text,
+              top: 10,
+              bottom: 10,
+            ),
             showButton
                 ? Row(
                     /* mainAxisAlignment: MainAxisAlignment.center, */

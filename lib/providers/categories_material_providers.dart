@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:inventory_app/models/models.dart';
-import 'package:inventory_app/services/services.dart';
+part of 'providers.dart';
 
 class CategoriesMaterialProviders extends ChangeNotifier {
   List<CategoriesModel> _categories = [];

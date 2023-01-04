@@ -20,11 +20,11 @@ class ClientProfilePage extends StatelessWidget {
               Navigator.pushNamed(context, 'client_register_page',
                   arguments: ClientData(
                     idClient: clientModel.id,
-                    address: clientModel.billing.address1,
+                    address: clientModel.address1,
                     email: clientModel.email,
                     lastName: clientModel.lastName,
                     name: clientModel.firstName,
-                    phone: clientModel.billing.phone,
+                    phone: clientModel.phone,
                   ));
             },
           ),
@@ -38,15 +38,17 @@ class ClientProfilePage extends StatelessWidget {
                 'Eliminar',
                 '¿Estás seguro de eliminar este cliente?',
                 () async {
-                  final response = await cientServices.deleteClient(
-                    clientModel.id,
-                  );
+                  final response = await deleteAction(
+                      'api/client/${clientModel.id}',
+                      useAuxiliarUrl: true);
 
-                  GlobalSnackBar.show(
-                      context, "Cliente eliminado correctamente");
-                  if (response) {
-                    Navigator.pushReplacementNamed(
-                        context, 'list_products_page');
+                  if (validateStatus(response!.statusCode)) {
+                    GlobalSnackBar.show(
+                        context, "Cliente eliminado correctamente");
+                    Navigator.pushReplacementNamed(context, 'clients');
+                  } else {
+                    GlobalSnackBar.show(context, "Error al eliminar el cliente",
+                        backgroundColor: Colors.red);
                   }
                 },
               );
@@ -85,7 +87,7 @@ class ClientProfilePage extends StatelessWidget {
                     lightThemeColor: Colors.white,
                   ),
                   SimpleText(
-                    text: clientModel.billing.address1,
+                    text: clientModel.address1.toCapitalize(),
                     fontSize: 14,
                     fontWeight: FontWeight.w300,
                     lightThemeColor: Colors.white,
@@ -121,7 +123,7 @@ class ClientProfilePage extends StatelessWidget {
                 cardContainer('Informacion del cliente', [
                   cardInformation(
                     'Telefono',
-                    clientModel.billing.phone,
+                    clientModel.phone,
                     Row(
                       children: [
                         IconButton(
@@ -146,7 +148,7 @@ class ClientProfilePage extends StatelessWidget {
                   ), */
                   cardInformation(
                     'Cliente desde: ',
-                    literalDate(clientModel.dateCreated),
+                    literalDateWithMount(clientModel.createdAt),
                     null,
                   ),
                   cardInformation(

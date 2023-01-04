@@ -1,15 +1,17 @@
 part of '../pages.dart';
 
 class SelectLoginPage extends StatelessWidget {
-  const SelectLoginPage({super.key});
+  SelectLoginPage({super.key});
+  final _formKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWithBackIcon(
+      /*  appBar: AppBarWithBackIcon(
         appBar: AppBar(),
-        /* title: 'Iniciar sesión', */
-      ),
+        title: 'Iniciar sesión',
+        showTitle: false,
+      ), */
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -25,13 +27,13 @@ class SelectLoginPage extends StatelessWidget {
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
-              const Icon(
+              /* const Icon(
                 Icons.tv,
                 size: 200,
-              ),
+              ), */
               Column(
                 children: [
-                  LoginButton(
+                  /* LoginButton(
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -49,9 +51,31 @@ class SelectLoginPage extends StatelessWidget {
                     backGroundColor: Colors.blue,
                     icon: Icons.g_mobiledata,
                     textColor: Colors.white,
+                  ), */
+                  FormBuilder(
+                    key: _formKey,
+                    child: Column(
+                      children: const [
+                        CustomLoginTextField(
+                          placeholder: 'Numero de telefono',
+                          icon: Icons.phone,
+                          name: 'phone',
+                          keyboardType: TextInputType.phone,
+                        ),
+                        CustomLoginTextField(
+                          placeholder: 'Contraseña',
+                          icon: Icons.password,
+                          name: 'password',
+                          passwordField: true,
+                          /* keyboardType: TextInputType.phone, */
+                        ),
+                      ],
+                    ),
                   ),
                   LoginButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      saveForm(context);
+                    },
                     paddingVertical: 12,
                     spaceBetweenIconAndText: 15,
                     label: 'Con numero de celular',
@@ -68,5 +92,24 @@ class SelectLoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  saveForm(BuildContext context) async {
+    _formKey.currentState!.save();
+    final data = {
+      'phone': _formKey.currentState!.fields['phone']!.value,
+      'password': _formKey.currentState!.fields['password']!.value,
+    };
+
+    final post =
+        await postAction('api/client/login', data, useAuxiliarUrl: true);
+    if (validateStatus(post!.statusCode)) {
+      final client = loginClientModelFromJson(post.body);
+      Navigator.pushReplacementNamed(context, 'home');
+      GlobalSnackBar.show(context, "Bienvenido", backgroundColor: Colors.green);
+    } else {
+      GlobalSnackBar.show(context, "Contraseña incorrecta",
+          backgroundColor: Colors.red);
+    }
   }
 }

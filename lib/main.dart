@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:inventory_app/providers/card_inventory_provider.dart';
-import 'package:inventory_app/providers/categories_material_providers.dart';
+import 'package:inventory_app/providers/providers.dart';
 import 'package:inventory_app/routes/routes.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Material App',
         routes: appRoutes,
-        initialRoute: 'home',
+        initialRoute: 'login',
         debugShowCheckedModeBanner: false,
       ),
     );

@@ -25,6 +25,7 @@ class ClientRegisterPage extends StatefulWidget {
 }
 
 class _ClientRegisterPageState extends State<ClientRegisterPage> {
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormBuilderState>();
@@ -124,12 +125,15 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
                   ],
                 ),
               ),
-              FillButton(
-                onPressed: () {
-                  addOrEditClient(_formKey, idClient: clientData.idClient);
-                },
-                label: editable ? "Editar Cliente" : "Guardar cliente",
-              ),
+              isLoading
+                  ? simpleLoading()
+                  : FillButton(
+                      onPressed: () {
+                        addOrEditClient(_formKey,
+                            idClient: clientData.idClient);
+                      },
+                      label: editable ? "Editar Cliente" : "Guardar cliente",
+                    ),
             ],
           ),
         ),
@@ -140,20 +144,14 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
   addOrEditClient(GlobalKey<FormBuilderState> formKey, {int? idClient}) async {
     formKey.currentState?.save();
     final currentData = formKey.currentState?.value;
-    final clientsServices = ClientsServices();
     final data = {
-      'first_name': currentData!['first_name'],
-      'last_name': currentData['last_name'],
-      'email':
-          "${currentData['first_name']}${currentData['last_name']}@gmail.com"
-              .replaceAll(' ', ''),
-      'billing': {
-        'address_1': currentData['address_1'],
-        'phone': currentData['phone'],
-      }
+      'firstName': currentData!['first_name'],
+      'lastName': currentData['last_name'],
+      'address1': currentData['address_1'],
+      'phone': currentData['phone'],
     };
-    bool ok;
-    if (idClient == null) {
+
+    /* if (idClient == null) {
       ok = await clientsServices.addClient(data);
     } else {
       ok = await clientsServices.editClient(idClient, data);
@@ -165,8 +163,30 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
     } else {
       GlobalSnackBar.show(context, "Hubo un error al guardar el cliente",
           backgroundColor: Colors.red);
+    } */
+    if (idClient == null) {
+      final post = await postAction('api/client', data, useAuxiliarUrl: true);
+      if (!mounted) return;
+      if (validateStatus(post!.statusCode)) {
+        GlobalSnackBar.show(context, "Cliente guardado con exito",
+            backgroundColor: Colors.green);
+        Navigator.pushReplacementNamed(context, 'clients');
+      } else {
+        GlobalSnackBar.show(context, "Hubo un error al guardar el cliente",
+            backgroundColor: Colors.red);
+      }
+    } else {
+      final putClient =
+          await putAction('api/client/$idClient', data, useAuxiliarUrl: true);
+      if (!mounted) return;
+      if (validateStatus(putClient!.statusCode)) {
+        GlobalSnackBar.show(context, "Cliente editado con exito",
+            backgroundColor: Colors.green);
+        Navigator.pushReplacementNamed(context, 'clients');
+      } else {
+        GlobalSnackBar.show(context, "Hubo un error al editar el cliente",
+            backgroundColor: Colors.red);
+      }
     }
-
-    debugPrint(data.toString());
   }
 }

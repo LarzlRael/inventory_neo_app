@@ -135,3 +135,97 @@ class LinksCategories {
             up == null ? null : List<dynamic>.from(up!.map((x) => x.toJson())),
       };
 }
+
+class Ing {
+  Ing({
+    required this.firstName,
+    required this.lastName,
+    required this.company,
+    required this.address1,
+    required this.address2,
+    required this.city,
+    required this.postcode,
+    required this.country,
+    required this.state,
+    /* required this.email, */
+    required this.phone,
+  });
+
+  String firstName;
+  String lastName;
+  String company;
+  String address1;
+  String address2;
+  String city;
+  String postcode;
+  String country;
+  String state;
+  /* String email; */
+  String phone;
+
+  factory Ing.fromJson(Map<String, dynamic> json) => Ing(
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        company: json["company"],
+        address1: json["address_1"],
+        address2: json["address_2"],
+        city: json["city"],
+        postcode: json["postcode"],
+        country: json["country"],
+        state: json["state"],
+        /* email: json["email"] == null ? null : json["email"], */
+        phone: json["phone"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "first_name": firstName,
+        "last_name": lastName,
+        "company": company,
+        "address_1": address1,
+        "address_2": address2,
+        "city": city,
+        "postcode": postcode,
+        "country": country,
+        "state": state,
+        /* "email": email == null ? null : email, */
+        "phone": phone,
+      };
+}
+
+class Links {
+  Links({
+    required this.self,
+    required this.collection,
+  });
+
+  List<Collection> self;
+  List<Collection> collection;
+
+  factory Links.fromJson(Map<String, dynamic> json) => Links(
+        self: List<Collection>.from(
+            json["self"].map((x) => Collection.fromJson(x))),
+        collection: List<Collection>.from(
+            json["collection"].map((x) => Collection.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "self": List<dynamic>.from(self.map((x) => x.toJson())),
+        "collection": List<dynamic>.from(collection.map((x) => x.toJson())),
+      };
+}
+
+class Collection {
+  Collection({
+    required this.href,
+  });
+
+  String href;
+
+  factory Collection.fromJson(Map<String, dynamic> json) => Collection(
+        href: json["href"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "href": href,
+      };
+}

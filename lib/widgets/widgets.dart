@@ -5,13 +5,12 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 import 'package:inventory_app/models/models.dart';
 import 'package:inventory_app/pages/pages.dart';
+import 'package:inventory_app/providers/providers.dart';
 import 'package:inventory_app/services/services.dart';
 import 'package:inventory_app/utils/utils.dart';
 import 'package:inventory_app/widgets/buttons/buttons.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-
-import '../providers/card_inventory_provider.dart';
 part 'text/simple_text.dart';
 /* Slides and banners */
 part 'slideshow/slideshow.dart';
@@ -41,6 +40,7 @@ part 'forms/custom_text_field.dart';
 part 'forms/custom_dropdown_fetch.dart';
 part 'forms/custom_radio_buttons.dart';
 part 'forms/custom_file_field.dart';
+part 'forms/custom_login_text_field.dart';
 
 /* Loadings */
 part 'loadings/simple_loading.dart';

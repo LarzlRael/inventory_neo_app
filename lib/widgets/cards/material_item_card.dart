@@ -19,7 +19,7 @@ class MaterialItemCard extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(width: 20.0),
+          const SizedBox(width: 20.0),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

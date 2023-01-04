@@ -49,7 +49,7 @@ class ClientItem extends StatelessWidget {
           bottom: 5,
         ),
         subtitle: SimpleText(
-          text: clientModel.billing.address1.toCapitalize(),
+          text: clientModel.address1.toCapitalize(),
           fontSize: 14,
           fontWeight: FontWeight.w300,
         ),

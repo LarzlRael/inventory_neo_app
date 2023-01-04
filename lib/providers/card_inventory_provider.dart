@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:inventory_app/models/models.dart';
+part of 'providers.dart';
 
 class CardInventoryProvider extends ChangeNotifier {
   List<ProductsModel> products = [];

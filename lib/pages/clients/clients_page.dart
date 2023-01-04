@@ -33,29 +33,41 @@ class ClientsPage extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            FutureBuilder(
-              future: getClients(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<ClientModel>> snapshot) {
-                if (!snapshot.hasData) {
-                  return simpleLoading();
-                }
-                final clients = snapshot.data;
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: clients?.length,
-                    itemBuilder: (_, int index) {
-                      return ClientItem(
-                        clientModel: clients![index],
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
-          ],
+        child: Container(
+          child: Column(
+            children: [
+              FutureBuilder(
+                future: getClients(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<ClientModel>> snapshot) {
+                  if (!snapshot.hasData) {
+                    return simpleLoading();
+                  }
+                  final clients = snapshot.data;
+                  if (clients!.isEmpty) {
+                    return const Expanded(
+                      child: NoInformation(
+                        text: 'No hay clientes registrados',
+                        icon: Icons.person,
+                        iconButton: Icons.person,
+                        showButton: false,
+                      ),
+                    );
+                  }
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: clients.length,
+                      itemBuilder: (_, int index) {
+                        return ClientItem(
+                          clientModel: clients![index],
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -63,6 +75,6 @@ class ClientsPage extends StatelessWidget {
 }
 
 Future<List<ClientModel>> getClients() async {
-  final clientRequest = await getAction('customers');
+  final clientRequest = await getAction('api/client', useAuxiliarUrl: true);
   return clientModelFromJson(clientRequest!.body);
 }

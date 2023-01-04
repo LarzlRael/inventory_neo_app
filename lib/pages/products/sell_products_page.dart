@@ -187,7 +187,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
       "billing": {
         "first_name": cardInventoryProvider.getClient!.firstName,
         "last_name": cardInventoryProvider.getClient!.lastName,
-        "address_1": cardInventoryProvider.getClient!.billing.address1,
+        "address_1": cardInventoryProvider.getClient!.address1,
         "address_2": "",
         "city": "San Francisco",
         "state": "CA",

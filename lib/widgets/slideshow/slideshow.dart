@@ -129,8 +129,8 @@ class _Dot extends StatelessWidget {
     final ssModel = Provider.of<_SlideShowModel>(context);
     Color color;
     double size;
-    if (ssModel.currentPageValue >= index - 0.5 &&
-        ssModel.currentPageValue <= index + 0.5) {
+    if (ssModel.getCurrentPageValue >= index - 0.5 &&
+        ssModel.getCurrentPageValue <= index + 0.5) {
       size = ssModel.primaryBulletValue;
       color = ssModel.primaryColorValue;
     } else {
@@ -184,45 +184,27 @@ class _SlidesState extends State<_Slides> {
       Provider.of<_SlideShowModel>(context, listen: false).currentPageValue =
           pageViewController.page!;
     }); */
+    /* cpv = currentPageValue */
+    _SlideShowModel cpv = Provider.of<_SlideShowModel>(context, listen: false);
     Timer.periodic(
       const Duration(seconds: 2),
       (Timer timer) {
-        if (Provider.of<_SlideShowModel>(context, listen: false)
-                .currentPageValue <
-            widget.slides.length - 1) {
-          Provider.of<_SlideShowModel>(context, listen: false)
-              .currentPageValue = pageViewController.page! + 1;
-          pageViewController.animateToPage(
-            Provider.of<_SlideShowModel>(context, listen: false)
-                .currentPageValue
-                .toInt(),
-            duration: const Duration(milliseconds: 350),
-            curve: Curves.easeIn,
-          );
+        if (cpv.getCurrentPageValue < widget.slides.length - 1) {
+          cpv.setCurrentPageValue = pageViewController.page! + 1;
+          setCurrentPageValueAndChangePage(
+              cpv.getCurrentPageValue.toInt(), cpv);
         } else {
-          Provider.of<_SlideShowModel>(context, listen: false)
-              .currentPageValue = 0;
-          pageViewController.animateToPage(
-            Provider.of<_SlideShowModel>(context, listen: false)
-                .currentPageValue
-                .toInt(),
-            duration: const Duration(milliseconds: 350),
-            curve: Curves.easeIn,
-          );
+          cpv.setCurrentPageValue = 0;
+          setCurrentPageValueAndChangePage(
+              cpv.getCurrentPageValue.toInt(), cpv);
         }
       },
     );
   }
 
-  setCurrentPageValueAndChangePage(
-    int index,
-  ) {
-    Provider.of<_SlideShowModel>(context, listen: false).currentPageValue =
-        pageViewController.page! + index;
+  setCurrentPageValueAndChangePage(int index, _SlideShowModel slideShowModel) {
     pageViewController.animateToPage(
-      Provider.of<_SlideShowModel>(context, listen: false)
-          .currentPageValue
-          .toInt(),
+      index,
       duration: const Duration(milliseconds: 350),
       curve: Curves.easeIn,
     );
@@ -242,7 +224,7 @@ class _SlidesState extends State<_Slides> {
         controller: pageViewController,
         onPageChanged: (index) {
           Provider.of<_SlideShowModel>(context, listen: false)
-              .currentPageValue = index.toDouble();
+              .setCurrentPageValue = index.toDouble();
         },
         children: widget.slides
             .map((slide) => _Slide(
@@ -284,9 +266,9 @@ class _SlideShowModel with ChangeNotifier {
     notifyListeners();
   }
 
-  double get currentPageValue => _currentPage;
+  double get getCurrentPageValue => _currentPage;
 
-  set currentPageValue(double value) {
+  set setCurrentPageValue(double value) {
     _currentPage = value;
     notifyListeners();
   }

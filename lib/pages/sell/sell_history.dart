@@ -55,17 +55,52 @@ class SellHistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          'sell_detail',
-          arguments: order,
-        );
-      },
-      child: Card(
+    return Card(
         margin: const EdgeInsets.symmetric(vertical: 5),
-        child: Row(
+        child: ListTile(
+          onTap: (() {
+            Navigator.pushNamed(
+              context,
+              'sell_detail',
+              arguments: order,
+            );
+          }),
+          leading: Image.network(
+            order.lineItems[0].imageProduct!.src == ""
+                ? "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
+                : order.lineItems[0].imageProduct!.src,
+            width: 80,
+            height: 80,
+            fit: BoxFit.cover,
+          ),
+          title: SimpleText(
+            text: order.lineItems[0].name.length > 20
+                ? '${order.lineItems[0].name.substring(0, 20).toCapitalize()}...'
+                : order.lineItems[0].name.toCapitalize(),
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SimpleText(
+                text: '${order.billing.firstName} ${order.billing.lastName}'
+                    .toTitleCase(),
+                fontSize: 14,
+                top: 3,
+                bottom: 3,
+                fontWeight: FontWeight.w500,
+              ),
+              SimpleText(
+                text: '${order.lineItems.length.toString()} artículos',
+                lightThemeColor: Colors.grey,
+                fontWeight: FontWeight.w600,
+              ),
+            ],
+          ),
+          trailing: tranlateStatus(order.status),
+        )
+        /*  Row(
           children: [
             Image.network(
               order.lineItems[0].imageProduct!.src == ""
@@ -105,9 +140,9 @@ class SellHistoryCard extends StatelessWidget {
             tranlateStatus(order.status),
             const SizedBox(width: 10),
           ],
-        ),
-      ),
-    );
+        ), */
+
+        );
   }
 }
 

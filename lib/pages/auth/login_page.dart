@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
         /* title: 'Iniciar sesión', */
       ), */
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -36,7 +36,7 @@ class LoginPage extends StatelessWidget {
                   context,
                   PageTransition(
                     type: PageTransitionType.bottomToTop,
-                    child: const SelectLoginPage(),
+                    child: SelectLoginPage(),
                     duration: const Duration(milliseconds: 400),
                   ),
                 );

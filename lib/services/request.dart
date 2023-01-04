@@ -40,8 +40,9 @@ class Request {
     RequestType method,
     String url,
     Map<String, dynamic> body,
-    String? token,
-  ) async {
+    String? token, {
+    bool useAuxiliarUrl = false,
+  }) async {
     //headers with basic auth
     String username = dotenv.get('wc_username');
     String password = dotenv.get('wc_password');
@@ -54,7 +55,9 @@ class Request {
       'Authorization': basicAuth,
     };
 
-    final Uri uri = Uri.parse('${Environment.serverHttpUrl}/$url');
+    Uri uri = useAuxiliarUrl
+        ? Uri.parse('${Environment.auxiliarUrl}/$url')
+        : Uri.parse('${Environment.serverHttpUrl}/$url');
     late http.Response res;
     switch (method) {
       case RequestType.get:
