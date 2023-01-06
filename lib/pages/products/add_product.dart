@@ -105,7 +105,7 @@ class _AddCategoriesState extends State<AddProduct> {
                         FormBuilderValidators.numeric(),
                       ]),
                     ),
-                    CustomTextField(
+                    const CustomTextField(
                       label: 'Descripcion',
                       name: 'description',
                     ),
@@ -122,7 +122,7 @@ class _AddCategoriesState extends State<AddProduct> {
                       options: itemDetails.idTags,
                       materiales: categoriesMaterialProviders.getMateriales,
                     ),
-                    CustomFileField(
+                    const CustomFileField(
                       name: 'file',
                     ),
                   ],
@@ -163,7 +163,8 @@ class _AddCategoriesState extends State<AddProduct> {
   }
 
   void register(GlobalKey<FormBuilderState> formkey, {int? idProduct}) async {
-    if (formkey.currentState!.validate()) {
+    debugPrint(formkey.currentState!.validate().toString());
+    if (!formkey.currentState!.validate()) {
       return;
     }
     formkey.currentState!.save();
@@ -220,7 +221,7 @@ class _AddCategoriesState extends State<AddProduct> {
         'Registro exitoso',
         backgroundColor: Colors.green,
       );
-      Navigator.pushNamed(context, 'list_products_page');
+      Navigator.popAndPushNamed(context, 'list_products_page');
       productsBloc.getProducts();
     } else {
       setState(() {

@@ -201,7 +201,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
       if (validateStatus(post!.statusCode)) {
         GlobalSnackBar.show(context, "Cliente guardado con exito",
             backgroundColor: Colors.green);
-        Navigator.pushReplacementNamed(context, 'clients');
+        Navigator.popAndPushNamed(context, 'clients');
       } else {
         GlobalSnackBar.show(context, "Hubo un error al guardar el cliente",
             backgroundColor: Colors.red);
@@ -213,7 +213,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
       if (validateStatus(putClient!.statusCode)) {
         GlobalSnackBar.show(context, "Cliente editado con exito",
             backgroundColor: Colors.green);
-        Navigator.pushReplacementNamed(context, 'clients');
+        Navigator.popAndPushNamed(context, 'clients');
       } else {
         GlobalSnackBar.show(context, "Hubo un error al editar el cliente",
             backgroundColor: Colors.red);

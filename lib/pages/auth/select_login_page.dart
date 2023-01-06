@@ -1,9 +1,15 @@
 part of '../pages.dart';
 
-class SelectLoginPage extends StatelessWidget {
+class SelectLoginPage extends StatefulWidget {
   SelectLoginPage({super.key});
-  final _formKey = GlobalKey<FormBuilderState>();
 
+  @override
+  State<SelectLoginPage> createState() => _SelectLoginPageState();
+}
+
+class _SelectLoginPageState extends State<SelectLoginPage> {
+  final _formKey = GlobalKey<FormBuilderState>();
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +59,7 @@ class SelectLoginPage extends StatelessWidget {
                     textColor: Colors.white,
                   ), */
                   FormBuilder(
+                    enabled: !loading,
                     key: _formKey,
                     child: Column(
                       children: const [
@@ -72,19 +79,21 @@ class SelectLoginPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  LoginButton(
-                    onPressed: () {
-                      saveForm(context);
-                    },
-                    paddingVertical: 12,
-                    spaceBetweenIconAndText: 15,
-                    label: 'Con numero de celular',
-                    fontSize: 15,
-                    ghostButton: true,
-                    backGroundColor: Colors.blue,
-                    icon: Icons.phone,
-                    textColor: Colors.white,
-                  ),
+                  loading
+                      ? const CircularProgressIndicator()
+                      : LoginButton(
+                          onPressed: () {
+                            saveForm(context);
+                          },
+                          paddingVertical: 12,
+                          spaceBetweenIconAndText: 15,
+                          label: 'Con numero de celular',
+                          fontSize: 15,
+                          ghostButton: true,
+                          backGroundColor: Colors.blue,
+                          icon: Icons.phone,
+                          textColor: Colors.white,
+                        ),
                 ],
               )
             ],

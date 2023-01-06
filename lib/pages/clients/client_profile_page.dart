@@ -160,12 +160,39 @@ class ClientProfilePage extends StatelessWidget {
                 cardContainer(
                   'Historial de compras',
                   [
-                    const NoInformation(
+                    FutureBuilder(
+                      future: getOrderByClient(clientModel.email),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<OrdersModel>> snapshot) {
+                        if (!snapshot.hasData) {
+                          return simpleLoading();
+                        }
+                        if (snapshot.data!.isEmpty) {
+                          return const NoInformation(
+                            icon: Icons.shopping_bag_outlined,
+                            text: 'Este usuario no ha realizado compras',
+                            showButton: false,
+                            iconButton: Icons.add,
+                          );
+                        }
+                        return Expanded(
+                          child: ListView.builder(
+                            itemCount: snapshot.data?.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return SellHistoryCard(
+                                order: snapshot.data![index],
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                    /* const NoInformation(
                       icon: Icons.shopping_bag_outlined,
                       text: 'No hay compras realizadas',
                       showButton: false,
                       iconButton: Icons.add,
-                    ),
+                    ), */
                   ],
                 )
               ],
@@ -239,5 +266,13 @@ class ClientProfilePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<List<OrdersModel>> getOrderByClient(String userEmail) async {
+    final response = await getAction(
+      'orders?search=$userEmail',
+    );
+
+    return ordersModelFromJson(response!.body);
   }
 }

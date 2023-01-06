@@ -31,7 +31,7 @@ class CustomFormBuilderFetchDropdown extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: FormBuilderDropdown(
-              validator: FormBuilderValidators.required(),
+              /* validator: FormBuilderValidators.required(), */
               name: formFieldName,
               decoration: const InputDecoration(
                 border: InputBorder.none,
