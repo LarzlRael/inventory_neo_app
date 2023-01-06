@@ -4,11 +4,13 @@ class CustomTextField extends StatelessWidget {
   final String label;
   final String name;
   final TextInputType keyboardType;
+  final String? Function(String?)? validator;
   const CustomTextField({
     super.key,
     required this.label,
     required this.name,
     this.keyboardType = TextInputType.text,
+    this.validator,
   });
 
   @override
@@ -28,6 +30,7 @@ class CustomTextField extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(left: 8.0),
             child: FormBuilderTextField(
+              validator: validator,
               autovalidateMode: AutovalidateMode.always,
               name: name,
               textCapitalization: TextCapitalization.sentences,

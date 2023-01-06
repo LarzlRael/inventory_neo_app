@@ -45,7 +45,7 @@ dependencies:
   mime_type: ^1.0.0
   #HTTP
   http: ^0.13.4
-  form_builder_validators: ^8.1.1
+  form_builder_validators: ^8.4.0
   form_builder_file_picker: ^2.1.0
 
   #time converter

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:inventory_app/providers/providers.dart';
 import 'package:inventory_app/routes/routes.dart';
+import 'package:inventory_app/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -28,6 +29,8 @@ class MyApp extends StatelessWidget {
         routes: appRoutes,
         initialRoute: 'welcome',
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: formBuildersDelegates,
+        supportedLocales: supportedLocales,
       ),
     );
   }

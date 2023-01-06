@@ -88,12 +88,22 @@ class _AddCategoriesState extends State<AddProduct> {
                     CustomTextField(
                       label: 'Nombre del producto',
                       name: 'name',
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.text,
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(
+                            errorText: "Este campo es requerido"),
+                        FormBuilderValidators.minLength(3),
+                      ]),
                     ),
                     CustomTextField(
                       label: 'Precio',
                       name: 'regular_price',
                       keyboardType: TextInputType.number,
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(
+                            errorText: "Este campo es requerido"),
+                        FormBuilderValidators.numeric(),
+                      ]),
                     ),
                     CustomTextField(
                       label: 'Descripcion',
@@ -153,6 +163,9 @@ class _AddCategoriesState extends State<AddProduct> {
   }
 
   void register(GlobalKey<FormBuilderState> formkey, {int? idProduct}) async {
+    if (formkey.currentState!.validate()) {
+      return;
+    }
     formkey.currentState!.save();
 
     bool isFile = formkey.currentState!.value['file'] != null;

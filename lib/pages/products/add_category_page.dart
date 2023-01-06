@@ -105,12 +105,16 @@ class _AddCategoryState extends State<AddCategoryPage>
                       autovalidateMode: AutovalidateMode.disabled,
                       skipDisabled: true,
                       child: Column(
-                        children: const [
+                        children: [
                           CustomTextField(
                             label: 'Nombre de categoria',
                             name: 'name',
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                  errorText: "Este campo es requerido"),
+                            ]),
                           ),
-                          CustomFileField(
+                          const CustomFileField(
                             name: 'file',
                           ),
                         ],

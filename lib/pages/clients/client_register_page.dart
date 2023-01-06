@@ -68,9 +68,10 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
                   bottom: 10,
                   fontSize: 18,
                   fontWeight: FontWeight.w600),
-              const SimpleText(
-                text:
-                    'Por favor, rellene los campos para registrar un nuevo cliente',
+              SimpleText(
+                text: editable
+                    ? 'Edite los campos para actualizar el cliente'
+                    : 'Por favor, rellene los campos para registrar un nuevo cliente',
                 fontSize: 14,
                 lightThemeColor: Colors.black54,
               ),
@@ -85,22 +86,51 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     CustomTextField(
                       label: 'Nombre',
                       name: 'first_name',
+                      validator: FormBuilderValidators.compose(
+                        [
+                          FormBuilderValidators.required(
+                              errorText: 'Nombre es requerido'),
+                          FormBuilderValidators.minLength(3),
+                        ],
+                      ),
                     ),
                     CustomTextField(
                       label: 'Apellidos',
                       name: 'last_name',
+                      validator: FormBuilderValidators.compose(
+                        [
+                          FormBuilderValidators.required(
+                              errorText: 'Apellidos es requerido'),
+                          FormBuilderValidators.minLength(3),
+                        ],
+                      ),
                     ),
                     CustomTextField(
                       label: 'Dirección',
                       name: 'address_1',
+                      validator: FormBuilderValidators.compose(
+                        [
+                          FormBuilderValidators.required(
+                              errorText: 'Dirección es requerido'),
+                          FormBuilderValidators.minLength(3),
+                        ],
+                      ),
                     ),
                     CustomTextField(
                       label: 'Telefono',
                       name: 'phone',
+                      keyboardType: TextInputType.phone,
+                      validator: FormBuilderValidators.compose(
+                        [
+                          FormBuilderValidators.required(
+                              errorText: 'Telefono es requerido'),
+                          FormBuilderValidators.minLength(3),
+                        ],
+                      ),
                     ),
                     /* FormBuilderRadioGroup(
                       decoration: const InputDecoration(
@@ -142,6 +172,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
   }
 
   addOrEditClient(GlobalKey<FormBuilderState> formKey, {int? idClient}) async {
+    if (!formKey.currentState!.validate()) return;
     formKey.currentState?.save();
     final currentData = formKey.currentState?.value;
     final data = {
