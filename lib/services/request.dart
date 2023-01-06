@@ -52,7 +52,7 @@ class Request {
 
     final headers = {
       'Content-Type': 'application/json',
-      'Authorization': basicAuth,
+      'Authorization': useAuxiliarUrl ? 'Bearer $token' : basicAuth,
     };
 
     Uri uri = useAuxiliarUrl

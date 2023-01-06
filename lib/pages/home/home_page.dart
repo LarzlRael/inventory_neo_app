@@ -11,6 +11,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final categoriesMaterialProviders =
         Provider.of<CategoriesMaterialProviders>(context, listen: false);
     categoriesMaterialProviders.setCategoriesWithFetch();
@@ -24,6 +25,27 @@ class _HomePageState extends State<HomePage> {
         title: appBarTitle(null),
         backgroundColor: Colors.white,
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              showConfirmDialog(
+                context,
+                'Cerrar sesión',
+                '¿Estás seguro de cerrar sesion?',
+                () async {
+                  authProvider.logout();
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    'select_login_page',
+                    (route) => false,
+                  );
+                },
+              );
+            },
+            tooltip: 'Cerrar sesión',
+            icon: const Icon(Icons.logout, color: Colors.black),
+          ),
+        ],
         leading: IconButton(
           onPressed: () {
             Navigator.push(

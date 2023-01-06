@@ -95,16 +95,15 @@ class SelectLoginPage extends StatelessWidget {
   }
 
   saveForm(BuildContext context) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     _formKey.currentState!.save();
     final data = {
       'phone': _formKey.currentState!.fields['phone']!.value,
       'password': _formKey.currentState!.fields['password']!.value,
     };
 
-    final post =
-        await postAction('api/client/login', data, useAuxiliarUrl: true);
-    if (validateStatus(post!.statusCode)) {
-      final client = loginClientModelFromJson(post.body);
+    final body = await authProvider.login(data);
+    if (body) {
       Navigator.pushReplacementNamed(context, 'home');
       GlobalSnackBar.show(context, "Bienvenido", backgroundColor: Colors.green);
     } else {

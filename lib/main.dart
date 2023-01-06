@@ -19,13 +19,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => CardInventoryProvider()),
         ChangeNotifierProvider(create: (_) => CategoriesMaterialProviders()),
       ],
       child: MaterialApp(
         title: 'Material App',
         routes: appRoutes,
-        initialRoute: 'login',
+        initialRoute: 'welcome',
         debugShowCheckedModeBanner: false,
       ),
     );

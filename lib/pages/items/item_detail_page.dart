@@ -46,7 +46,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
           ),
           IconButton(
             onPressed: () {
-              showConfirmDialog(
+              asyncShowConfirmDialog(
                 context,
                 'Eliminar',
                 '¿Estas seguro de eliminar este producto?',

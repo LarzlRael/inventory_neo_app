@@ -56,7 +56,7 @@ Future<void> showMyDialogTagMaterial(BuildContext context, String tagId) async {
   );
 }
 
-void showConfirmDialog(
+void asyncShowConfirmDialog(
   BuildContext context,
   String title,
   String description,
@@ -85,34 +85,30 @@ void showConfirmDialog(
   );
 }
 
-void dialogFormCategory(
+void showConfirmDialog(
   BuildContext context,
   String title,
   String description,
-  Future<dynamic> Function()? onAccept,
+  Function() onAccept,
 ) {
   showDialog(
     context: context,
     builder: (BuildContext context) => AlertDialog(
       title: Text(title),
-      content: Column(
-        children: const [
-          Text('que fue gente'),
-        ],
-      ),
-      actions: <Widget>[
+      content: Text(description),
+      actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, 'Cancel'),
           child: const Text('Cancelar'),
         ),
-        /*  TextButton(
-          onPressed: () async {
+        TextButton(
+          onPressed: () {
             Navigator.pop(context, 'OK');
-            await onAccept!();
+            onAccept();
             /* GlobalSnackBar.show(context, 'Comentario eliminado'); */
           },
           child: const Text('OK'),
-        ), */
+        ),
       ],
     ),
   );

@@ -140,7 +140,7 @@ class _AddCategoriesState extends State<AddProduct> {
   Future<String> getUrlFileResult(String path) async {
     final uploadFile = await Request.uploadFileRequest(
       RequestType.post,
-      'upload',
+      'api/uploadFiles',
       {},
       File(
         path,
@@ -157,7 +157,9 @@ class _AddCategoriesState extends State<AddProduct> {
 
     bool isFile = formkey.currentState!.value['file'] != null;
     final productoService = ProductsServices();
-
+    setState(() {
+      _isLoading = true;
+    });
     final json = {
       "name": formkey.currentState!.value['name'],
       "manage_stock": true,
@@ -188,9 +190,6 @@ class _AddCategoriesState extends State<AddProduct> {
         },
       );
     }
-    setState(() {
-      _isLoading = true;
-    });
 
     final correct = await productoService.createOrUpdateProduct(
       json,

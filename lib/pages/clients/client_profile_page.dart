@@ -33,7 +33,7 @@ class ClientProfilePage extends StatelessWidget {
             color: Colors.black,
             tooltip: 'Eliminar cliente',
             onPressed: () {
-              showConfirmDialog(
+              asyncShowConfirmDialog(
                 context,
                 'Eliminar',
                 '¿Estás seguro de eliminar este cliente?',

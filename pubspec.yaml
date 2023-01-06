@@ -56,6 +56,8 @@ dependencies:
 
   #dot env
   flutter_dotenv: ^5.0.2
+
+  flutter_secure_storage: ^7.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -28,11 +28,11 @@ class Home extends StatelessWidget {
                 childAspectRatio: 3 / 2,
                 crossAxisCount: 3,
                 children: const [
-                  ManagementCards(
+                  /* ManagementCards(
                     cardTitle: 'Empleados',
                     cardIcon: Icons.person_pin_circle,
                     cardRoute: 'clients',
-                  ),
+                  ), */
                   ManagementCards(
                       cardTitle: 'Clientes',
                       cardIcon: Icons.person,
@@ -55,13 +55,13 @@ class Home extends StatelessWidget {
                 ],
               ),
             ),
-            const SimpleText(
+            /*  const SimpleText(
               text: 'Que tus clientes te conozcan',
               fontSize: 16,
               fontWeight: FontWeight.w700,
               top: 25,
               bottom: 5,
-            ),
+            ), */
           ],
         ),
       ),

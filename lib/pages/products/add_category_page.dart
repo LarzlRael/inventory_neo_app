@@ -48,7 +48,7 @@ class _AddCategoryState extends State<AddCategoryPage>
             child: IconButton(
               icon: const Icon(Icons.delete, color: Colors.red),
               onPressed: () {
-                showConfirmDialog(
+                asyncShowConfirmDialog(
                   context,
                   'Eliminar categoria',
                   '¿Estas seguro de eliminar esta categoria?',
