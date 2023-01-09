@@ -45,7 +45,7 @@ class ClientProfilePage extends StatelessWidget {
                     GlobalSnackBar.show(
                         context, "Cliente eliminado correctamente",
                         backgroundColor: Colors.green);
-                    Navigator.pushReplacementNamed(context, 'clients');
+                    Navigator.pop(context);
                   } else {
                     GlobalSnackBar.show(context, "Error al eliminar el cliente",
                         backgroundColor: Colors.red);
