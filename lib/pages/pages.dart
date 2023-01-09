@@ -55,3 +55,4 @@ part 'products/add_category_page.dart';
 /* Sells */
 part 'sell/sell_history.dart';
 part 'sell/sell_detail.dart';
+part 'loading_page.dart';

@@ -20,17 +20,13 @@ class AuthProvider extends ChangeNotifier {
   logout() {
     isLogged = false;
     notifyListeners();
-
     _storage.delete(key: 'token');
   }
 
   Future<bool> renewToken() async {
-    final resp = await Request.sendRequestWithToken(
-      RequestType.get,
-      'api/client/renew',
-      {},
-      await _storage.read(key: 'token'),
-    );
+    final resp = await Request.sendRequestWithToken(RequestType.get,
+        'api/client/renew', {}, await _storage.read(key: 'token'),
+        useAuxiliarUrl: true);
 
     if (validateStatus(resp!.statusCode)) {
       final body = loginClientModelFromJson(resp.body);

@@ -89,7 +89,7 @@ class _SelectLoginPageState extends State<SelectLoginPage> {
                           spaceBetweenIconAndText: 15,
                           label: 'Con numero de celular',
                           fontSize: 15,
-                          ghostButton: true,
+                          /* ghostButton: true, */
                           backGroundColor: Colors.blue,
                           icon: Icons.phone,
                           textColor: Colors.white,

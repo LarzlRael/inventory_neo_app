@@ -195,7 +195,7 @@ class _AddCategoriesState extends State<AddProduct> {
     if (isFile && formkey.currentState!.value['file'].length > 0) {
       json.addAll(
         {
-          "image": [
+          "images": [
             {
               "src": await getUrlFileResult(
                   formkey.currentState!.value['file'][0].path)

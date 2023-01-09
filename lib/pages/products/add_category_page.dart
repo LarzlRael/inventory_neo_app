@@ -152,11 +152,9 @@ class _AddCategoryState extends State<AddCategoryPage>
   Future<String> getUrlFileResult(String path) async {
     final uploadFile = await Request.uploadFileRequest(
       RequestType.post,
-      'upload',
+      'api/uploadFiles',
       {},
-      File(
-        path,
-      ),
+      File(path),
       '',
       useAuxiliarUrl: true,
     );

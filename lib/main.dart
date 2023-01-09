@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Material App',
         routes: appRoutes,
-        initialRoute: 'welcome',
+        initialRoute: 'loading',
         debugShowCheckedModeBanner: false,
         localizationsDelegates: formBuildersDelegates,
         supportedLocales: supportedLocales,
