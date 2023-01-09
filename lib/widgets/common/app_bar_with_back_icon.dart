@@ -18,6 +18,7 @@ class AppBarWithBackIcon extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     /* final theme = Provider.of<ThemeChanger>(context); */
+    final authProvider = Provider.of<AuthProvider>(context);
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.white,
@@ -28,7 +29,7 @@ class AppBarWithBackIcon extends StatelessWidget
               fontSize: 18,
               fontWeight: FontWeight.w600,
             )
-          : appBarTitle(subTitle),
+          : appBarTitle(subTitle, authProvider),
       leading: IconButton(
         icon: const Icon(
           Icons.arrow_circle_left_outlined,
@@ -47,11 +48,11 @@ class AppBarWithBackIcon extends StatelessWidget
   Size get preferredSize => Size.fromHeight(appBar.preferredSize.height);
 }
 
-Widget appBarTitle(String? subTitle) {
+Widget appBarTitle(String? subTitle, AuthProvider authProvider) {
   return Column(
     children: [
-      const SimpleText(
-        text: 'Joyeria Arrieta',
+      SimpleText(
+        text: authProvider.user!.client!.store!.name!,
         lightThemeColor: Colors.black,
         fontSize: 15,
         fontWeight: FontWeight.w500,

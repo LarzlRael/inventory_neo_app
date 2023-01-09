@@ -14,8 +14,7 @@ class AddCategoryPage extends StatefulWidget {
   State<AddCategoryPage> createState() => _AddCategoryState();
 }
 
-class _AddCategoryState extends State<AddCategoryPage>
-    with AutomaticKeepAliveClientMixin {
+class _AddCategoryState extends State<AddCategoryPage> {
   bool _isLoading = false;
   final categoryForm = CategoryForm(name: '', id: null);
   late CategoriesBloc categoriesBloc;
@@ -34,13 +33,12 @@ class _AddCategoryState extends State<AddCategoryPage>
       categoryForm.id = arguments.id;
       categoryForm.image = arguments.image;
     }
-    super.build(context);
     final formKey = GlobalKey<FormBuilderState>();
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
         title:
-            categoryForm.id == null ? 'Agregar categorias' : 'Editar categoria',
+            categoryForm.id == null ? 'Agregar categoria' : 'Editar categoria',
         showTitle: true,
         actions: [
           Visibility(
@@ -66,9 +64,7 @@ class _AddCategoryState extends State<AddCategoryPage>
                       GlobalSnackBar.show(
                           context, "Categoria eliminado correctamente",
                           backgroundColor: Colors.green);
-                      Navigator.pop(
-                        context,
-                      );
+                      Navigator.pop(context);
                       categoriesBloc.getCategories();
                     } else {
                       GlobalSnackBar.show(
@@ -155,7 +151,7 @@ class _AddCategoryState extends State<AddCategoryPage>
       'api/uploadFiles',
       {},
       File(path),
-      '',
+      await getToken(),
       useAuxiliarUrl: true,
     );
 
@@ -163,6 +159,9 @@ class _AddCategoryState extends State<AddCategoryPage>
   }
 
   void register(GlobalKey<FormBuilderState> formkey, int? idCategory) async {
+    if (!formkey.currentState!.validate()) {
+      return;
+    }
     formkey.currentState!.save();
     bool isFile = formkey.currentState!.value['file'] != null;
     setState(() {
@@ -224,13 +223,11 @@ class _AddCategoryState extends State<AddCategoryPage>
         messageSuccess,
         backgroundColor: Colors.green,
       );
+      categoriesBloc.getCategories();
+      Navigator.pop(context);
       setState(() {
         _isLoading = false;
       });
-      categoriesBloc.getCategories();
-      Navigator.pop(
-        context,
-      );
     } else {
       setState(() {
         _isLoading = false;
@@ -242,7 +239,4 @@ class _AddCategoryState extends State<AddCategoryPage>
       );
     }
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

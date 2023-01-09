@@ -152,10 +152,8 @@ class _AddCategoriesState extends State<AddProduct> {
       RequestType.post,
       'api/uploadFiles',
       {},
-      File(
-        path,
-      ),
-      '',
+      File(path),
+      await getToken(),
       useAuxiliarUrl: true,
     );
 
@@ -174,7 +172,7 @@ class _AddCategoriesState extends State<AddProduct> {
     setState(() {
       _isLoading = true;
     });
-    final json = {
+    final Map<String, dynamic> json = {
       "name": formkey.currentState!.value['name'],
       "manage_stock": true,
       "stock_quantity": 1,
@@ -227,7 +225,6 @@ class _AddCategoriesState extends State<AddProduct> {
       setState(() {
         _isLoading = false;
       });
-
       GlobalSnackBar.show(
         context,
         'Error al registrar',

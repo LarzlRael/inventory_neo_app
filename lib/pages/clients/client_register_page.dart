@@ -28,7 +28,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormBuilderState>();
+    final formKey = GlobalKey<FormBuilderState>();
     final args = ModalRoute.of(context)!.settings.arguments as ClientData?;
     final clientData = ClientData(
       idClient: null,
@@ -83,7 +83,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
                   'address_1': clientData.address,
                   'phone': clientData.phone,
                 },
-                key: _formKey,
+                key: formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -159,8 +159,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
                   ? simpleLoading()
                   : FillButton(
                       onPressed: () {
-                        addOrEditClient(_formKey,
-                            idClient: clientData.idClient);
+                        addOrEditClient(formKey, idClient: clientData.idClient);
                       },
                       label: editable ? "Editar Cliente" : "Guardar cliente",
                     ),

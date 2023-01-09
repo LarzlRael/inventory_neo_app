@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
         iconTheme: const IconThemeData(
           color: Colors.black, //change your color here
         ),
-        title: appBarTitle(null),
+        title: appBarTitle(null, authProvider),
         backgroundColor: Colors.white,
         centerTitle: true,
         actions: [

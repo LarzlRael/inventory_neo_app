@@ -2,6 +2,7 @@ part of 'providers.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool isLogged = false;
+  late LoginClientModel? user;
   final _storage = const FlutterSecureStorage();
 
   Future<bool> login(Map<String, dynamic> data) async {
@@ -11,8 +12,9 @@ class AuthProvider extends ChangeNotifier {
     if (valid) {
       final body = loginClientModelFromJson(post.body);
       isLogged = true;
+      user = body;
       notifyListeners();
-      await _storage.write(key: 'token', value: body.token);
+      await _storage.write(key: 'token', value: body!.token);
     }
     return valid;
   }
@@ -30,9 +32,10 @@ class AuthProvider extends ChangeNotifier {
 
     if (validateStatus(resp!.statusCode)) {
       final body = loginClientModelFromJson(resp.body);
+      user = body;
       isLogged = true;
       notifyListeners();
-      await _storage.write(key: 'token', value: body.token);
+      await _storage.write(key: 'token', value: body!.token);
       return true;
     } else {
       isLogged = false;

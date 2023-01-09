@@ -5,7 +5,6 @@ class ClientProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cientServices = ClientsServices();
     final ClientModel clientModel =
         ModalRoute.of(context)!.settings.arguments as ClientModel;
     return Scaffold(
@@ -44,7 +43,8 @@ class ClientProfilePage extends StatelessWidget {
 
                   if (validateStatus(response!.statusCode)) {
                     GlobalSnackBar.show(
-                        context, "Cliente eliminado correctamente");
+                        context, "Cliente eliminado correctamente",
+                        backgroundColor: Colors.green);
                     Navigator.pushReplacementNamed(context, 'clients');
                   } else {
                     GlobalSnackBar.show(context, "Error al eliminar el cliente",

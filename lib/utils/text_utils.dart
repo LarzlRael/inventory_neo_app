@@ -19,3 +19,8 @@ bool validateStatus(int? state) {
   const status = [200, 201, 202, 203, 204];
   return status.contains(state);
 }
+
+Future<String> getToken() async {
+  const storage = FlutterSecureStorage();
+  return await storage.read(key: 'token') ?? '';
+}
