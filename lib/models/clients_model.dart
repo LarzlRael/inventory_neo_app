@@ -1,6 +1,3 @@
-// To parse this JSON data, do
-//
-//     final clientModel = clientModelFromJson(jsonString);
 part of 'models.dart';
 
 List<ClientModel> clientModelFromJson(String str) => List<ClientModel>.from(

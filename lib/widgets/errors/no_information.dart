@@ -33,6 +33,7 @@ class NoInformation extends StatelessWidget {
               text: text,
               top: 10,
               bottom: 10,
+              textAlign: TextAlign.center,
             ),
             showButton
                 ? Row(

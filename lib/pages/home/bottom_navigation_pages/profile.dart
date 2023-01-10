@@ -22,12 +22,14 @@ class Profile extends StatelessWidget {
               lightThemeColor: Colors.deepPurple,
             ),
             subtitle(
-                'Nombre',
+                'Dueño de la tienda',
                 "${authProvider!.client!.firstName} ${authProvider.client!.lastName}"
                     .toTitleCase()),
             subtitle(
                 'Direccion', authProvider.client!.address1!.toCapitalize()),
-            subtitle('Telefono', authProvider.client!.phone!),
+            subtitle('Tipo de negocio',
+                authProvider.client!.store!.typeStore!.toCapitalize()),
+            subtitle('Teléfono', authProvider.client!.phone!),
           ],
         ),
       ),
@@ -46,7 +48,7 @@ Widget subtitle(String title, String subtitle) {
           fontSize: 16,
           fontWeight: FontWeight.w700,
           top: 5,
-          bottom: 5,
+          bottom: 3,
           lightThemeColor: Colors.deepPurple,
         ),
         SimpleText(
@@ -115,6 +117,7 @@ class CardProfile extends StatelessWidget {
                   text: authProvider!.client!.store!.name!.toTitleCase(),
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
+                  lightThemeColor: Colors.white,
                 ),
                 const SizedBox(width: 10),
                 /* const Icon(
