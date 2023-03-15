@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.logout, color: Colors.black),
           ),
         ],
-        leading: IconButton(
+        /* leading: IconButton(
           onPressed: () {
             Navigator.push(
               context,
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
           },
           icon: const Icon(Icons.menu_rounded),
           //replace with our own icon data.
-        ),
+        ), */
       ),
       /* Delete back icon  */
 

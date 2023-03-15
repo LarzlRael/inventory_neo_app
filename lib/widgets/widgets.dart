@@ -46,3 +46,7 @@ part 'forms/custom_login_text_field.dart';
 part 'loadings/simple_loading.dart';
 /* Notifications */
 part 'notificacion/global_snackbar.dart';
+
+/* form */
+part 'form_generator/input.dart';
+part 'form_generator/global_form.dart';

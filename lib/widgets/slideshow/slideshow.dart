@@ -163,7 +163,7 @@ class _Slides extends StatefulWidget {
 }
 
 class _SlidesState extends State<_Slides> {
-  final pageViewController = PageController();
+  var pageViewController = PageController();
 
   void onAddButtonTapped(int index) {
     // use this to animate to the page
@@ -177,6 +177,7 @@ class _SlidesState extends State<_Slides> {
     pageViewController.jumpToPage(index);
   }
 
+  late _SlideShowModel cpv;
   @override
   void initState() {
     super.initState();
@@ -185,7 +186,7 @@ class _SlidesState extends State<_Slides> {
           pageViewController.page!;
     }); */
     /* cpv = currentPageValue */
-    _SlideShowModel cpv = Provider.of<_SlideShowModel>(context, listen: false);
+    cpv = Provider.of<_SlideShowModel>(context, listen: false);
     Timer.periodic(
       const Duration(seconds: 2),
       (Timer timer) {
@@ -195,6 +196,7 @@ class _SlidesState extends State<_Slides> {
               cpv.getCurrentPageValue.toInt(), cpv);
         } else {
           cpv.setCurrentPageValue = 0;
+          pageViewController.jumpToPage(0);
           setCurrentPageValueAndChangePage(
               cpv.getCurrentPageValue.toInt(), cpv);
         }

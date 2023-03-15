@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:inventory_app/providers/providers.dart';
 import 'package:inventory_app/routes/routes.dart';
 import 'package:inventory_app/utils/utils.dart';
@@ -30,7 +31,9 @@ class MyApp extends StatelessWidget {
         initialRoute: 'loading',
         debugShowCheckedModeBanner: false,
         localizationsDelegates: formBuildersDelegates,
-        supportedLocales: supportedLocales,
+        supportedLocales: const [
+          ...FormBuilderLocalizations.supportedLocales,
+        ],
       ),
     );
   }
