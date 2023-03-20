@@ -53,6 +53,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 () async {
                   final response = await productBloc.deleteProduct(
                     widget.productModel.id.toString(),
+                    widget.productModel.images[0].src,
                   );
 
                   if (!mounted) return;

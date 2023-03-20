@@ -50,3 +50,6 @@ part 'notificacion/global_snackbar.dart';
 /* form */
 part 'form_generator/input.dart';
 part 'form_generator/global_form.dart';
+
+/* Common widget */
+part 'common/stream_data_builder.dart';

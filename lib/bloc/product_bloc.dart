@@ -16,7 +16,7 @@ class ProductsBloc {
     _productsController.sink.add(await _productsServices.getAllProducts());
   }
 
-  Future<bool> deleteProduct(String id) async {
+  Future<bool> deleteProduct(String id, String urlImage) async {
     final res = await _productsServices.deleteProduct(id);
     getProducts();
     return res;
