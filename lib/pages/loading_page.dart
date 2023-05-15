@@ -20,8 +20,8 @@ class LoadingPage extends StatelessWidget {
   Future checkLoginState(
     BuildContext context,
     AuthProvider authServices,
-  ) async {
-    await authServices.renewToken().then(
+  ) {
+    return authServices.renewToken().then(
       (value) {
         if (value) {
           goToInitialPage(context, '/home');

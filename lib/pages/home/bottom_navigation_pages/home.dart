@@ -38,23 +38,24 @@ class Home extends StatelessWidget {
                     cardRoute: 'clients',
                   ), */
                   ManagementCards(
-                      cardTitle: 'Clientes',
-                      cardIcon: Icons.person,
-                      cardRoute: 'clients'),
+                    cardTitle: 'Clientes',
+                    cardIcon: Icons.person,
+                    cardRoute: '/clients',
+                  ),
                   ManagementCards(
                     cardTitle: 'Productos',
                     cardIcon: Icons.production_quantity_limits,
-                    cardRoute: 'list_products_page',
+                    cardRoute: '/list_products_page',
                   ),
                   ManagementCards(
                     cardTitle: 'Vender producto',
                     cardIcon: Icons.sell,
-                    cardRoute: 'sell_products',
+                    cardRoute: '/sell_products',
                   ),
                   ManagementCards(
                     cardTitle: 'Historial de ventas',
                     cardIcon: Icons.history,
-                    cardRoute: 'sell_history',
+                    cardRoute: '/sell_history',
                   ),
                 ],
               ),
