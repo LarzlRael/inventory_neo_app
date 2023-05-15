@@ -6,8 +6,7 @@ class CardItemInventory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cardInventoryProvider =
-        Provider.of<CardInventoryProvider>(context, listen: true);
+    final cardInventoryProvider = context.watch<CardInventoryProvider>();
     return GestureDetector(
       onTap: () {
         /* Navigator.pushNamed(context, 'item_detail'); */

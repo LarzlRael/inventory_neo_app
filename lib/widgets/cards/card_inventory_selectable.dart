@@ -8,8 +8,7 @@ class CardInventorySelectableItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productsServices = ProductsServices();
-    final cardInventoryProvider =
-        Provider.of<CardInventoryProvider>(context, listen: true);
+    final cardInventoryProvider = context.watch<CardInventoryProvider>();
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 15,

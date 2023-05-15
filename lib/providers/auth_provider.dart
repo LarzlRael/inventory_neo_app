@@ -1,8 +1,10 @@
 part of 'providers.dart';
 
+enum AuthStatus { checking, authenticated, notAuthenticated }
+
 class AuthProvider extends ChangeNotifier {
-  bool isLogged = false;
-  late LoginClientModel? user;
+  AuthState authState = AuthState();
+
   final _storage = const FlutterSecureStorage();
 
   Future<bool> login(Map<String, dynamic> data) async {
@@ -11,16 +13,24 @@ class AuthProvider extends ChangeNotifier {
     final valid = validateStatus(post!.statusCode);
     if (valid) {
       final body = loginClientModelFromJson(post.body);
-      isLogged = true;
-      user = body;
-      notifyListeners();
+
+      authState = authState.copyWith(
+        authStatus: AuthStatus.authenticated,
+        user: body,
+        isLogged: true,
+      );
       await _storage.write(key: 'token', value: body!.token);
+      notifyListeners();
     }
     return valid;
   }
 
   logout() {
-    isLogged = false;
+    authState = authState.copyWith(
+      authStatus: AuthStatus.notAuthenticated,
+      user: null,
+      isLogged: false,
+    );
     notifyListeners();
     _storage.delete(key: 'token');
   }
@@ -32,15 +42,44 @@ class AuthProvider extends ChangeNotifier {
 
     if (validateStatus(resp!.statusCode)) {
       final body = loginClientModelFromJson(resp.body);
-      user = body;
-      isLogged = true;
-      notifyListeners();
+
       await _storage.write(key: 'token', value: body!.token);
+      authState = authState.copyWith(
+        authStatus: AuthStatus.authenticated,
+        user: body,
+        isLogged: true,
+      );
+      notifyListeners();
       return true;
     } else {
-      isLogged = false;
       logout();
       return false;
     }
   }
+}
+
+class AuthState {
+  final AuthStatus authStatus;
+  final LoginClientModel? user;
+  final String errorMessage;
+  final bool isLogged;
+
+  AuthState({
+    this.authStatus = AuthStatus.checking,
+    this.user,
+    this.errorMessage = '',
+    this.isLogged = false,
+  });
+  AuthState copyWith({
+    AuthStatus? authStatus,
+    LoginClientModel? user,
+    String? errorMessage,
+    bool? isLogged,
+  }) =>
+      AuthState(
+        authStatus: authStatus ?? this.authStatus,
+        user: user ?? this.user,
+        errorMessage: errorMessage ?? this.errorMessage,
+        isLogged: isLogged ?? this.isLogged,
+      );
 }

@@ -30,10 +30,7 @@ class _AddCategoriesState extends State<AddProduct> {
   @override
   Widget build(BuildContext context) {
     final categoriesMaterialProviders =
-        Provider.of<CategoriesMaterialProviders>(
-      context,
-      listen: false,
-    );
+        context.read<CategoriesMaterialProviders>();
     final itemDetails = ItemDetails(
       idProduct: null,
       name: '',

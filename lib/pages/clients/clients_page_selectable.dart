@@ -5,7 +5,7 @@ class ClientsPageSelectable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cardInventoryProvider = Provider.of<CardInventoryProvider>(context);
+    final cardInventoryProvider = context.read<CardInventoryProvider>();
 
     return Scaffold(
       appBar: AppBarWithBackIcon(

@@ -11,9 +11,9 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final authProvider = context.read<AuthProvider>();
     final categoriesMaterialProviders =
-        Provider.of<CategoriesMaterialProviders>(context, listen: false);
+        context.read<CategoriesMaterialProviders>();
     /* categoriesMaterialProviders.setCategoriesWithFetch();
     categoriesMaterialProviders.setMaterialTagsFetch(); */
     return Scaffold(

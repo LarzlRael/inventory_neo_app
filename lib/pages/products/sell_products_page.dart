@@ -11,8 +11,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
-    final cardInventoryProvider =
-        Provider.of<CardInventoryProvider>(context, listen: true);
+    final cardInventoryProvider = context.watch<CardInventoryProvider>();
 
     final globaProvider = context.read<GlobalProvider>();
     final clientSelect = cardInventoryProvider.getClient != null;

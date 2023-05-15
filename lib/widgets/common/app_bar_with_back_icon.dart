@@ -18,7 +18,7 @@ class AppBarWithBackIcon extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     /* final theme = Provider.of<ThemeChanger>(context); */
-    final authProvider = Provider.of<AuthProvider>(context);
+    final authProvider = context.read<AuthProvider>();
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.white,

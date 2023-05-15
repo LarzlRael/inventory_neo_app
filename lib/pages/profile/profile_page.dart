@@ -4,7 +4,7 @@ class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final authProvider = context.read<AuthProvider>();
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),

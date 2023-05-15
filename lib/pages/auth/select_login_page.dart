@@ -122,6 +122,7 @@ class _SelectLoginPageState extends State<SelectLoginPage> {
   saveForm(BuildContext context) async {
     final authProvider = context.read<AuthProvider>();
     final globalProvider = context.read<GlobalProvider>();
+
     _formKey.currentState!.save();
     final data = {
       'phone': _formKey.currentState!.fields['phone']!.value,

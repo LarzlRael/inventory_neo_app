@@ -7,7 +7,7 @@ class Inventory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final inventoryProvider = Provider.of<CategoriesMaterialProviders>(context);
+    final inventoryProvider = context.read<CategoriesMaterialProviders>();
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(
