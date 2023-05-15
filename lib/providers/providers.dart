@@ -11,3 +11,4 @@ part 'categories_material_providers.dart';
 part 'theme_provider.dart';
 part 'products_provider.dart';
 part 'product_provider.dart';
+part 'global_provider.dart';

@@ -16,6 +16,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
   @override
   Widget build(BuildContext context) {
     final cardInventoryProvider = context.read<CardInventoryProvider>();
+    final globalProvider = context.read<GlobalProvider>();
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
@@ -48,25 +49,26 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 context,
                 'Eliminar',
                 '¿Estas seguro de eliminar este producto?',
-                () async {
-                  final response = await productBloc.deleteProduct(
+                () {
+                  return productBloc
+                      .deleteProduct(
                     widget.productModel.id.toString(),
                     widget.productModel.images[0].src,
-                  );
-
-                  if (!mounted) return;
-                  if (response) {
-                    GlobalSnackBar.show(
-                      context,
-                      "Producto eliminado correctamente",
-                      backgroundColor: Colors.green,
-                    );
-                    /* productBloc.getProducts(); */
-                    Navigator.pop(context);
-                  } else {
-                    GlobalSnackBar.show(
-                        context, "No se pudo eliminar el producto");
-                  }
+                  )
+                      .then((value) {
+                    if (value) {
+                      globalProvider.showSnackBar(
+                        context,
+                        "Producto eliminado correctamente",
+                        backgroundColor: Colors.green,
+                      );
+                      /* productBloc.getProducts(); */
+                      Navigator.pop(context);
+                    } else {
+                      globalProvider.showSnackBar(
+                          context, "No se pudo eliminar el producto");
+                    }
+                  });
                 },
               );
             },

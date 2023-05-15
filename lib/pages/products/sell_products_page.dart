@@ -13,6 +13,8 @@ class _SellProductsPageState extends State<SellProductsPage> {
   Widget build(BuildContext context) {
     final cardInventoryProvider =
         Provider.of<CardInventoryProvider>(context, listen: true);
+
+    final globaProvider = context.read<GlobalProvider>();
     final clientSelect = cardInventoryProvider.getClient != null;
     final productsSelect = cardInventoryProvider.getProducts.isEmpty;
     return Scaffold(
@@ -180,6 +182,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
   }
 
   sendData(CardInventoryProvider cardInventoryProvider) async {
+    final globaProvider = context.read<GlobalProvider>();
     final data = {
       "payment_method": "bacs",
       "payment_method_title": "Direct Bank Transfer",
@@ -207,12 +210,18 @@ class _SellProductsPageState extends State<SellProductsPage> {
         setState(() {
           _isLoading = false;
         });
-        GlobalSnackBar.show(context, "Venta realizada con exito",
-            backgroundColor: Colors.green);
+        globaProvider.showSnackBar(
+          context,
+          "Venta realizada con exito",
+          backgroundColor: Colors.green,
+        );
         Navigator.pushNamed(context, 'sell_history');
       } else {
-        GlobalSnackBar.show(context, "Error al realizar la venta",
-            backgroundColor: Colors.red);
+        globaProvider.showSnackBar(
+          context,
+          "Error al realizar la venta",
+          backgroundColor: Colors.red,
+        );
         setState(() {
           _isLoading = false;
         });

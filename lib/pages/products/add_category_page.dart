@@ -28,6 +28,7 @@ class _AddCategoryState extends State<AddCategoryPage> {
   Widget build(BuildContext context) {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as CategoryForm?;
+    final globalProvider = context.read<GlobalProvider>();
     if (arguments != null) {
       categoryForm.name = arguments.name;
       categoryForm.id = arguments.id;
@@ -54,28 +55,32 @@ class _AddCategoryState extends State<AddCategoryPage> {
                     setState(() {
                       _isLoading = true;
                     });
-                    final response = await deleteAction(
-                        'products/categories/${categoryForm.id}?force=true');
+                    deleteAction(
+                            'products/categories/${categoryForm.id}?force=true')
+                        .then((value) {
+                      if (validateStatus(value!.statusCode)) {
+                        globalProvider.showSnackBar(
+                          context,
+                          "Categoria eliminado correctamente",
+                          backgroundColor: Colors.green,
+                        );
+                        /* TODO change this in a categories provider */
+                        categoriesBloc.getCategories();
+                        context.pop();
+                      } else {
+                        globalProvider.showSnackBar(
+                          context,
+                          "No se pudo eliminar esta categoria",
+                          backgroundColor: Colors.red,
+                        );
+                        setState(() {
+                          _isLoading = false;
+                        });
+                      }
+                    });
                     setState(() {
                       _isLoading = false;
                     });
-                    if (!mounted) return;
-                    if (validateStatus(response!.statusCode)) {
-                      GlobalSnackBar.show(
-                          context, "Categoria eliminado correctamente",
-                          backgroundColor: Colors.green);
-                      Navigator.pop(context);
-                      categoriesBloc.getCategories();
-                    } else {
-                      GlobalSnackBar.show(
-                        context,
-                        "No se pudo eliminar esta categoria",
-                        backgroundColor: Colors.red,
-                      );
-                      setState(() {
-                        _isLoading = false;
-                      });
-                    }
                   },
                 );
               },
@@ -196,7 +201,6 @@ class _AddCategoryState extends State<AddCategoryPage> {
   ) async {
     final updateCategory =
         await putAction('products/categories/$idCategory', json);
-
     responsePost(
       validateStatus(updateCategory!.statusCode),
       'Categoria actualizada',
@@ -217,22 +221,24 @@ class _AddCategoryState extends State<AddCategoryPage> {
   }
 
   responsePost(bool isok, String messageSuccess, String messageError) {
+    final globalProvider = context.read<GlobalProvider>();
     if (isok) {
-      GlobalSnackBar.show(
+      globalProvider.showSnackBar(
         context,
         messageSuccess,
         backgroundColor: Colors.green,
       );
-      categoriesBloc.getCategories();
-      Navigator.pop(context);
+      /* Change this */
+      /* categoriesBloc.getCategories(); */
       setState(() {
         _isLoading = false;
       });
+      context.pop();
     } else {
       setState(() {
         _isLoading = false;
       });
-      GlobalSnackBar.show(
+      globalProvider.showSnackBar(
         context,
         messageError,
         backgroundColor: Colors.red,

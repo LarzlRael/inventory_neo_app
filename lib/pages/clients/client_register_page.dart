@@ -172,6 +172,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
   }
 
   addOrEditClient(GlobalKey<FormBuilderState> formKey, {int? idClient}) async {
+    final globalProvider = context.read<GlobalProvider>();
     if (!formKey.currentState!.validate()) return;
     formKey.currentState?.save();
     final currentData = formKey.currentState?.value;
@@ -199,25 +200,33 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
       final post = await postAction('api/client', data, useAuxiliarUrl: true);
       if (!mounted) return;
       if (validateStatus(post!.statusCode)) {
-        GlobalSnackBar.show(context, "Cliente guardado con exito",
+        globalProvider.showSnackBar(context, "Cliente guardado con exito",
             backgroundColor: Colors.green);
-        Navigator.popAndPushNamed(context, 'clients');
+        /* Navigator.popAndPushNamed(context, 'clients'); */
+        context.pop();
       } else {
-        GlobalSnackBar.show(context, "Hubo un error al guardar el cliente",
+        globalProvider.showSnackBar(
+            context, "Hubo un error al guardar el cliente",
             backgroundColor: Colors.red);
       }
     } else {
-      final putClient =
-          await putAction('api/client/$idClient', data, useAuxiliarUrl: true);
-      if (!mounted) return;
-      if (validateStatus(putClient!.statusCode)) {
-        GlobalSnackBar.show(context, "Cliente editado con exito",
-            backgroundColor: Colors.green);
-        Navigator.popAndPushNamed(context, 'clients');
-      } else {
-        GlobalSnackBar.show(context, "Hubo un error al editar el cliente",
-            backgroundColor: Colors.red);
-      }
+      await putAction('api/client/$idClient', data, useAuxiliarUrl: true)
+          .then((value) {
+        if (validateStatus(value!.statusCode)) {
+          globalProvider.showSnackBar(context, "Cliente editado con exito",
+              backgroundColor: Colors.green);
+          Navigator.popAndPushNamed(
+            context,
+            'clients',
+          );
+        } else {
+          globalProvider.showSnackBar(
+            context,
+            "Hubo un error al editar el cliente",
+            backgroundColor: Colors.red,
+          );
+        }
+      });
     }
   }
 }

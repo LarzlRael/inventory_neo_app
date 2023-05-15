@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CardInventoryProvider()),
         ChangeNotifierProvider(create: (_) => CategoriesMaterialProviders()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => GlobalProvider()),
         ChangeNotifierProvider(create: (_) => ProductsProvider()),
       ],
       child: MaterialApp.router(

@@ -119,15 +119,9 @@ class _SelectLoginPageState extends State<SelectLoginPage> {
     );
   }
 
-  void showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
-  }
-
   saveForm(BuildContext context) async {
     final authProvider = context.read<AuthProvider>();
+    final globalProvider = context.read<GlobalProvider>();
     _formKey.currentState!.save();
     final data = {
       'phone': _formKey.currentState!.fields['phone']!.value,
@@ -137,9 +131,9 @@ class _SelectLoginPageState extends State<SelectLoginPage> {
     authProvider.login(data).then((value) {
       if (value) {
         context.go('/home');
-        showSnackBar(context, 'Bienvenido');
+        globalProvider.showSnackBar(context, 'Bienvenido');
       } else {
-        showSnackBar(context, "Contraseña incorrecta");
+        globalProvider.showSnackBar(context, "Contraseña incorrecta");
       }
     });
     /* );

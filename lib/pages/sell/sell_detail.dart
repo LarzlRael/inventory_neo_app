@@ -145,19 +145,27 @@ class _SellDetailState extends State<SellDetail> {
   }
 
   updateStatus(orderId, dropdownValue) async {
+    final globalProvider = context.read<GlobalProvider>();
     final orderBloc = OrdersBloc();
-    final res = await putAction(
-        'orders/$orderId', {'status': statusListTransalteEn[dropdownValue]});
-
-    if (!mounted) return;
-    if (res!.statusCode == 200) {
-      orderBloc.getOrders();
-      GlobalSnackBar.show(context, 'Estado actualizado',
-          backgroundColor: Colors.green);
-      /* Navigator.pop(context); */
-    } else {
-      GlobalSnackBar.show(context, 'Error al cambiar estado',
-          backgroundColor: Colors.red);
-    }
+    putAction(
+            'orders/$orderId', {'status': statusListTransalteEn[dropdownValue]})
+        .then((value) {
+      if (value!.statusCode == 200) {
+        /* TODO change orders in the state */
+        orderBloc.getOrders();
+        globalProvider.showSnackBar(
+          context,
+          'Estado actualizado',
+          backgroundColor: Colors.green,
+        );
+        context.pop();
+      } else {
+        globalProvider.showSnackBar(
+          context,
+          'Error al cambiar estado',
+          backgroundColor: Colors.red,
+        );
+      }
+    });
   }
 }

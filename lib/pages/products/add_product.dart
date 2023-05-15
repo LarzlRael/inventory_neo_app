@@ -161,7 +161,8 @@ class _AddCategoriesState extends State<AddProduct> {
   }
 
   void register(GlobalKey<FormBuilderState> formkey, {int? idProduct}) async {
-    debugPrint(formkey.currentState!.validate().toString());
+    final globalProvider = context.read<GlobalProvider>();
+
     if (!formkey.currentState!.validate()) {
       return;
     }
@@ -203,33 +204,33 @@ class _AddCategoriesState extends State<AddProduct> {
       );
     }
 
-    final correct = await productoService.createOrUpdateProduct(
+    productoService
+        .createOrUpdateProduct(
       json,
       edit: idProduct != null,
       idProduct: idProduct,
-    );
+    )
+        .then((value) {
+      if (value) {
+        globalProvider.showSnackBar(
+          context,
+          'Registro exitoso',
+          backgroundColor: Colors.green,
+        );
+        context.pop();
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        globalProvider.showSnackBar(
+          context,
+          'Error al registrar',
+          backgroundColor: Colors.red,
+        );
+      }
+    });
     setState(() {
       _isLoading = false;
     });
-
-    if (!mounted) return;
-    if (correct) {
-      GlobalSnackBar.show(
-        context,
-        'Registro exitoso',
-        backgroundColor: Colors.green,
-      );
-      Navigator.popAndPushNamed(context, 'list_products_page');
-      productsBloc.getProducts();
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
-      GlobalSnackBar.show(
-        context,
-        'Error al registrar',
-        backgroundColor: Colors.red,
-      );
-    }
   }
 }

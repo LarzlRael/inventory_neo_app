@@ -7,6 +7,8 @@ class ClientProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ClientModel clientModel =
         ModalRoute.of(context)!.settings.arguments as ClientModel;
+
+    final globalProvider = context.read<GlobalProvider>();
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
@@ -41,12 +43,14 @@ class ClientProfilePage extends StatelessWidget {
                   useAuxiliarUrl: true,
                 ).then((value) {
                   if (value!.statusCode == 200) {
-                    GlobalSnackBar.show(
-                        context, "Cliente eliminado correctamente",
-                        backgroundColor: Colors.green);
+                    globalProvider.showSnackBar(
+                      context,
+                      "Cliente eliminado correctamente",
+                      backgroundColor: Colors.green,
+                    );
                     context.pop();
                   } else {
-                    GlobalSnackBar.show(
+                    globalProvider.showSnackBar(
                       context,
                       "Error al eliminar el cliente",
                       backgroundColor: Colors.red,
