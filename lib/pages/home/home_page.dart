@@ -14,16 +14,14 @@ class _HomePageState extends State<HomePage> {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final categoriesMaterialProviders =
         Provider.of<CategoriesMaterialProviders>(context, listen: false);
-    categoriesMaterialProviders.setCategoriesWithFetch();
-    categoriesMaterialProviders.setMaterialTagsFetch();
+    /* categoriesMaterialProviders.setCategoriesWithFetch();
+    categoriesMaterialProviders.setMaterialTagsFetch(); */
     return Scaffold(
       appBar: AppBar(
-        elevation: 1,
-        iconTheme: const IconThemeData(
+        /*   iconTheme: const IconThemeData(
           color: Colors.black, //change your color here
-        ),
-        title: appBarTitle(null, authProvider),
-        backgroundColor: Colors.white,
+        ), */
+        /* title: appBarTitle(null, authProvider), */
         centerTitle: true,
         actions: [
           IconButton(

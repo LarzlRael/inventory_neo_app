@@ -2,15 +2,15 @@ part of './widgets.dart';
 
 class BannerLogin extends StatelessWidget {
   const BannerLogin({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return const Slideshow(
-      primaryColor: Colors.blue,
-      secondaryColor: Colors.blueGrey,
+    final colors = Theme.of(context).colorScheme;
+    return Slideshow(
+      primaryColor: colors.primary,
+      secondaryColor: Colors.grey,
       primaryBullet: 12.5,
       secondaryBullet: 7.5,
-      slides: [
+      slides: const [
         SlideBannerItem(
             assetImage:
                 'https://www.financialfortunemedia.com/wp-content/uploads/2021/06/Image-to-Text.png',

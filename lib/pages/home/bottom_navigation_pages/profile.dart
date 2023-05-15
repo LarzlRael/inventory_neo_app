@@ -27,8 +27,8 @@ class Profile extends StatelessWidget {
                     .toTitleCase()),
             subtitle(
                 'Direccion', authProvider.client!.address1!.toCapitalize()),
-            subtitle('Tipo de negocio',
-                authProvider.client!.store!.typeStore!.toCapitalize()),
+            /* subtitle('Tipo de negocio',
+                authProvider.client!.store!.typeStore!.toCapitalize()), */
             subtitle('Teléfono', authProvider.client!.phone!),
           ],
         ),
@@ -113,12 +113,12 @@ class CardProfile extends StatelessWidget {
                   color: Colors.black.withOpacity(0.3),
                   size: 50,
                 ),
-                SimpleText(
+                /* SimpleText(
                   text: authProvider!.client!.store!.name!.toTitleCase(),
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
                   lightThemeColor: Colors.white,
-                ),
+                ), */
                 const SizedBox(width: 10),
                 /* const Icon(
                   Icons.chevron_right,

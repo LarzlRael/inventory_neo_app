@@ -44,7 +44,7 @@ class Client {
     this.createdAt,
     this.updatedAt,
     this.storeId,
-    this.store,
+    /* this.store, */
   });
 
   int? id;
@@ -58,7 +58,7 @@ class Client {
   DateTime? createdAt;
   DateTime? updatedAt;
   int? storeId;
-  Store? store;
+  /* Store? store; */
 
   factory Client.fromJson(Map<String, dynamic> json) => Client(
         id: json["id"],
@@ -72,7 +72,7 @@ class Client {
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         storeId: json["storeId"],
-        store: Store.fromJson(json["store"]),
+        /* store: Store.fromJson(json["store"]), */
       );
 
   Map<String, dynamic> toJson() => {
@@ -87,11 +87,11 @@ class Client {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "storeId": storeId,
-        "store": store!.toJson(),
+        /* "store": store!.toJson(), */
       };
 }
 
-class Store {
+/* class Store {
   Store({
     this.id,
     this.name,
@@ -126,3 +126,4 @@ class Store {
         "updatedAt": updatedAt?.toIso8601String(),
       };
 }
+ */

@@ -56,7 +56,7 @@ class Request {
     };
 
     Uri uri = useAuxiliarUrl
-        ? Uri.parse('${Environment.auxiliarUrl}/$url')
+        ? Uri.parse('${Enviroment.apiUrl}/$url')
         : Uri.parse('${Environment.serverHttpUrl}/$url');
     late http.Response res;
     switch (method) {
@@ -85,7 +85,7 @@ class Request {
   }) async {
     late http.Response res;
     Uri uri = useAuxiliarUrl
-        ? Uri.parse('${Environment.auxiliarUrl}/$url')
+        ? Uri.parse('${Enviroment.apiUrl}/$url')
         : Uri.parse('${Environment.serverHttpUrl}/$url');
 
     final mimeType = mime(file.path)!.split('/');

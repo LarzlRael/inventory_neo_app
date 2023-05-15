@@ -20,83 +20,99 @@ class _SelectLoginPageState extends State<SelectLoginPage> {
       ), */
       body: SafeArea(
         child: Container(
+          color: Colors.blue,
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           width: double.infinity,
           /* color: Colors.blue, */
-          child: Column(
-            /* crossAxisAlignment: CrossAxisAlignment.end, */
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const SimpleText(
-                /* textAlign: TextAlign.center, */
-                text: '¡Hola de nuevo!',
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
-              /* const Icon(
-                Icons.tv,
-                size: 200,
-              ), */
-              Column(
-                children: [
-                  /* LoginButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          type: PageTransitionType.bottomToTop,
-                          child: const HomePage(),
-                          duration: const Duration(milliseconds: 400),
-                        ),
-                      );
-                    },
-                    paddingVertical: 12,
-                    spaceBetweenIconAndText: 15,
-                    label: 'Iniciar sesión con Google',
-                    fontSize: 15,
-                    backGroundColor: Colors.blue,
-                    icon: Icons.g_mobiledata,
-                    textColor: Colors.white,
-                  ), */
-                  FormBuilder(
-                    enabled: !loading,
-                    key: _formKey,
-                    child: Column(
-                      children: const [
-                        CustomLoginTextField(
-                          placeholder: 'Numero de telefono',
-                          icon: Icons.phone,
-                          name: 'phone',
-                          keyboardType: TextInputType.phone,
-                        ),
-                        CustomLoginTextField(
-                          placeholder: 'Contraseña',
-                          icon: Icons.password,
-                          name: 'password',
-                          passwordField: true,
-                          /* keyboardType: TextInputType.phone, */
-                        ),
-                      ],
+
+          child: SingleChildScrollView(
+            child: Column(
+              /* crossAxisAlignment: CrossAxisAlignment.end, */
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const SimpleText(
+                  /* textAlign: TextAlign.center, */
+                  text: '¡Hola de nuevo!',
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+                /* const Icon(
+                  Icons.tv,
+                  size: 200,
+                ), */
+                Column(
+                  children: [
+                    /* LoginButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.bottomToTop,
+                            child: const HomePage(),
+                            duration: const Duration(milliseconds: 400),
+                          ),
+                        );
+                      },
+                      paddingVertical: 12,
+                      spaceBetweenIconAndText: 15,
+                      label: 'Iniciar sesión con Google',
+                      fontSize: 15,
+                      backGroundColor: Colors.blue,
+                      icon: Icons.g_mobiledata,
+                      textColor: Colors.white,
+                    ), */
+                    FormBuilder(
+                      enabled: !loading,
+                      key: _formKey,
+                      child: Column(
+                        children: const [
+                          CustomLoginTextField(
+                            placeholder: 'Numero de telefono',
+                            icon: Icons.phone,
+                            name: 'phone',
+                            keyboardType: TextInputType.phone,
+                          ),
+                          CustomLoginTextField(
+                            placeholder: 'Contraseña',
+                            icon: Icons.password,
+                            name: 'password',
+                            passwordField: true,
+                            /* keyboardType: TextInputType.phone, */
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  loading
-                      ? const CircularProgressIndicator()
-                      : LoginButton(
-                          onPressed: () {
-                            saveForm(context);
-                          },
-                          paddingVertical: 12,
-                          spaceBetweenIconAndText: 15,
-                          label: 'Con numero de celular',
-                          fontSize: 15,
-                          /* ghostButton: true, */
-                          backGroundColor: Colors.blue,
-                          icon: Icons.phone,
-                          textColor: Colors.white,
-                        ),
-                ],
-              )
-            ],
+                    loading
+                        ? const CircularProgressIndicator()
+                        : /* LoginButton(
+                            onPressed: () {
+                              saveForm(context);
+                            },
+                            paddingVertical: 12,
+                            spaceBetweenIconAndText: 15,
+                            label: 'Con numero de celular',
+                            fontSize: 15,
+                            /* ghostButton: true, */
+                            backGroundColor: Colors.blue,
+                            icon: Icons.phone,
+                            textColor: Colors.white,
+                          ), */
+                        SizedBox(
+                            height: 45,
+                            width: double.infinity,
+                            child: FilledButton.icon(
+                              onPressed: () {
+                                saveForm(context);
+                              },
+                              icon: Icon(Icons.phone),
+                              label: Text('Iniciar sesión'),
+                            ),
+                          )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

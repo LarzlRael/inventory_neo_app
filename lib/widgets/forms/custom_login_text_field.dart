@@ -25,6 +25,7 @@ class _CustomFormBuilderTextFieldState extends State<CustomLoginTextField> {
   /* bool showPassword = false; */
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10.0),
       child: Card(
@@ -33,7 +34,7 @@ class _CustomFormBuilderTextFieldState extends State<CustomLoginTextField> {
         ),
         child: FormBuilderTextField(
           keyboardType: widget.keyboardType,
-          obscureText: widget.passwordField && _obscureText,
+          obscureText: widget.passwordField ? _obscureText : false,
           name: widget.name,
           /* validator: FormBuilderValidators.required(), */
           decoration: InputDecoration(
@@ -45,9 +46,12 @@ class _CustomFormBuilderTextFieldState extends State<CustomLoginTextField> {
             ),
             suffixIcon: widget.passwordField
                 ? IconButton(
-                    icon: _obscureText
-                        ? const Icon(Icons.link_off_sharp)
-                        : const Icon(Icons.remove_red_eye),
+                    icon: Icon(
+                      _obscureText
+                          ? Icons.link_off_sharp
+                          : Icons.remove_red_eye,
+                      color: colors.primary,
+                    ),
                     onPressed: () {
                       setState(() {
                         _obscureText = !_obscureText;
@@ -55,7 +59,7 @@ class _CustomFormBuilderTextFieldState extends State<CustomLoginTextField> {
                     },
                   )
                 : null,
-            prefixIcon: Icon(widget.icon),
+            prefixIcon: Icon(widget.icon, color: colors.primary),
           ),
         ),
       ),

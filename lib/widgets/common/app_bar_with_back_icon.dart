@@ -48,15 +48,15 @@ class AppBarWithBackIcon extends StatelessWidget
   Size get preferredSize => Size.fromHeight(appBar.preferredSize.height);
 }
 
-Widget appBarTitle(String? subTitle, AuthProvider authProvider) {
+Widget appBarTitle(String? subTitle, AuthProvider? authProvider) {
   return Column(
     children: [
-      SimpleText(
+      /*  SimpleText(
         text: authProvider.user!.client!.store!.name!,
         lightThemeColor: Colors.black,
         fontSize: 15,
         fontWeight: FontWeight.w500,
-      ),
+      ), */
       const SizedBox(
         height: 3,
       ),

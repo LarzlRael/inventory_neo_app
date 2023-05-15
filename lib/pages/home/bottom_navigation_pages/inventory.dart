@@ -44,7 +44,7 @@ class Inventory extends StatelessWidget {
                   mainAxisSpacing: 5,
                 ),
                 itemCount: inventoryProvider.getCategories.length,
-                itemBuilder: (BuildContext ctx, index) {
+                itemBuilder: (_, index) {
                   return CategoryCard(
                     categoriesModel: inventoryProvider.getCategories[index],
                   );

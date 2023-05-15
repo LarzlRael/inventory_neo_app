@@ -5,6 +5,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       /* appBar: AppBarWithBackIcon(
         appBar: AppBar(),
@@ -30,25 +32,32 @@ class LoginPage extends StatelessWidget {
               borderRadius: 100,
               marginVertical: 10,
             ), */
-            FillButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.bottomToTop,
-                    child: SelectLoginPage(),
-                    duration: const Duration(milliseconds: 400),
-                  ),
-                );
-              },
-              labelButtonFontSize: 15,
-              label: 'Iniciar sesión',
-              ghostButton: true,
-              backgroundColor: Colors.blue,
-              borderRadius: 100,
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: OutlinedButton(
+                /* backgroundColor: colors.primary, */
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.bottomToTop,
+                      child: SelectLoginPage(),
+                      duration: const Duration(milliseconds: 400),
+                    ),
+                  );
+                },
+                child: Text('Iniciar sesión'),
+                /* labelButtonFontSize: 15,
+                label: 'Iniciar sesión',
+                ghostButton: true,
+                /* backgroundColor: Colors.blue, */
+                borderRadius: 100, */
+              ),
             ),
-            const SimpleText(
+            SimpleText(
               text: '¿Necesitas ayuda?, Contactanos',
+              style: textTheme.bodyMedium!.copyWith(color: colors.primary),
             )
           ],
         ),

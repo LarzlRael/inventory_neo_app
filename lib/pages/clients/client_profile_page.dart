@@ -38,8 +38,9 @@ class ClientProfilePage extends StatelessWidget {
                 '¿Estás seguro de eliminar este cliente?',
                 () async {
                   final response = await deleteAction(
-                      'api/client/${clientModel.id}',
-                      useAuxiliarUrl: true);
+                    'api/client/${clientModel.id}',
+                    useAuxiliarUrl: true,
+                  );
 
                   if (validateStatus(response!.statusCode)) {
                     GlobalSnackBar.show(
