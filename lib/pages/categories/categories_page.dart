@@ -11,7 +11,7 @@ class CategoriesPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          Navigator.pushNamed(context, 'add_categories_page');
+          context.push('/add_categories_page');
         },
       ),
       appBar: AppBarWithBackIcon(

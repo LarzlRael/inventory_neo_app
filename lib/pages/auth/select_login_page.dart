@@ -1,7 +1,7 @@
 part of '../pages.dart';
 
 class SelectLoginPage extends StatefulWidget {
-  SelectLoginPage({super.key});
+  const SelectLoginPage({super.key});
 
   @override
   State<SelectLoginPage> createState() => _SelectLoginPageState();
@@ -105,8 +105,8 @@ class _SelectLoginPageState extends State<SelectLoginPage> {
                               onPressed: () {
                                 saveForm(context);
                               },
-                              icon: Icon(Icons.phone),
-                              label: Text('Iniciar sesión'),
+                              icon: const Icon(Icons.phone),
+                              label: const Text('Iniciar sesión'),
                             ),
                           )
                   ],
@@ -119,21 +119,36 @@ class _SelectLoginPageState extends State<SelectLoginPage> {
     );
   }
 
+  void showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
   saveForm(BuildContext context) async {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final authProvider = context.read<AuthProvider>();
     _formKey.currentState!.save();
     final data = {
       'phone': _formKey.currentState!.fields['phone']!.value,
       'password': _formKey.currentState!.fields['password']!.value,
     };
 
-    final body = await authProvider.login(data);
+    authProvider.login(data).then((value) {
+      if (value) {
+        context.go('/home');
+        showSnackBar(context, 'Bienvenido');
+      } else {
+        showSnackBar(context, "Contraseña incorrecta");
+      }
+    });
+    /* );
     if (body) {
       Navigator.pushReplacementNamed(context, 'home');
       GlobalSnackBar.show(context, "Bienvenido", backgroundColor: Colors.green);
     } else {
       GlobalSnackBar.show(context, "Contraseña incorrecta",
           backgroundColor: Colors.red);
-    }
+    } */
   }
 }

@@ -23,10 +23,9 @@ class ClientItem extends StatelessWidget {
           if (onTap != null) {
             onTap!();
           } else {
-            Navigator.pushNamed(
-              context,
-              'client_profile',
-              arguments: clientModel,
+            context.push(
+              '/client_profile',
+              extra: clientModel,
             );
           }
         },

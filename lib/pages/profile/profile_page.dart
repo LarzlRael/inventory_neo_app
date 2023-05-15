@@ -18,10 +18,8 @@ class ProfilePage extends StatelessWidget {
                 '¿Estás seguro de cerrar sesion?',
                 () async {
                   authProvider.logout();
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    'login',
-                    (route) => false,
+                  context.go(
+                    '/login',
                   );
                 },
               );

@@ -30,6 +30,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormBuilderState>();
     final args = ModalRoute.of(context)!.settings.arguments as ClientData?;
+    final textTheme = Theme.of(context).textTheme;
     final clientData = ClientData(
       idClient: null,
       name: '',
@@ -63,19 +64,19 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SimpleText(
-                  text: editable ? 'Editar cliente' : 'Agregar nuevo cliente',
-                  bottom: 10,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600),
-              SimpleText(
-                text: editable
-                    ? 'Edite los campos para actualizar el cliente'
-                    : 'Por favor, rellene los campos para registrar un nuevo cliente',
-                fontSize: 14,
-                lightThemeColor: Colors.black54,
+              Text(
+                editable ? 'Editar cliente' : 'Agregar nuevo cliente',
+                style: textTheme.titleSmall,
               ),
-              const SizedBox(height: 20),
+              Text(
+                  editable
+                      ? 'Edite los campos para actualizar el cliente'
+                      : 'Por favor, rellene los campos para registrar un nuevo cliente',
+                  style: textTheme.bodyMedium!
+                    ..copyWith(
+                      color: Colors.grey[600],
+                    )),
+              const SizedBox(height: 10),
               FormBuilder(
                 initialValue: {
                   'first_name': clientData.name,

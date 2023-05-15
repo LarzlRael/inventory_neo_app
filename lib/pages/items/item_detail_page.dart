@@ -15,18 +15,16 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
   final productBloc = ProductsBloc();
   @override
   Widget build(BuildContext context) {
-    final cardInventoryProvider =
-        Provider.of<CardInventoryProvider>(context, listen: false);
+    final cardInventoryProvider = context.read<CardInventoryProvider>();
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(
-                context,
+              context.push(
                 'add_product',
-                arguments: ItemDetails(
+                extra: ItemDetails(
                   idProduct: widget.productModel.id,
                   category: widget.productModel.categories.first.id,
                   name: widget.productModel.name,
@@ -185,9 +183,8 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                       borderRadius: 10,
                       onPressed: () {
                         cardInventoryProvider.addProduct(widget.productModel);
-                        Navigator.pushNamed(
-                          context,
-                          'sell_products',
+                        context.go(
+                          '/sell_products',
                         );
                       },
                     ),

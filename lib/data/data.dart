@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:inventory_app/pages/pages.dart';
 import 'package:inventory_app/widgets/buttons/buttons.dart';
 
@@ -16,7 +17,7 @@ List<Widget> registerOptions(BuildContext context) {
       icon: Icons.home_work,
       text: 'Agregar producto',
       onPressed: () {
-        Navigator.pushNamed(context, 'list_products_page');
+        context.push('/list_products_page');
       },
     ),
     CircleButton(
@@ -24,7 +25,7 @@ List<Widget> registerOptions(BuildContext context) {
       icon: Icons.money,
       text: 'Agregar categoria',
       onPressed: () {
-        Navigator.pushNamed(context, 'categories_page');
+        context.push('/categories_page');
       },
     ),
     CircleButton(
@@ -32,7 +33,7 @@ List<Widget> registerOptions(BuildContext context) {
       icon: Icons.person_search,
       text: 'Agregar material',
       onPressed: () {
-        Navigator.pushNamed(context, 'materials_page');
+        context.push('/materials_page');
       },
     ),
     CircleButton(
@@ -40,7 +41,7 @@ List<Widget> registerOptions(BuildContext context) {
       icon: Icons.person_add,
       text: 'Agregar cliente',
       onPressed: () {
-        Navigator.pushNamed(context, 'client_register_page');
+        context.push('/client_register_page');
       },
     ),
   ];

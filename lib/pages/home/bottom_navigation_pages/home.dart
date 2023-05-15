@@ -5,19 +5,23 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SimpleText(
-              text: 'Gestiona tu negocio',
-              fontSize: 15,
-              fontWeight: FontWeight.w700,
-              top: 5,
-              bottom: 5,
-            ),
+            Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 5,
+                ),
+                child: Text(
+                  'Gestiona tu negocio',
+                  style: textTheme.titleMedium,
+                  /*  fontSize: 15,
+                  fontWeight: FontWeight.w700, */
+                )),
             SizedBox(
               /* fit: FlexFit.tight, */
               height: MediaQuery.of(context).size.height * 0.25,
@@ -84,7 +88,7 @@ class ManagementCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, cardRoute);
+        context.push(cardRoute);
       },
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

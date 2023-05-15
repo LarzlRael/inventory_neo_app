@@ -10,7 +10,7 @@ class MaterialsPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         tooltip: 'Agregar material',
         onPressed: () {
-          Navigator.pushNamed(context, 'material_register_page');
+          context.push('/material_register_page');
         },
         child: const Icon(Icons.add),
       ),

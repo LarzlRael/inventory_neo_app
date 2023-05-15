@@ -201,23 +201,22 @@ class _SellProductsPageState extends State<SellProductsPage> {
     setState(() {
       _isLoading = true;
     });
-    final result = await postAction('orders', data);
-    setState(() {
-      _isLoading = false;
+    await postAction('orders', data).then((value) {
+      if (validateStatus(value?.statusCode)) {
+        cardInventoryProvider.clearProducts();
+        setState(() {
+          _isLoading = false;
+        });
+        GlobalSnackBar.show(context, "Venta realizada con exito",
+            backgroundColor: Colors.green);
+        Navigator.pushNamed(context, 'sell_history');
+      } else {
+        GlobalSnackBar.show(context, "Error al realizar la venta",
+            backgroundColor: Colors.red);
+        setState(() {
+          _isLoading = false;
+        });
+      }
     });
-    if (!mounted) return;
-    if (validateStatus(result?.statusCode)) {
-      cardInventoryProvider.clearProducts();
-
-      GlobalSnackBar.show(context, "Venta realizada con exito",
-          backgroundColor: Colors.green);
-      Navigator.pushNamed(context, 'sell_history');
-    } else {
-      GlobalSnackBar.show(context, "Error al realizar la venta",
-          backgroundColor: Colors.red);
-      setState(() {
-        _isLoading = true;
-      });
-    }
   }
 }

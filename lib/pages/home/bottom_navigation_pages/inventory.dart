@@ -108,10 +108,9 @@ class CategoryCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (goToProductsByCategory) {
-          Navigator.pushNamed(
-            context,
+          context.go(
             'add_categories_page',
-            arguments: CategoryForm(
+            extra: CategoryForm(
               id: categoriesModel.id,
               name: categoriesModel.name,
               image: categoriesModel.image != null
@@ -120,10 +119,9 @@ class CategoryCard extends StatelessWidget {
             ),
           );
         } else {
-          Navigator.pushNamed(
-            context,
+          context.go(
             'list_items_category',
-            arguments: categoriesModel.id,
+            extra: categoriesModel.id,
           );
         }
       },

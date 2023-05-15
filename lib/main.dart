@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:inventory_app/providers/providers.dart';
+import 'package:inventory_app/routes/app_router.dart';
 import 'package:inventory_app/routes/routes.dart';
 import 'package:inventory_app/utils/utils.dart';
 import 'package:provider/provider.dart';
@@ -28,12 +29,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => CardInventoryProvider()),
         ChangeNotifierProvider(create: (_) => CategoriesMaterialProviders()),
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => ProductsProvider()),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         title: appName,
-        routes: appRoutes,
-        initialRoute: 'loading',
         theme: appTheme.getTheme(),
+        routerConfig: appRouter,
         debugShowCheckedModeBanner: false,
         localizationsDelegates: formBuildersDelegates,
         supportedLocales: const [

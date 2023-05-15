@@ -16,15 +16,17 @@ class ClientProfilePage extends StatelessWidget {
             color: Colors.black,
             tooltip: 'Editar cliente',
             onPressed: () {
-              Navigator.pushNamed(context, 'client_register_page',
-                  arguments: ClientData(
-                    idClient: clientModel.id,
-                    address: clientModel.address1,
-                    email: clientModel.email,
-                    lastName: clientModel.lastName,
-                    name: clientModel.firstName,
-                    phone: clientModel.phone,
-                  ));
+              context.push(
+                '/client_register_page',
+                extra: ClientData(
+                  idClient: clientModel.id,
+                  address: clientModel.address1,
+                  email: clientModel.email,
+                  lastName: clientModel.lastName,
+                  name: clientModel.firstName,
+                  phone: clientModel.phone,
+                ),
+              );
             },
           ),
           IconButton(
@@ -32,27 +34,26 @@ class ClientProfilePage extends StatelessWidget {
             color: Colors.black,
             tooltip: 'Eliminar cliente',
             onPressed: () {
-              asyncShowConfirmDialog(
-                context,
-                'Eliminar',
-                '¿Estás seguro de eliminar este cliente?',
-                () async {
-                  final response = await deleteAction(
-                    'api/client/${clientModel.id}',
-                    useAuxiliarUrl: true,
-                  );
-
-                  if (validateStatus(response!.statusCode)) {
+              asyncShowConfirmDialog(context, 'Eliminar',
+                  '¿Estás seguro de eliminar este cliente?', () async {
+                deleteAction(
+                  'api/client/${clientModel.id}',
+                  useAuxiliarUrl: true,
+                ).then((value) {
+                  if (value!.statusCode == 200) {
                     GlobalSnackBar.show(
                         context, "Cliente eliminado correctamente",
                         backgroundColor: Colors.green);
-                    Navigator.pop(context);
+                    context.pop();
                   } else {
-                    GlobalSnackBar.show(context, "Error al eliminar el cliente",
-                        backgroundColor: Colors.red);
+                    GlobalSnackBar.show(
+                      context,
+                      "Error al eliminar el cliente",
+                      backgroundColor: Colors.red,
+                    );
                   }
-                },
-              );
+                });
+              });
             },
           ),
         ],

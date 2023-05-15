@@ -20,7 +20,7 @@ class CardItemInventoryVertical extends StatelessWidget {
             duration: const Duration(milliseconds: 400),
           ),
         ); */
-        Navigator.pushNamed(context, 'item_detail', arguments: productModel);
+        context.push('/item_detail', extra: productModel);
       },
       child: Hero(
         tag: productModel.id,

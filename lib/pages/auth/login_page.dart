@@ -36,18 +36,20 @@ class LoginPage extends StatelessWidget {
               width: double.infinity,
               height: 50,
               child: OutlinedButton(
-                /* backgroundColor: colors.primary, */
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: colors.primary), //<-- SEE HERE
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
                     PageTransition(
                       type: PageTransitionType.bottomToTop,
-                      child: SelectLoginPage(),
+                      child: const SelectLoginPage(),
                       duration: const Duration(milliseconds: 400),
                     ),
                   );
                 },
-                child: Text('Iniciar sesión'),
+                child: const Text('Iniciar sesión'),
                 /* labelButtonFontSize: 15,
                 label: 'Iniciar sesión',
                 ghostButton: true,

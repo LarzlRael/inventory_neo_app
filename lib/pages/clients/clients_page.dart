@@ -11,7 +11,7 @@ class ClientsPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         tooltip: 'Agregar cliente',
         onPressed: () {
-          Navigator.pushNamed(context, 'client_register_page');
+          context.push('/client_register_page');
         },
         child: const Icon(Icons.add),
       ),

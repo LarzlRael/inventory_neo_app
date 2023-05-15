@@ -5,7 +5,7 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authServices = Provider.of<AuthProvider>(context, listen: false);
+    final authServices = context.read<AuthProvider>();
 
     return Scaffold(
       body: FutureBuilder(
@@ -21,22 +21,26 @@ class LoadingPage extends StatelessWidget {
     BuildContext context,
     AuthProvider authServices,
   ) async {
-    final isAuthenticated = await authServices.renewToken();
-    if (isAuthenticated) {
-      goToInitialPage(context, const HomePage());
-    } else {
-      goToInitialPage(context, const LoginPage());
-    }
+    await authServices.renewToken().then(
+      (value) {
+        if (value) {
+          goToInitialPage(context, '/home');
+        } else {
+          goToInitialPage(context, '/loading');
+        }
+      },
+    );
   }
 }
 
-goToInitialPage(BuildContext context, Widget page) {
-  Navigator.pushAndRemoveUntil(
+goToInitialPage(BuildContext context, String page) {
+  /* Navigator.pushAndRemoveUntil(
     context,
     PageRouteBuilder(
       pageBuilder: (_, __, ___) => page,
       transitionDuration: const Duration(milliseconds: 0),
     ),
     (route) => false,
-  );
+  ); */
+  context.go(page);
 }

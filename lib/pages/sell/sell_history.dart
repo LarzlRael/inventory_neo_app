@@ -59,10 +59,9 @@ class SellHistoryCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 5),
         child: ListTile(
           onTap: (() {
-            Navigator.pushNamed(
-              context,
-              'sell_detail',
-              arguments: order,
+            context.push(
+              '/sell_detail',
+              extra: order,
             );
           }),
           leading: Image.network(
