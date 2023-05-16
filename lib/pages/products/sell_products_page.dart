@@ -214,7 +214,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
           "Venta realizada con exito",
           backgroundColor: Colors.green,
         );
-        Navigator.pushNamed(context, 'sell_history');
+        context.push('/sell_history');
       } else {
         globaProvider.showSnackBar(
           context,

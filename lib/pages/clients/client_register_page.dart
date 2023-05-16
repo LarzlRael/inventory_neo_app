@@ -18,7 +18,9 @@ class ClientData {
 }
 
 class ClientRegisterPage extends StatefulWidget {
-  const ClientRegisterPage({super.key});
+  final ClientData? clientData;
+
+  const ClientRegisterPage({super.key, this.clientData});
 
   @override
   State<ClientRegisterPage> createState() => _ClientRegisterPageState();
@@ -26,11 +28,13 @@ class ClientRegisterPage extends StatefulWidget {
 
 class _ClientRegisterPageState extends State<ClientRegisterPage> {
   bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormBuilderState>();
-    final args = ModalRoute.of(context)!.settings.arguments as ClientData?;
+
     final textTheme = Theme.of(context).textTheme;
+
     final clientData = ClientData(
       idClient: null,
       name: '',
@@ -39,12 +43,12 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
       phone: '',
       email: '',
     );
-    if (args != null) {
-      clientData.idClient = args.idClient;
-      clientData.name = args.name;
-      clientData.lastName = args.lastName;
-      clientData.address = args.address;
-      clientData.phone = args.phone;
+    if (widget.clientData != null) {
+      clientData.idClient = widget.clientData!.idClient;
+      clientData.name = widget.clientData!.name;
+      clientData.lastName = widget.clientData!.lastName;
+      clientData.address = widget.clientData!.address;
+      clientData.phone = widget.clientData!.phone;
     }
 
     final editable = clientData.idClient != null;
@@ -215,10 +219,8 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
         if (validateStatus(value!.statusCode)) {
           globalProvider.showSnackBar(context, "Cliente editado con exito",
               backgroundColor: Colors.green);
-          Navigator.popAndPushNamed(
-            context,
-            'clients',
-          );
+
+          context.pop('/clients');
         } else {
           globalProvider.showSnackBar(
             context,

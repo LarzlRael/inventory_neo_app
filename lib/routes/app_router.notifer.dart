@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_app/providers/providers.dart';
-/* 
+
 class GoRouterNotifier extends ChangeNotifier {
-  AuthProvider authNotifier = AuthProvider();
+  final AuthProvider _authNotifier;
   AuthStatus _authStatus = AuthStatus.checking;
+
   GoRouterNotifier(this._authNotifier) {
-    _authNotifier.addListener((state) {
-      authStatus = state.authStatus;
+    _authNotifier.addListener(() {
+      authStatus = _authNotifier.authStatus;
     });
   }
 
@@ -17,4 +18,3 @@ class GoRouterNotifier extends ChangeNotifier {
     notifyListeners();
   }
 }
- */

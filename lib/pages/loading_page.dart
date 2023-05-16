@@ -1,32 +1,39 @@
 part of 'pages.dart';
 
-class LoadingPage extends StatelessWidget {
+class LoadingPage extends StatefulWidget {
   const LoadingPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final authServices = context.read<AuthProvider>();
+  State<LoadingPage> createState() => _LoadingPageState();
+}
 
-    return Scaffold(
-      body: FutureBuilder(
-        future: checkLoginState(context, authServices),
-        builder: (_, __) {
-          return const Center(child: CircularProgressIndicator());
-        },
+class _LoadingPageState extends State<LoadingPage> {
+  late AuthProvider authServices;
+
+  @override
+  void initState() {
+    authServices = context.read<AuthProvider>();
+    checkLoginState(context);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }
 
-  Future checkLoginState(
-    BuildContext context,
-    AuthProvider authServices,
-  ) {
+  Future checkLoginState(BuildContext context) {
     return authServices.renewToken().then(
       (value) {
         if (value) {
-          goToInitialPage(context, '/home');
+          /* goToInitialPage(context, '/home'); */
+          context.go('/home');
         } else {
-          goToInitialPage(context, '/loading');
+          context.go('/welcome_page');
         }
       },
     );

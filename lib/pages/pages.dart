@@ -20,11 +20,10 @@ import 'package:inventory_app/widgets/widgets.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-part 'welcome_page.dart';
 part 'home/home_page.dart';
-part 'auth/select_login_page.dart';
-/* Auth */
 part 'auth/login_page.dart';
+/* Auth */
+part 'auth/welcome_page.dart';
 
 /* Bottom navigation page */
 part 'home/bottom_navigation_pages/home.dart';

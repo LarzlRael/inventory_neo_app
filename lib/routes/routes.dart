@@ -4,8 +4,8 @@ import 'package:inventory_app/pages/pages.dart';
 
 final Map<String, Widget Function(BuildContext)> appRoutes = {
   'loading': (_) => const LoadingPage(),
-  'select_login_page': (_) => const SelectLoginPage(),
-  'welcome': (_) => const LoginPage(),
+  'login_page': (_) => const LoginPage(),
+  'welcome': (_) => const WelcomePage(),
   'home': (_) => const HomePage(),
   /* Items */
   'item_detail': (BuildContext context) => ItemDetailPage(

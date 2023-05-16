@@ -7,20 +7,21 @@ class KeyValueStorageServiceImpl implements KeyValueStorageService {
   }
 
   @override
-  Future<T?> getValue<T>(String key, String value) async {
-    final prefs = getSharedPref();
+  Future<T?> getValue<T>(String key) async {
+    final prefs = await getSharedPref();
     switch (T) {
       case int:
-        return (await prefs).getInt(key) as T?;
+        return prefs.getInt(key) as T?;
 
       case String:
-        return (await prefs).getString(key) as T?;
+        return prefs.getString(key) as T?;
 
       case bool:
-        return (await prefs).getBool(key) as T?;
+        return prefs.getBool(key) as T?;
 
       default:
-        throw Exception('Type not found');
+        throw UnimplementedError(
+            'GET not implemented for type ${T.runtimeType}');
     }
   }
 
@@ -31,19 +32,22 @@ class KeyValueStorageServiceImpl implements KeyValueStorageService {
   }
 
   @override
-  Future<void> setKeyValue<T>(String key, String value) async {
-    final prefs = getSharedPref();
+  Future<void> setKeyValue<T>(String key, T value) async {
+    final prefs = await getSharedPref();
     switch (T) {
       case int:
-        await (await prefs).setInt(key, value as int);
+        prefs.setInt(key, value as int);
         break;
       case String:
-        await (await prefs).setString(key, value);
+        prefs.setString(key, value as String);
         break;
       case bool:
-        await (await prefs).setBool(key, value as bool);
+        prefs.setBool(key, value as bool);
         break;
+
       default:
+        throw UnimplementedError(
+            'Set not implemented for type ${T.runtimeType}');
     }
   }
 }

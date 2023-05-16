@@ -4,8 +4,9 @@ enum AuthStatus { checking, authenticated, notAuthenticated }
 
 class AuthProvider extends ChangeNotifier {
   AuthState authState = AuthState();
-
-  final _storage = const FlutterSecureStorage();
+  AuthStatus get authStatus => authState.authStatus;
+  KeyValueStorageServiceImpl keyValueStorageService =
+      KeyValueStorageServiceImpl();
 
   Future<bool> login(Map<String, dynamic> data) async {
     final post =
@@ -19,36 +20,44 @@ class AuthProvider extends ChangeNotifier {
         user: body,
         isLogged: true,
       );
-      await _storage.write(key: 'token', value: body!.token);
+
+      await keyValueStorageService.setKeyValue<String>('token', body!.token!);
       notifyListeners();
     }
     return valid;
   }
 
-  logout() {
+  logout() async {
+    await keyValueStorageService.removeKey('token');
     authState = authState.copyWith(
       authStatus: AuthStatus.notAuthenticated,
       user: null,
       isLogged: false,
     );
     notifyListeners();
-    _storage.delete(key: 'token');
   }
 
   Future<bool> renewToken() async {
-    final resp = await Request.sendRequestWithToken(RequestType.get,
-        'api/client/renew', {}, await _storage.read(key: 'token'),
-        useAuxiliarUrl: true);
+    final token = await keyValueStorageService.getValue<String>('token');
+    final resp = await Request.sendRequestWithToken(
+      RequestType.get,
+      'api/client/renew',
+      {},
+      token,
+      useAuxiliarUrl: true,
+    );
 
     if (validateStatus(resp!.statusCode)) {
       final body = loginClientModelFromJson(resp.body);
 
-      await _storage.write(key: 'token', value: body!.token);
+      await keyValueStorageService.setKeyValue<String>('token', body!.token!);
+
       authState = authState.copyWith(
         authStatus: AuthStatus.authenticated,
         user: body,
         isLogged: true,
       );
+
       notifyListeners();
       return true;
     } else {

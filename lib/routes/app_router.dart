@@ -17,8 +17,12 @@ final appRouter = GoRouter(
       builder: (context, state) => const LoadingPage(),
     ),
     GoRoute(
-      path: '/select_login_page',
-      builder: (context, state) => const SelectLoginPage(),
+      path: '/welcome_page',
+      builder: (context, state) => const WelcomePage(),
+    ),
+    GoRoute(
+      path: '/login_page',
+      builder: (context, state) => const LoginPage(),
     ),
     GoRoute(
       path: '/home',
@@ -46,7 +50,12 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/client_register_page',
-      builder: (context, state) => const ClientRegisterPage(),
+      builder: (context, state) {
+        ClientData? clientData = state.extra as ClientData?;
+        return ClientRegisterPage(
+          clientData: clientData,
+        );
+      },
     ),
 
     GoRoute(

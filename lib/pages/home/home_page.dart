@@ -32,11 +32,7 @@ class _HomePageState extends State<HomePage> {
                 '¿Estás seguro de cerrar sesion?',
                 () async {
                   authProvider.logout();
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    'select_login_page',
-                    (route) => false,
-                  );
+                  context.go('/login_page');
                 },
               );
             },
