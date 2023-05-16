@@ -146,13 +146,13 @@ class _SellDetailState extends State<SellDetail> {
 
   updateStatus(orderId, dropdownValue) async {
     final globalProvider = context.read<GlobalProvider>();
-    final orderBloc = OrdersBloc();
+    final orderBloc = context.read<OrderProvider>();
     putAction(
             'orders/$orderId', {'status': statusListTransalteEn[dropdownValue]})
         .then((value) {
       if (value!.statusCode == 200) {
         /* TODO change orders in the state */
-        orderBloc.getOrders();
+        orderBloc.fetchOrders();
         globalProvider.showSnackBar(
           context,
           'Estado actualizado',

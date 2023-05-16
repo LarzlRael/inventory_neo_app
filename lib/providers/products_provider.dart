@@ -1,7 +1,8 @@
 part of 'providers.dart';
 
 class ProductsProvider extends ChangeNotifier {
-  ProductsState _state = ProductsState();
+  ProductsState productsState = ProductsState();
+  CategoriesState categoriesState = CategoriesState();
 
   /* createOrUpdateProduct(Map<String, dynamic> productLike) {
     final isProductIsList =
@@ -30,20 +31,50 @@ class ProductsProvider extends ChangeNotifier {
       {},
       'xd',
     );
-    _state.copyWith(
+    productsState.copyWith(
       products: productsModelFromJson(clientRequest!.body),
     );
     notifyListeners();
   }
 
-  get getProducts => _state.products;
+  get getProducts => productsState.products;
 
   deleteProductById(String id) {
-    _state.copyWith(
-      products: _state.products.where((element) => element.id != id).toList(),
+    productsState.copyWith(
+      products:
+          productsState.products.where((element) => element.id != id).toList(),
     );
     notifyListeners();
   }
+
+  get getCategories => categoriesState.categories;
+  fetchCategories() async {
+    final res = await getAction('/products/categories');
+    final orders = categoriesModelFromJson(res!.body);
+
+    categoriesState.copyWith(
+      categories: orders,
+      isLoading: false,
+    );
+    notifyListeners();
+  }
+}
+
+class CategoriesState {
+  final bool isLoading;
+  final List<CategoriesModel> categories;
+  CategoriesState({
+    this.isLoading = false,
+    this.categories = const [],
+  });
+  CategoriesState copyWith({
+    bool? isLoading,
+    List<CategoriesModel>? categories,
+  }) =>
+      CategoriesState(
+        isLoading: isLoading ?? this.isLoading,
+        categories: categories ?? this.categories,
+      );
 }
 
 class ProductsState {

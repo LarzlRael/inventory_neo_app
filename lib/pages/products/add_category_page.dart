@@ -17,10 +17,10 @@ class AddCategoryPage extends StatefulWidget {
 class _AddCategoryState extends State<AddCategoryPage> {
   bool _isLoading = false;
   final categoryForm = CategoryForm(name: '', id: null);
-  late CategoriesBloc categoriesBloc;
+  /* late CategoriesBloc categoriesBloc; */
   @override
   void initState() {
-    categoriesBloc = CategoriesBloc();
+    /* categoriesBloc = CategoriesBloc(); */
     super.initState();
   }
 
@@ -65,7 +65,7 @@ class _AddCategoryState extends State<AddCategoryPage> {
                           backgroundColor: Colors.green,
                         );
                         /* TODO change this in a categories provider */
-                        categoriesBloc.getCategories();
+                        /* categoriesBloc.getCategories(); */
                         context.pop();
                       } else {
                         globalProvider.showSnackBar(

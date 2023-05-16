@@ -8,7 +8,7 @@ enum RequestType {
 }
 
 class Request {
-  String uri = '${Environment.serverHttpUrl}/';
+  String uri = Environment.baseURL;
 
   static Future<http.Response?> sendRequest(
     RequestType method,
@@ -18,7 +18,7 @@ class Request {
     final headers = {
       'Content-Type': 'application/json',
     };
-    Uri uri = Uri.parse('${Environment.serverHttpUrl}/$url');
+    Uri uri = Uri.parse('${Environment.baseURL}/$url');
     late http.Response res;
     switch (method) {
       case RequestType.get:
@@ -56,8 +56,8 @@ class Request {
     };
 
     Uri uri = useAuxiliarUrl
-        ? Uri.parse('${Enviroment.apiUrl}/$url')
-        : Uri.parse('${Environment.serverHttpUrl}/$url');
+        ? Uri.parse('${Environment.apiUrl}/$url')
+        : Uri.parse('${Environment.baseURL}/$url');
     late http.Response res;
     switch (method) {
       case RequestType.get:
@@ -85,8 +85,8 @@ class Request {
   }) async {
     late http.Response res;
     Uri uri = useAuxiliarUrl
-        ? Uri.parse('${Enviroment.apiUrl}/$url')
-        : Uri.parse('${Environment.serverHttpUrl}/$url');
+        ? Uri.parse('${Environment.apiUrl}/$url')
+        : Uri.parse('${Environment.baseURL}/$url');
 
     final mimeType = mime(file.path)!.split('/');
     final headers = {

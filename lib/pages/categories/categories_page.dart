@@ -5,8 +5,8 @@ class CategoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categoriesBloc = CategoriesBloc();
-    categoriesBloc.getCategories();
+    final products = context.read<ProductsProvider>();
+    products.getCategories();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
@@ -26,7 +26,7 @@ class CategoriesPage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            StreamBuilder(
+            /* StreamBuilder(
               stream: categoriesBloc.categoriesStream,
               builder: (
                 BuildContext context,
@@ -55,7 +55,7 @@ class CategoriesPage extends StatelessWidget {
                   ),
                 );
               },
-            ),
+            ), */
           ],
         ),
       ),

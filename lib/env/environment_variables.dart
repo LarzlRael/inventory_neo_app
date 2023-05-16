@@ -1,11 +1,9 @@
 /* const baseURL = 'https://subastareas2.herokuapp.com'; */
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-const baseURL = 'https://arrieta.exon.vip/wp-json/wc/v3';
+/* const serverHttpUrl = baseURL; */
 
-const serverHttpUrl = baseURL;
-
-class Enviroment {
+class Environment {
   static initEnviroment() async {
     await dotenv.load(
       fileName: '.env',
@@ -14,4 +12,8 @@ class Enviroment {
 
   static String apiUrl =
       dotenv.env['API_URL'] ?? 'No está configurado el API_URL';
+  static String baseURL =
+      dotenv.env['WOOCOMMERCE_API_URL'] ?? 'No está configurado el API_URL';
+  /* static String serverHttpUrl =
+      dotenv.env['WOOCOMMERCE_API_URL'] ?? 'No está configurado el API_URL'; */
 }

@@ -4,8 +4,7 @@ class SellHistory extends StatelessWidget {
   const SellHistory({super.key});
   @override
   Widget build(BuildContext context) {
-    final orderBloc = OrdersBloc();
-    orderBloc.getOrders();
+    final orderBloc = context.read<OrderProvider>();
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
@@ -23,7 +22,8 @@ class SellHistory extends StatelessWidget {
             /* SellHistoryCard(),
             SellHistoryCard(),
             SellHistoryCard(), */
-            StreamBuilder(
+            /* TODO change this  */
+            /* StreamBuilder(
               stream: orderBloc.ordersList,
               builder: (BuildContext context,
                   AsyncSnapshot<List<OrdersModel>> snapshot) {
@@ -41,7 +41,7 @@ class SellHistory extends StatelessWidget {
                   ),
                 );
               },
-            ),
+            ), */
           ],
         ),
       ),

@@ -12,3 +12,4 @@ part 'theme_provider.dart';
 part 'products_provider.dart';
 part 'product_provider.dart';
 part 'global_provider.dart';
+part 'order_provider.dart';

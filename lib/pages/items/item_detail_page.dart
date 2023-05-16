@@ -12,10 +12,10 @@ class ItemDetailPage extends StatefulWidget {
 }
 
 class _ItemDetailPageState extends State<ItemDetailPage> {
-  final productBloc = ProductsBloc();
   @override
   Widget build(BuildContext context) {
     final cardInventoryProvider = context.read<CardInventoryProvider>();
+    final productsProvider = context.read<ProductsProvider>();
     final globalProvider = context.read<GlobalProvider>();
     return Scaffold(
       appBar: AppBarWithBackIcon(
@@ -50,10 +50,10 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 'Eliminar',
                 '¿Estas seguro de eliminar este producto?',
                 () {
-                  return productBloc
-                      .deleteProduct(
+                  return productsProvider
+                      .deleteProductById(
                     widget.productModel.id.toString(),
-                    widget.productModel.images[0].src,
+                    /* widget.productModel.images[0].src, */
                   )
                       .then((value) {
                     if (value) {

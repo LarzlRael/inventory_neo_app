@@ -7,12 +7,12 @@ import 'package:inventory_app/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 import 'constants/constants.dart';
-import 'env/enviroment_variables.dart';
+import 'env/environment_variables.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await UserPreferences.init();
-  await Enviroment.initEnviroment();
+  await Environment.initEnviroment();
   // mergeWith optional, you can include Platform.environment for Mobile/Desktop app
   runApp(ChangeNotifierProvider(
       create: (_) => ThemeProviderNotifier(), child: const MyApp()));
@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => GlobalProvider()),
         ChangeNotifierProvider(create: (_) => ProductsProvider()),
+        ChangeNotifierProvider(create: (_) => OrderProvider()),
       ],
       child: MaterialApp.router(
         title: appName,

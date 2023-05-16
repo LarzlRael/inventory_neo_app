@@ -25,7 +25,7 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddCategoriesState extends State<AddProduct> {
-  final productsBloc = ProductsBloc();
+  /* final productsBloc = ProductsBloc(); */
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -200,7 +200,6 @@ class _AddCategoriesState extends State<AddProduct> {
         },
       );
     }
-
     productoService
         .createOrUpdateProduct(
       json,

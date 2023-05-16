@@ -12,7 +12,7 @@ class ProductsBloc {
 
   Stream<List<ProductsModel>> get productsStream => _productsController.stream;
 
-  void getProducts() async {
+  /* void getProducts() async {
     _productsController.sink.add(await _productsServices.getAllProducts());
   }
 
@@ -20,7 +20,7 @@ class ProductsBloc {
     final res = await _productsServices.deleteProduct(id);
     getProducts();
     return res;
-  }
+  } */
 
   void dispose() {
     _productsController.close();
