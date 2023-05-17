@@ -4,6 +4,7 @@ class ProductsProvider extends ChangeNotifier {
   ProductsState productsState = ProductsState();
   CategoriesState categoriesState = CategoriesState();
 
+  createOrUpdateProduct(Map<String, dynamic> productLike, {int? idProduct}) {}
   /* createOrUpdateProduct(Map<String, dynamic> productLike) {
     final isProductIsList =
         _products.any((element) => element.id == product.id);
@@ -47,9 +48,8 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  get getCategories => categoriesState.categories;
-  fetchCategories() async {
-    final res = await getAction('/products/categories');
+  getCategories() async {
+    final res = await getAction('products/categories');
     final orders = categoriesModelFromJson(res!.body);
 
     categoriesState.copyWith(

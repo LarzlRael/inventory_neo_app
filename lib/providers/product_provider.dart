@@ -7,28 +7,39 @@ class ProductProvider extends ChangeNotifier {
     productsProvider = ProductsProvider();
   }
 
-  Future<bool> deleteProduct(String idProduct) async {
-    final clientRequest = await Request.sendRequestWithToken(
-      RequestType.delete,
-      'products/$idProduct',
-      {},
-      'xd',
-    );
+  Future<ProductModel> deleteProduct(String idProduct) async {
+    try {
+      final clientRequest = await Request.sendRequestWithToken(
+        RequestType.delete,
+        'products/$idProduct',
+        {},
+        'xd',
+      );
 
-    productsProvider.deleteProductById(idProduct);
-    return validateStatus(clientRequest!.statusCode);
+      productsProvider.deleteProductById(idProduct);
+      return productModelFromJson(clientRequest!.body);
+    } catch (e) {
+      rethrow;
+    }
   }
 
-  createOrUpdateProduct(
+  Future<ProductModel> createOrUpdateProduct(
     Map<String, dynamic> body, {
     int? idProduct,
   }) async {
-    final clientRequest = await Request.sendRequestWithToken(
-      idProduct == null ? RequestType.put : RequestType.post,
-      idProduct == null ? 'products' : 'products/$idProduct',
-      body,
-      'xd',
-    );
-    final valid = validateStatus(clientRequest!.statusCode);
+    try {
+      final requestType =
+          idProduct == null ? RequestType.post : RequestType.put;
+      final clientRequest = await Request.sendRequestWithToken(
+        requestType,
+        idProduct == null ? 'products' : 'products/$idProduct',
+        body,
+        'xd',
+      );
+      return productModelFromJson(clientRequest!.body);
+      /* final valid = validateStatus(clientRequest!.statusCode); */
+    } catch (e) {
+      rethrow;
+    }
   }
 }

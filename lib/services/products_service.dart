@@ -31,7 +31,7 @@ class ProductsServices {
     return productsModelFromJson(clientRequest!.body);
   }
 
-  Future<bool> createOrUpdateProduct(
+  /* Future<bool> createOrUpdateProduct(
     Map<String, dynamic> body, {
     bool edit = false,
     int? idProduct,
@@ -43,7 +43,7 @@ class ProductsServices {
       'xd',
     );
     return validateStatus(clientRequest!.statusCode);
-  }
+  } */
 
   Future<bool> deleteProduct(String idProduct) async {
     final clientRequest = await Request.sendRequestWithToken(

@@ -17,7 +17,6 @@ class ClientsPage extends StatelessWidget {
       ),
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
-        showTitle: true,
         title: 'Clientes',
         actions: [
           IconButton(

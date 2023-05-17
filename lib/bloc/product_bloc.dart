@@ -1,7 +1,6 @@
 part of 'blocs.dart';
 
 class ProductsBloc {
-  final _productsServices = ProductsServices();
   static final ProductsBloc _singleton = ProductsBloc._internal();
   ProductsBloc._internal();
 

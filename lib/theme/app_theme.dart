@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const colorList = <Color>[
   Colors.amber,
@@ -25,7 +26,13 @@ class AppTheme {
         useMaterial3: true,
         brightness: isDarkMode ? Brightness.dark : Brightness.light,
         colorSchemeSeed: colorList[5],
-        appBarTheme: const AppBarTheme(),
+        appBarTheme: AppBarTheme(
+          titleTextStyle: GoogleFonts.montserratAlternates().copyWith(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
       );
   AppTheme copyWith({
     int? selectedColor,

@@ -27,6 +27,14 @@ class AddProduct extends StatefulWidget {
 class _AddCategoriesState extends State<AddProduct> {
   /* final productsBloc = ProductsBloc(); */
   bool _isLoading = false;
+
+  late ProductsProvider productsProvider;
+  @override
+  void initState() {
+    productsProvider = context.read<ProductsProvider>();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final categoriesMaterialProviders =
@@ -166,7 +174,7 @@ class _AddCategoriesState extends State<AddProduct> {
     formkey.currentState!.save();
 
     bool isFile = formkey.currentState!.value['file'] != null;
-    final productoService = ProductsServices();
+
     setState(() {
       _isLoading = true;
     });
@@ -200,33 +208,31 @@ class _AddCategoriesState extends State<AddProduct> {
         },
       );
     }
-    productoService
+    productsProvider
         .createOrUpdateProduct(
       json,
-      edit: idProduct != null,
       idProduct: idProduct,
     )
         .then((value) {
-      if (value) {
-        globalProvider.showSnackBar(
-          context,
-          'Registro exitoso',
-          backgroundColor: Colors.green,
-        );
-        context.pop();
-      } else {
-        setState(() {
-          _isLoading = false;
-        });
-        globalProvider.showSnackBar(
-          context,
-          'Error al registrar',
-          backgroundColor: Colors.red,
-        );
-      }
-    });
-    setState(() {
-      _isLoading = false;
+      globalProvider.showSnackBar(
+        context,
+        'Registro exitoso',
+        backgroundColor: Colors.green,
+      );
+
+      setState(() {
+        _isLoading = false;
+      });
+      context.pop();
+    }).catchError((error) {
+      globalProvider.showSnackBar(
+        context,
+        'Error al registrar',
+        backgroundColor: Colors.red,
+      );
+      setState(() {
+        _isLoading = false;
+      });
     });
   }
 }

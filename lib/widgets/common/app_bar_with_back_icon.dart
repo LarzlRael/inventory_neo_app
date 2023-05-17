@@ -32,9 +32,9 @@ class AppBarWithBackIcon extends StatelessWidget
           : appBarTitle(subTitle, authProvider),
       leading: IconButton(
         icon: const Icon(
-          Icons.arrow_circle_left_outlined,
-          size: 40,
-          color: Colors.black,
+          Icons.chevron_left_rounded,
+          size: 35,
+          /* color: Colors.black, */
         ),
         onPressed: () => Navigator.pop(context),
       ),

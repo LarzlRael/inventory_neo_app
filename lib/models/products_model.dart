@@ -1,83 +1,14 @@
-// To parse this JSON data, do
-//
-//     final productModel = productModelFromJson(jsonString);
-
 part of 'models.dart';
 
-ProductModel productModelFromJson(String str) =>
-    ProductModel.fromJson(json.decode(str));
+List<ProductsModel> productsModelFromJson(String str) =>
+    List<ProductsModel>.from(
+        json.decode(str).map((x) => ProductsModel.fromJson(x)));
 
-String productModelToJson(ProductModel data) => json.encode(data.toJson());
+String productsModelToJson(List<ProductsModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class ProductModel {
-  int id;
-  String name;
-  String slug;
-  String permalink;
-  DateTime dateCreated;
-  DateTime dateCreatedGmt;
-  DateTime dateModified;
-  DateTime dateModifiedGmt;
-  String type;
-  String status;
-  bool featured;
-  String catalogVisibility;
-  String description;
-  String shortDescription;
-  String sku;
-  String price;
-  String regularPrice;
-  String salePrice;
-  dynamic dateOnSaleFrom;
-  dynamic dateOnSaleFromGmt;
-  dynamic dateOnSaleTo;
-  dynamic dateOnSaleToGmt;
-  String priceHtml;
-  bool onSale;
-  bool purchasable;
-  int totalSales;
-  bool virtual;
-  bool downloadable;
-  List<dynamic> downloads;
-  int downloadLimit;
-  int downloadExpiry;
-  String externalUrl;
-  String buttonText;
-  String taxStatus;
-  String taxClass;
-  bool manageStock;
-  dynamic stockQuantity;
-  String stockStatus;
-  String backorders;
-  bool backordersAllowed;
-  bool backordered;
-  bool soldIndividually;
-  String weight;
-  Dimensions dimensions;
-  bool shippingRequired;
-  bool shippingTaxable;
-  String shippingClass;
-  int shippingClassId;
-  bool reviewsAllowed;
-  String averageRating;
-  int ratingCount;
-  List<int> relatedIds;
-  List<dynamic> upsellIds;
-  List<dynamic> crossSellIds;
-  int parentId;
-  String purchaseNote;
-  List<Category> categories;
-  List<dynamic> tags;
-  List<ImageProduct> images;
-  List<dynamic> attributes;
-  List<dynamic> defaultAttributes;
-  List<dynamic> variations;
-  List<dynamic> groupedProducts;
-  int menuOrder;
-  List<dynamic> metaData;
-  Links links;
-
-  ProductModel({
+class ProductsModel {
+  ProductsModel({
     required this.id,
     required this.name,
     required this.slug,
@@ -96,11 +27,10 @@ class ProductModel {
     required this.price,
     required this.regularPrice,
     required this.salePrice,
-    this.dateOnSaleFrom,
-    this.dateOnSaleFromGmt,
-    this.dateOnSaleTo,
-    this.dateOnSaleToGmt,
-    required this.priceHtml,
+    required this.dateOnSaleFrom,
+    required this.dateOnSaleFromGmt,
+    required this.dateOnSaleTo,
+    required this.dateOnSaleToGmt,
     required this.onSale,
     required this.purchasable,
     required this.totalSales,
@@ -114,11 +44,11 @@ class ProductModel {
     required this.taxStatus,
     required this.taxClass,
     required this.manageStock,
-    this.stockQuantity,
-    required this.stockStatus,
+    required this.stockQuantity,
     required this.backorders,
     required this.backordersAllowed,
     required this.backordered,
+    required this.lowStockAmount,
     required this.soldIndividually,
     required this.weight,
     required this.dimensions,
@@ -129,7 +59,6 @@ class ProductModel {
     required this.reviewsAllowed,
     required this.averageRating,
     required this.ratingCount,
-    required this.relatedIds,
     required this.upsellIds,
     required this.crossSellIds,
     required this.parentId,
@@ -142,17 +71,92 @@ class ProductModel {
     required this.variations,
     required this.groupedProducts,
     required this.menuOrder,
-    required this.metaData,
+    required this.priceHtml,
+    required this.relatedIds,
+    required this.stockStatus,
+    required this.hasOptions,
     required this.links,
   });
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
+  int id;
+  String name;
+  String slug;
+  String permalink;
+  DateTime? dateCreated;
+  DateTime? dateCreatedGmt;
+  DateTime dateModified;
+  DateTime dateModifiedGmt;
+  String type;
+  String status;
+  bool featured;
+  String catalogVisibility;
+  String description;
+  String shortDescription;
+  String sku;
+  String price;
+  String regularPrice;
+  String salePrice;
+  dynamic dateOnSaleFrom;
+  dynamic dateOnSaleFromGmt;
+  dynamic dateOnSaleTo;
+  dynamic dateOnSaleToGmt;
+  bool onSale;
+  bool purchasable;
+  int totalSales;
+  bool virtual;
+  bool downloadable;
+  List<dynamic> downloads;
+  int downloadLimit;
+  int downloadExpiry;
+  String externalUrl;
+  String buttonText;
+  String taxStatus;
+  String taxClass;
+  bool manageStock;
+  dynamic stockQuantity;
+  String backorders;
+  bool backordersAllowed;
+  bool backordered;
+  dynamic lowStockAmount;
+  bool soldIndividually;
+  String weight;
+  Dimensions dimensions;
+  bool shippingRequired;
+  bool shippingTaxable;
+  String shippingClass;
+  int shippingClassId;
+  bool reviewsAllowed;
+  String averageRating;
+  int ratingCount;
+  List<dynamic> upsellIds;
+  List<dynamic> crossSellIds;
+  int parentId;
+  String purchaseNote;
+  List<Category> categories;
+  List<Category> tags;
+  List<ImageProduct> images;
+  List<Attribute> attributes;
+  List<dynamic> defaultAttributes;
+  List<dynamic> variations;
+  List<dynamic> groupedProducts;
+  int menuOrder;
+  String priceHtml;
+  List<int> relatedIds;
+  String stockStatus;
+  bool hasOptions;
+  Links links;
+
+  factory ProductsModel.fromJson(Map<String, dynamic> json) => ProductsModel(
         id: json["id"],
         name: json["name"],
         slug: json["slug"],
         permalink: json["permalink"],
-        dateCreated: DateTime.parse(json["date_created"]),
-        dateCreatedGmt: DateTime.parse(json["date_created_gmt"]),
+        dateCreated: json["date_created"] == null
+            ? null
+            : DateTime.parse(json["date_created"]),
+        dateCreatedGmt: json["date_created_gmt"] == null
+            ? null
+            : DateTime.parse(json["date_created_gmt"]),
         dateModified: DateTime.parse(json["date_modified"]),
         dateModifiedGmt: DateTime.parse(json["date_modified_gmt"]),
         type: json["type"],
@@ -169,7 +173,6 @@ class ProductModel {
         dateOnSaleFromGmt: json["date_on_sale_from_gmt"],
         dateOnSaleTo: json["date_on_sale_to"],
         dateOnSaleToGmt: json["date_on_sale_to_gmt"],
-        priceHtml: json["price_html"],
         onSale: json["on_sale"],
         purchasable: json["purchasable"],
         totalSales: json["total_sales"],
@@ -184,10 +187,10 @@ class ProductModel {
         taxClass: json["tax_class"],
         manageStock: json["manage_stock"],
         stockQuantity: json["stock_quantity"],
-        stockStatus: json["stock_status"],
         backorders: json["backorders"],
         backordersAllowed: json["backorders_allowed"],
         backordered: json["backordered"],
+        lowStockAmount: json["low_stock_amount"],
         soldIndividually: json["sold_individually"],
         weight: json["weight"],
         dimensions: Dimensions.fromJson(json["dimensions"]),
@@ -198,24 +201,28 @@ class ProductModel {
         reviewsAllowed: json["reviews_allowed"],
         averageRating: json["average_rating"],
         ratingCount: json["rating_count"],
-        relatedIds: List<int>.from(json["related_ids"].map((x) => x)),
         upsellIds: List<dynamic>.from(json["upsell_ids"].map((x) => x)),
         crossSellIds: List<dynamic>.from(json["cross_sell_ids"].map((x) => x)),
         parentId: json["parent_id"],
         purchaseNote: json["purchase_note"],
         categories: List<Category>.from(
             json["categories"].map((x) => Category.fromJson(x))),
-        tags: List<dynamic>.from(json["tags"].map((x) => x)),
+        tags:
+            List<Category>.from(json["tags"].map((x) => Category.fromJson(x))),
         images: List<ImageProduct>.from(
             json["images"].map((x) => ImageProduct.fromJson(x))),
-        attributes: List<dynamic>.from(json["attributes"].map((x) => x)),
+        attributes: List<Attribute>.from(
+            json["attributes"].map((x) => Attribute.fromJson(x))),
         defaultAttributes:
             List<dynamic>.from(json["default_attributes"].map((x) => x)),
         variations: List<dynamic>.from(json["variations"].map((x) => x)),
         groupedProducts:
             List<dynamic>.from(json["grouped_products"].map((x) => x)),
         menuOrder: json["menu_order"],
-        metaData: List<dynamic>.from(json["meta_data"].map((x) => x)),
+        priceHtml: json["price_html"],
+        relatedIds: List<int>.from(json["related_ids"].map((x) => x)),
+        stockStatus: json["stock_status"],
+        hasOptions: json["has_options"],
         links: Links.fromJson(json["_links"]),
       );
 
@@ -224,8 +231,10 @@ class ProductModel {
         "name": name,
         "slug": slug,
         "permalink": permalink,
-        "date_created": dateCreated.toIso8601String(),
-        "date_created_gmt": dateCreatedGmt.toIso8601String(),
+        "date_created":
+            dateCreated == null ? null : dateCreated?.toIso8601String(),
+        "date_created_gmt":
+            dateCreatedGmt == null ? null : dateCreatedGmt?.toIso8601String(),
         "date_modified": dateModified.toIso8601String(),
         "date_modified_gmt": dateModifiedGmt.toIso8601String(),
         "type": type,
@@ -242,7 +251,6 @@ class ProductModel {
         "date_on_sale_from_gmt": dateOnSaleFromGmt,
         "date_on_sale_to": dateOnSaleTo,
         "date_on_sale_to_gmt": dateOnSaleToGmt,
-        "price_html": priceHtml,
         "on_sale": onSale,
         "purchasable": purchasable,
         "total_sales": totalSales,
@@ -257,10 +265,10 @@ class ProductModel {
         "tax_class": taxClass,
         "manage_stock": manageStock,
         "stock_quantity": stockQuantity,
-        "stock_status": stockStatus,
         "backorders": backorders,
         "backorders_allowed": backordersAllowed,
         "backordered": backordered,
+        "low_stock_amount": lowStockAmount,
         "sold_individually": soldIndividually,
         "weight": weight,
         "dimensions": dimensions.toJson(),
@@ -271,21 +279,151 @@ class ProductModel {
         "reviews_allowed": reviewsAllowed,
         "average_rating": averageRating,
         "rating_count": ratingCount,
-        "related_ids": List<dynamic>.from(relatedIds.map((x) => x)),
         "upsell_ids": List<dynamic>.from(upsellIds.map((x) => x)),
         "cross_sell_ids": List<dynamic>.from(crossSellIds.map((x) => x)),
         "parent_id": parentId,
         "purchase_note": purchaseNote,
         "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
-        "tags": List<dynamic>.from(tags.map((x) => x)),
+        "tags": List<dynamic>.from(tags.map((x) => x.toJson())),
         "images": List<dynamic>.from(images.map((x) => x.toJson())),
-        "attributes": List<dynamic>.from(attributes.map((x) => x)),
+        "attributes": List<dynamic>.from(attributes.map((x) => x.toJson())),
         "default_attributes":
             List<dynamic>.from(defaultAttributes.map((x) => x)),
         "variations": List<dynamic>.from(variations.map((x) => x)),
         "grouped_products": List<dynamic>.from(groupedProducts.map((x) => x)),
         "menu_order": menuOrder,
-        "meta_data": List<dynamic>.from(metaData.map((x) => x)),
+        "price_html": priceHtml,
+        "related_ids": List<dynamic>.from(relatedIds.map((x) => x)),
+        "stock_status": stockStatus,
+        "has_options": hasOptions,
         "_links": links.toJson(),
+      };
+}
+
+class Attribute {
+  Attribute({
+    required this.id,
+    required this.name,
+    required this.position,
+    required this.visible,
+    required this.variation,
+    required this.options,
+  });
+
+  int id;
+  String name;
+  int position;
+  bool visible;
+  bool variation;
+  List<String> options;
+
+  factory Attribute.fromJson(Map<String, dynamic> json) => Attribute(
+        id: json["id"],
+        name: json["name"],
+        position: json["position"],
+        visible: json["visible"],
+        variation: json["variation"],
+        options: List<String>.from(json["options"].map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "position": position,
+        "visible": visible,
+        "variation": variation,
+        "options": List<dynamic>.from(options.map((x) => x)),
+      };
+}
+
+class Category {
+  Category({
+    required this.id,
+    required this.name,
+    required this.slug,
+  });
+
+  int id;
+  String name;
+  String slug;
+
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
+        id: json["id"],
+        name: json["name"],
+        slug: json["slug"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "slug": slug,
+      };
+}
+
+class Dimensions {
+  Dimensions({
+    required this.length,
+    required this.width,
+    required this.height,
+  });
+
+  String length;
+  String width;
+  String height;
+
+  factory Dimensions.fromJson(Map<String, dynamic> json) => Dimensions(
+        length: json["length"],
+        width: json["width"],
+        height: json["height"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "length": length,
+        "width": width,
+        "height": height,
+      };
+}
+
+class ImageProduct {
+  ImageProduct({
+    required this.id,
+    required this.dateCreated,
+    required this.dateCreatedGmt,
+    required this.dateModified,
+    required this.dateModifiedGmt,
+    required this.src,
+    required this.name,
+    required this.alt,
+  });
+
+  int id;
+  DateTime dateCreated;
+  DateTime dateCreatedGmt;
+  DateTime dateModified;
+  DateTime dateModifiedGmt;
+  String src;
+  String name;
+  String alt;
+
+  factory ImageProduct.fromJson(Map<String, dynamic> json) => ImageProduct(
+        id: json["id"],
+        dateCreated: DateTime.parse(json["date_created"]),
+        dateCreatedGmt: DateTime.parse(json["date_created_gmt"]),
+        dateModified: DateTime.parse(json["date_modified"]),
+        dateModifiedGmt: DateTime.parse(json["date_modified_gmt"]),
+        src: json["src"],
+        name: json["name"],
+        alt: json["alt"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "date_created": dateCreated.toIso8601String(),
+        "date_created_gmt": dateCreatedGmt.toIso8601String(),
+        "date_modified": dateModified.toIso8601String(),
+        "date_modified_gmt": dateModifiedGmt.toIso8601String(),
+        "src": src,
+        "name": name,
+        "alt": alt,
       };
 }

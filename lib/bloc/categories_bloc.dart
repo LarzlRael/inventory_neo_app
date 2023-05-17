@@ -14,9 +14,9 @@ class CategoriesBloc {
     _ordersLists.close();
   }
 
-  getCategories() async {
+  /* getCategories() async {
     final res = await getAction('/products/categories');
     final orders = categoriesModelFromJson(res!.body);
     _ordersLists.sink.add(orders);
-  }
+  } */
 }

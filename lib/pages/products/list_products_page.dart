@@ -1,13 +1,25 @@
 part of '../pages.dart';
 
-class ListProductsPage extends StatelessWidget {
+class ListProductsPage extends StatefulWidget {
   const ListProductsPage({super.key});
+
+  @override
+  State<ListProductsPage> createState() => _ListProductsPageState();
+}
+
+class _ListProductsPageState extends State<ListProductsPage> {
+  late ProductsProvider productsProvider;
+  @override
+  void initState() {
+    productsProvider = context.read<ProductsProvider>();
+    productsProvider.fetchProductsAllProducts();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     /* productBloc.getProducts(); */
-    final productsProvider = context.read<ProductsProvider>();
-    productsProvider.getProducts();
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -36,7 +48,7 @@ class ListProductsPage extends StatelessWidget {
       body: Column(
         children: [
           FutureBuilder(
-            future: productsProvider.fetchCategories(),
+            future: productsProvider.getCategories(),
             builder: (BuildContext context,
                 AsyncSnapshot<List<ProductsModel>> snapshot) {
               if (!snapshot.hasData) {

@@ -14,9 +14,9 @@ class OrdersBloc {
     _ordersLists.close();
   }
 
-  getOrders() async {
+  /*  getOrders() async {
     final res = await getAction('/orders');
     final orders = ordersModelFromJson(res!.body);
     _ordersLists.sink.add(orders);
-  }
+  } */
 }
