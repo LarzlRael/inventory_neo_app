@@ -1,27 +1,8 @@
 part of '../pages.dart';
 
-class ItemDetails {
-  int? idProduct;
-  String name;
-  String price;
-  String description;
-  int category;
-  List<String> idTags;
-  List<String> images = [];
-  ItemDetails({
-    required this.name,
-    required this.price,
-    required this.description,
-    required this.category,
-    required this.idTags,
-    required this.images,
-    this.idProduct,
-  });
-}
-
 class AddOrEditProduct extends StatefulWidget {
-  const AddOrEditProduct({super.key, this.itemDetails});
-  final ItemDetails? itemDetails;
+  const AddOrEditProduct({super.key, this.idProduct});
+  final int? idProduct;
 
   @override
   State<AddOrEditProduct> createState() => _AddOrEditCategoriesState();
@@ -32,157 +13,151 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
   bool _isLoading = false;
   late ProductsProvider productsProvider;
   late ProductProvider productProvider;
+  late CategoriesMaterialProviders categoriesMaterialProviders;
   @override
   void initState() {
+    super.initState();
     productsProvider = context.read<ProductsProvider>();
     productProvider = context.read<ProductProvider>();
-    /* productsProvider.loadProducts(); */
-    super.initState();
+    categoriesMaterialProviders = context.read<CategoriesMaterialProviders>();
+    productProvider.loadProduct(widget.idProduct);
   }
 
   @override
   Widget build(BuildContext context) {
-    final categoriesMaterialProviders =
-        context.read<CategoriesMaterialProviders>();
-    final itemDetails = ItemDetails(
-      idProduct: null,
-      name: '',
-      price: '',
-      description: '',
-      category: 15,
-      idTags: [],
-      images: [],
-    );
-
-    if (widget.itemDetails != null) {
-      itemDetails.idProduct = widget.itemDetails?.idProduct;
-      itemDetails.name = widget.itemDetails!.name;
-      itemDetails.price = widget.itemDetails!.price;
-      itemDetails.description = widget.itemDetails!.description;
-      itemDetails.category = widget.itemDetails!.category;
-      itemDetails.idTags = widget.itemDetails!.idTags;
-      itemDetails.images = widget.itemDetails!.images;
-    }
     final formKey = GlobalKey<FormBuilderState>();
-    return Scaffold(
-      appBar: AppBarWithBackIcon(
-        appBar: AppBar(),
-        actions: itemDetails.idProduct != null
-            ? [
-                IconButton(
-                  onPressed: () async {
-                    await CamerGalleryServiceImp().takePhoto();
-                  },
-                  icon: const Icon(Icons.camera_alt),
-                ),
-                IconButton(
-                  onPressed: () async {
-                    await CamerGalleryServiceImp().selectFromGallery();
-                  },
-                  icon: const Icon(Icons.photo_album),
-                ),
-              ]
-            : null,
-        title: itemDetails.idProduct == null
-            ? 'Agregar producto'
-            : 'Editar producto',
-        showTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Column(
-            children: [
-              itemDetails.images.isEmpty
-                  ? const SizedBox()
-                  : SizedBox(
-                      height: 250,
-                      width: 600,
-                      child: ImageGallery(
-                        /* change this by the original */
-                        images: itemDetails.images,
-                      ),
+    return Consumer<ProductProvider>(
+      builder: (context, product, child) {
+        final selectProductState = productProvider.selectProductState.product;
+        final loadingState = productProvider.selectProductState.isLoading;
+        return Scaffold(
+          appBar: AppBarWithBackIcon(
+            appBar: AppBar(),
+            actions: widget.idProduct != null
+                ? [
+                    IconButton(
+                      onPressed: () async {
+                        await CamerGalleryServiceImp().takePhoto();
+                      },
+                      icon: const Icon(Icons.camera_alt),
                     ),
-              const SizedBox(height: 10),
-              FormBuilder(
-                enabled: !_isLoading,
-                key: formKey,
-                initialValue: {
-                  'name': itemDetails.name,
-                  'regular_price': itemDetails.price,
-                  'description': itemDetails.description,
-                  'category': itemDetails.category,
-                  'tags': itemDetails.idTags,
-                  /* 'file': itemDetails.file, */
-                },
-                onChanged: () {
-                  /*  _formKey.currentState!.save();
+                    IconButton(
+                      onPressed: () async {
+                        await CamerGalleryServiceImp().selectFromGallery();
+                      },
+                      icon: const Icon(Icons.photo_album),
+                    ),
+                  ]
+                : null,
+            title: selectProductState?.idProduct == null
+                ? 'Agregar producto'
+                : 'Editar producto',
+            showTitle: true,
+          ),
+          body: SingleChildScrollView(
+            child: loadingState
+                ? const Center(child: CircularProgressIndicator())
+                : Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Column(
+                      children: [
+                        selectProductState!.images.isEmpty
+                            ? const SizedBox()
+                            : SizedBox(
+                                height: 250,
+                                width: 600,
+                                child: ImageGallery(
+                                  /* change this by the original */
+                                  images: [
+                                    'https://i.pinimg.com/originals/49/fb/12/49fb12b526930c3756494a67b899859d.jpg',
+                                    'https://i.ytimg.com/vi/V6UzcWt2wGg/maxresdefault.jpg'
+                                  ],
+                                ),
+                              ),
+                        const SizedBox(height: 10),
+                        FormBuilder(
+                          enabled: !_isLoading,
+                          key: formKey,
+                          initialValue: {
+                            'name': selectProductState!.name,
+                            'regular_price': selectProductState.price,
+                            'description': selectProductState.description,
+                            'category': selectProductState.category,
+                            'tags': selectProductState.idTags,
+                            /* 'file': itemDetails.file, */
+                          },
+                          onChanged: () {
+                            /*  _formKey.currentState!.save();
                   debugPrint(_formKey.currentState!.value.toString()); */
-                },
-                autovalidateMode: AutovalidateMode.disabled,
-                skipDisabled: true,
-                child: Column(
-                  children: [
-                    CustomTextField(
-                      label: 'Nombre del producto',
-                      name: 'name',
-                      keyboardType: TextInputType.text,
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(
-                            errorText: "Este campo es requerido"),
-                        FormBuilderValidators.minLength(3),
-                      ]),
-                    ),
-                    CustomTextField(
-                      label: 'Precio',
-                      name: 'regular_price',
-                      keyboardType: TextInputType.number,
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(
-                            errorText: "Este campo es requerido"),
-                        FormBuilderValidators.numeric(),
-                      ]),
-                    ),
-                    const CustomTextField(
-                      label: 'Descripcion',
-                      name: 'description',
-                    ),
-                    CustomFormBuilderFetchDropdown(
-                      title: 'Categoria',
-                      formFieldName: 'category',
-                      placeholder: 'Seleccione una categoria',
-                      categories: categoriesMaterialProviders
-                          .categoriesState.categories,
-                    ),
-                    CustomRadioButtons(
-                      formFieldName: 'tags',
-                      placeholder: 'Seleccione una categoria',
-                      title: 'Materiales',
-                      options: itemDetails.idTags,
-                      materiales: categoriesMaterialProviders.getMateriales,
-                    ),
-                    /* const CustomFileField(
+                          },
+                          autovalidateMode: AutovalidateMode.disabled,
+                          skipDisabled: true,
+                          child: Column(
+                            children: [
+                              CustomTextField(
+                                label: 'Nombre del producto',
+                                name: 'name',
+                                keyboardType: TextInputType.text,
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                      errorText: "Este campo es requerido"),
+                                  FormBuilderValidators.minLength(3),
+                                ]),
+                              ),
+                              CustomTextField(
+                                label: 'Precio',
+                                name: 'regular_price',
+                                keyboardType: TextInputType.number,
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                      errorText: "Este campo es requerido"),
+                                  FormBuilderValidators.numeric(),
+                                ]),
+                              ),
+                              const CustomTextField(
+                                label: 'Descripcion',
+                                name: 'description',
+                              ),
+                              CustomFormBuilderFetchDropdown(
+                                title: 'Categoria',
+                                formFieldName: 'category',
+                                placeholder: 'Seleccione una categoria',
+                                categories: categoriesMaterialProviders
+                                    .categoriesState.categoriesList,
+                              ),
+                              CustomRadioButtons(
+                                formFieldName: 'tags',
+                                placeholder: 'Seleccione una categoria',
+                                title: 'Materiales',
+                                options: selectProductState.idTags,
+                                materiales: categoriesMaterialProviders
+                                    .materialesState.materiales,
+                              ),
+                              /* const CustomFileField(
                       name: 'file',
                     ), */
-                  ],
-                ),
-              ),
-              !_isLoading
-                  ? FillButton(
-                      onPressed: () {
-                        register(formKey, idProduct: itemDetails.idProduct);
-                      },
-                      label: itemDetails.idProduct == null
-                          ? 'Registrar'
-                          : 'Editar',
-                    )
-                  : const Center(
-                      child: CircularProgressIndicator(),
+                            ],
+                          ),
+                        ),
+                        !_isLoading
+                            ? FillButton(
+                                onPressed: () {
+                                  register(formKey,
+                                      idProduct: selectProductState.idProduct);
+                                },
+                                label: selectProductState.idProduct == null
+                                    ? 'Registrar'
+                                    : 'Editar',
+                              )
+                            : const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                      ],
                     ),
-            ],
+                  ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

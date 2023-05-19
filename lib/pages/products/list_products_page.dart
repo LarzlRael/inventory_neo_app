@@ -18,7 +18,6 @@ class _ListProductsPageState extends State<ListProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final products = productsProvider.productsState;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -44,21 +43,26 @@ class _ListProductsPageState extends State<ListProductsPage> {
         ],
         showTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: MasonryGridView.count(
-          physics: const BouncingScrollPhysics(),
-          crossAxisCount: 2,
-          mainAxisSpacing: 20,
-          crossAxisSpacing: 35,
-          itemCount: products.products.length,
-          itemBuilder: (context, index) {
-            final product = products.products[index];
-            return CardItemInventoryVertical(
-              productModel: product,
-            );
-          },
-        ),
+      body: Consumer<ProductsProvider>(
+        builder: (_, person, child) {
+          final products2 = person.productsState;
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: MasonryGridView.count(
+              physics: const BouncingScrollPhysics(),
+              crossAxisCount: 2,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 35,
+              itemCount: products2.products.length,
+              itemBuilder: (context, index) {
+                final product = products2.products[index];
+                return CardItemInventoryVertical(
+                  productModel: product,
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }

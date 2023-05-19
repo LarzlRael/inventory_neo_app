@@ -20,29 +20,12 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
+        title: widget.productModel.name.toTitleCase(),
+        showTitle: true,
         actions: [
           IconButton(
             onPressed: () {
-              context.push(
-                '/add_product',
-                extra: ItemDetails(
-                  idProduct: widget.productModel.id,
-                  category: widget.productModel.categories.first.id,
-                  name: widget.productModel.name,
-                  price: widget.productModel.price,
-                  description:
-                      removeAllHtmlTags(widget.productModel.description),
-                  idTags: widget.productModel.tags
-                      .map((e) => e.id.toString())
-                      .toList(),
-                  /* Change this for the original images array */
-                  /* images: widget.productModel.images.map((e) => e.src).toList(), */
-                  images: [
-                    'https://i.pinimg.com/originals/49/fb/12/49fb12b526930c3756494a67b899859d.jpg',
-                    'https://i.ytimg.com/vi/V6UzcWt2wGg/maxresdefault.jpg'
-                  ],
-                ),
-              );
+              context.push('/add_product', extra: widget.productModel.id);
             },
             icon: const Icon(
               Icons.edit,

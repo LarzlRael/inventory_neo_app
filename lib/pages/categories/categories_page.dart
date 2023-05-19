@@ -18,8 +18,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final categoriesList =
-        context.watch<CategoriesMaterialProviders>().categoriesState.categories;
+    final categoriesList = context
+        .watch<CategoriesMaterialProviders>()
+        .categoriesState
+        .categoriesList;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),

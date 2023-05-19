@@ -28,8 +28,6 @@ class CardInventorySelectableItems extends StatelessWidget {
               ),
               Text(
                 'Productos Seleccionados: ${cardInventoryProvider.getProducts.length}',
-/*                 fontSize: 16,
-                fontWeight: FontWeight.w800, */
                 style: GoogleFonts.montserratAlternates().copyWith(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,

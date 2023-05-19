@@ -84,9 +84,9 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/add_product',
       builder: (context, state) {
-        ItemDetails? itemDetails = state.extra as ItemDetails?;
+        int? idProduct = state.extra as int?;
         return AddOrEditProduct(
-          itemDetails: itemDetails,
+          idProduct: idProduct,
         );
       },
     ),

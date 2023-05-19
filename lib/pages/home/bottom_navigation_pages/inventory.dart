@@ -13,15 +13,12 @@ class _InventoryState extends State<Inventory> {
   @override
   void initState() {
     super.initState();
-
     inventoryProvider = context.read<CategoriesMaterialProviders>();
     inventoryProvider.getFetchCategories();
   }
 
   @override
   Widget build(BuildContext context) {
-    final catogoriesList =
-        context.watch<CategoriesMaterialProviders>().categoriesState.categories;
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(
@@ -49,25 +46,30 @@ class _InventoryState extends State<Inventory> {
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
-            isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : Expanded(
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        /* childAspectRatio: 3 / 2, */
-                        crossAxisSpacing: 5,
-                        mainAxisSpacing: 5,
+            Consumer<CategoriesMaterialProviders>(
+                builder: (_, categoriesMaterialProviders, __) {
+              final categories = categoriesMaterialProviders.categoriesState;
+
+              return categories.isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : Expanded(
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200,
+                          /* childAspectRatio: 3 / 2, */
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 5,
+                        ),
+                        itemCount: categories.categoriesList.length,
+                        itemBuilder: (_, index) {
+                          return CategoryCard(
+                            categoriesModel: categories.categoriesList[index],
+                          );
+                        },
                       ),
-                      itemCount: catogoriesList.length,
-                      itemBuilder: (_, index) {
-                        return CategoryCard(
-                          categoriesModel: catogoriesList[index],
-                        );
-                      },
-                    ),
-                  ),
+                    );
+            })
           ],
         ),
       ),
@@ -122,11 +124,11 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         if (goToProductsByCategory) {
           context.go(
-            'add_categories_page',
+            '/add_categories_page',
             extra: CategoryForm(
               id: categoriesModel.id,
               name: categoriesModel.name,

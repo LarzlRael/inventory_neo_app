@@ -1,19 +1,15 @@
 part of 'providers.dart';
 
 class CategoriesMaterialProviders extends ChangeNotifier {
-  List<TagsModel> _materiales = [];
   CategoriesState categoriesState = CategoriesState();
+  MaterialState materialesState = MaterialState();
 
-  set setMateriales(List<TagsModel> tags) {
-    _materiales = tags;
-    notifyListeners();
-  }
-
-  get getMateriales => _materiales;
-
-  getFetchMaterialTagsFetch() async {
+  getFetchMaterialTags() async {
+    materialesState = materialesState.copyWith(isLoading: true);
     final tags = await getAction('products/tags');
-    _materiales = tagsModelFromJson(tags!.body);
+    materialesState = materialesState.copyWith(
+        materiales: tagsModelFromJson(tags!.body), isLoading: false);
+    notifyListeners();
   }
 
   Future<void> getFetchCategories() async {
@@ -30,10 +26,10 @@ class CategoriesMaterialProviders extends ChangeNotifier {
 
 class CategoriesState {
   final bool isLoading;
-  final List<CategoriesModel> categories;
+  final List<CategoriesModel> categoriesList;
   CategoriesState({
     this.isLoading = false,
-    this.categories = const [],
+    this.categoriesList = const [],
   });
   CategoriesState copyWith({
     bool? isLoading,
@@ -41,6 +37,23 @@ class CategoriesState {
   }) =>
       CategoriesState(
         isLoading: isLoading ?? this.isLoading,
-        categories: categories ?? this.categories,
+        categoriesList: categories ?? this.categoriesList,
+      );
+}
+
+class MaterialState {
+  final bool isLoading;
+  final List<TagsModel> materiales;
+  MaterialState({
+    this.isLoading = false,
+    this.materiales = const [],
+  });
+  MaterialState copyWith({
+    bool? isLoading,
+    List<TagsModel>? materiales,
+  }) =>
+      MaterialState(
+        isLoading: isLoading ?? this.isLoading,
+        materiales: materiales ?? this.materiales,
       );
 }

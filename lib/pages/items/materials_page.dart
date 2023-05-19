@@ -1,11 +1,26 @@
 part of '../pages.dart';
 
-class MaterialsPage extends StatelessWidget {
+class MaterialsPage extends StatefulWidget {
   const MaterialsPage({super.key});
 
   @override
+  State<MaterialsPage> createState() => _MaterialsPageState();
+}
+
+class _MaterialsPageState extends State<MaterialsPage> {
+  late CategoriesMaterialProviders categoriesMaterialProviders;
+
+  @override
+  initState() {
+    super.initState();
+    categoriesMaterialProviders = context.read<CategoriesMaterialProviders>();
+    categoriesMaterialProviders.getFetchCategories();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    /* final tagsServices = TagsServices(); */
+    final materials = categoriesMaterialProviders.materialesState;
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         tooltip: 'Agregar material',
@@ -24,32 +39,18 @@ class MaterialsPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(
           children: [
-            FutureBuilder(
-              future: getAllTags(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<TagsModel>> snapshot) {
-                if (!snapshot.hasData) {
-                  return simpleLoading();
-                }
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (_, int index) {
-                      final tag = snapshot.data![index];
-                      return MaterialItemCard(tag: tag);
-                    },
-                  ),
-                );
-              },
+            Expanded(
+              child: ListView.builder(
+                itemCount: materials.materiales.length,
+                itemBuilder: (_, int index) {
+                  final tag = materials.materiales[index];
+                  return MaterialItemCard(tag: tag);
+                },
+              ),
             ),
           ],
         ),
       ),
     );
-  }
-
-  Future<List<TagsModel>> getAllTags() async {
-    final clientRequest = await getAction('products/tags');
-    return tagsModelFromJson(clientRequest!.body);
   }
 }
