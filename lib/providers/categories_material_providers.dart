@@ -17,12 +17,12 @@ class CategoriesMaterialProviders extends ChangeNotifier {
   get getCategories => _categories;
   get getMateriales => _materiales;
 
-  setCategoriesWithFetch() async {
+  getFetchCategories() async {
     final categories = await getAction('products/categories');
     setCategories = categoriesModelFromJson(categories!.body);
   }
 
-  setMaterialTagsFetch() async {
+  getFetchMaterialTagsFetch() async {
     final tags = await getAction('products/tags');
     _materiales = tagsModelFromJson(tags!.body);
   }

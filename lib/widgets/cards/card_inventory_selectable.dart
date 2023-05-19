@@ -139,7 +139,8 @@ class _CardInventorySelectableState extends State<CardInventorySelectable> {
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
                 widget.productModel.images.isNotEmpty
-                    ? widget.productModel.images[0].src
+                    /* ? widget.productModel.images[0].src */
+                    ? 'https://blog.hubstaff.com/wp-content/uploads/2016/05/Businesses-growth-post.png'
                     : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
                 /* height: 75, */
                 width: 65,

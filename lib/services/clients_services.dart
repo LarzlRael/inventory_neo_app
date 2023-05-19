@@ -6,9 +6,8 @@ class ClientsServices {
       RequestType.get,
       'customers',
       {},
-      'xd',
     );
-    return clientModelFromJson(clientRequest!.body);
+    return clientsModelFromJson(clientRequest!.body);
   }
 
   Future<List<ClientModel>> getClientsWithParameters(String parameters) async {
@@ -16,9 +15,8 @@ class ClientsServices {
       RequestType.get,
       'customers?search=$parameters',
       {},
-      'xd',
     );
-    return clientModelFromJson(clientRequest!.body);
+    return clientsModelFromJson(clientRequest!.body);
   }
 
   Future<bool> addClient(Map<String, dynamic> body) async {
@@ -26,7 +24,6 @@ class ClientsServices {
       RequestType.post,
       'customers',
       body,
-      'xd',
     );
     return validateStatus(clientRequest!.statusCode);
   }
@@ -36,7 +33,6 @@ class ClientsServices {
       RequestType.put,
       'customers/$idClient',
       body,
-      'xd',
     );
     return validateStatus(clientRequest!.statusCode);
   }
@@ -48,8 +44,21 @@ class ClientsServices {
       RequestType.delete,
       'customers/$idClient',
       {},
-      'xd',
     );
     return validateStatus(clientRequest!.statusCode);
+  }
+
+  Future<ClientModel> addOrEditClient(Map<String, dynamic> clientLike,
+      {int? idClient}) async {
+    try {
+      final response = await (idClient == null
+          ? postAction('api/client', clientLike, useAuxiliarUrl: true)
+          : putAction('api/client/$idClient', clientLike,
+              useAuxiliarUrl: true));
+
+      return clientModelFromJson(response!.body);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

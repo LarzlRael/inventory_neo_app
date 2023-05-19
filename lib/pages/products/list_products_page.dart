@@ -12,7 +12,7 @@ class _ListProductsPageState extends State<ListProductsPage> {
   @override
   void initState() {
     productsProvider = context.read<ProductsProvider>();
-    productsProvider.fetchProductsAllProducts();
+    productsProvider.getProductsAllProducts();
     super.initState();
   }
 
@@ -48,7 +48,7 @@ class _ListProductsPageState extends State<ListProductsPage> {
       body: Column(
         children: [
           FutureBuilder(
-            future: productsProvider.getCategories(),
+            future: productsProvider.getProductsAllProducts(),
             builder: (BuildContext context,
                 AsyncSnapshot<List<ProductsModel>> snapshot) {
               if (!snapshot.hasData) {

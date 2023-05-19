@@ -67,7 +67,6 @@ class CategoriesPage extends StatelessWidget {
       RequestType.get,
       'products/categories',
       {},
-      'xd',
     );
     return categoriesModelFromJson(clientRequest!.body);
   }

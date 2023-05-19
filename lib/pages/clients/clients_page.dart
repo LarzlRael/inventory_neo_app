@@ -73,5 +73,5 @@ class ClientsPage extends StatelessWidget {
 
 Future<List<ClientModel>> getClients() async {
   final clientRequest = await getAction('api/client', useAuxiliarUrl: true);
-  return clientModelFromJson(clientRequest!.body);
+  return clientsModelFromJson(clientRequest!.body);
 }

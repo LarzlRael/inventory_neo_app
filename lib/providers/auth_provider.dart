@@ -43,7 +43,6 @@ class AuthProvider extends ChangeNotifier {
       RequestType.get,
       'api/client/renew',
       {},
-      token,
       useAuxiliarUrl: true,
     );
 

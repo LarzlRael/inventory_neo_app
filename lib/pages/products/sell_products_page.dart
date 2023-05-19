@@ -50,7 +50,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
             const SizedBox(height: 20),
             SimpleText(
               text:
-                  'Productos Seleccionados: ${cardInventoryProvider.getProducts.length}',
+                  'Productos seleccionados: ${cardInventoryProvider.getProducts.length}',
               fontSize: 16,
               fontWeight: FontWeight.w600,
               bottom: 5,

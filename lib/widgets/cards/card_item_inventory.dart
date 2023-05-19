@@ -29,7 +29,9 @@ class CardItemInventory extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: Image.network(
               productModel.images.isNotEmpty
-                  ? productModel.images[0].src
+                  /* CHange this */
+                  /* ? productModel.images[0].src */
+                  ? 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg'
                   : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
               height: 75,
               width: 100,

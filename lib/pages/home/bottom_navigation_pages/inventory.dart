@@ -1,13 +1,25 @@
 part of '../../pages.dart';
 
-class Inventory extends StatelessWidget {
-  Inventory({super.key});
+class Inventory extends StatefulWidget {
+  const Inventory({super.key});
+
+  @override
+  State<Inventory> createState() => _InventoryState();
+}
+
+class _InventoryState extends State<Inventory> {
+  late CategoriesMaterialProviders inventoryProvider;
+  @override
+  void initState() {
+    super.initState();
+    inventoryProvider = context.read<CategoriesMaterialProviders>();
+    inventoryProvider.getFetchCategories();
+  }
 
   final pageViewController = PageController();
 
   @override
   Widget build(BuildContext context) {
-    final inventoryProvider = context.read<CategoriesMaterialProviders>();
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(
@@ -119,8 +131,8 @@ class CategoryCard extends StatelessWidget {
             ),
           );
         } else {
-          context.go(
-            'list_items_category',
+          context.push(
+            '/list_category_items',
             extra: categoriesModel.id,
           );
         }
@@ -186,11 +198,11 @@ class CategoryCard extends StatelessWidget {
 }
 
 class ListCategoryItems extends StatelessWidget {
-  const ListCategoryItems({super.key});
+  final int categoryId;
+  const ListCategoryItems({super.key, required this.categoryId});
 
   @override
   Widget build(BuildContext context) {
-    final arguments = ModalRoute.of(context)!.settings.arguments as int;
     return Scaffold(
       appBar: AppBarWithBackIcon(
         title: 'Productos',
@@ -218,7 +230,7 @@ class ListCategoryItems extends StatelessWidget {
             color: Colors.blue,
           ), */
           FutureBuilder(
-            future: getProductsByCategory(arguments),
+            future: getProductsByCategory(categoryId),
             builder: (BuildContext context,
                 AsyncSnapshot<List<ProductsModel>> snapshot) {
               if (!snapshot.hasData) {

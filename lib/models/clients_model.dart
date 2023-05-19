@@ -1,10 +1,15 @@
 part of 'models.dart';
 
-List<ClientModel> clientModelFromJson(String str) => List<ClientModel>.from(
+List<ClientModel> clientsModelFromJson(String str) => List<ClientModel>.from(
     json.decode(str).map((x) => ClientModel.fromJson(x)));
 
-String clientModelToJson(List<ClientModel> data) =>
+String clientsModelToJson(List<ClientModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+ClientModel clientModelFromJson(String str) =>
+    ClientModel.fromJson(json.decode(str));
+
+String clientModelToJson(ClientModel data) => json.encode(data.toJson());
 
 class ClientModel {
   ClientModel({
@@ -19,7 +24,7 @@ class ClientModel {
     required this.updatedAt,
   });
 
-  int id;
+  int? id;
   String firstName;
   String lastName;
   String address1;

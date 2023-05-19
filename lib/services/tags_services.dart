@@ -6,7 +6,6 @@ class TagsServices {
       RequestType.get,
       'products/tags/$categoryId',
       {},
-      'xd',
     );
     return tagModelFromJson(clientRequest!.body);
   }
@@ -16,7 +15,6 @@ class TagsServices {
       RequestType.get,
       'products/tags',
       {},
-      'xd',
     );
     return tagsModelFromJson(clientRequest!.body);
   }

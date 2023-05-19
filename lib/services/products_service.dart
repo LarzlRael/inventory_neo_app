@@ -6,7 +6,6 @@ class ProductsServices {
       RequestType.get,
       'products?category=$category',
       {},
-      'xd',
     );
     return productsModelFromJson(clientRequest!.body);
   }
@@ -16,7 +15,6 @@ class ProductsServices {
       RequestType.get,
       'products',
       {},
-      'xd',
     );
     return productsModelFromJson(clientRequest!.body);
   }
@@ -26,7 +24,6 @@ class ProductsServices {
       RequestType.get,
       'products?search=$query',
       {},
-      'xd',
     );
     return productsModelFromJson(clientRequest!.body);
   }
@@ -50,7 +47,6 @@ class ProductsServices {
       RequestType.delete,
       'products/$idProduct',
       {},
-      'xd',
     );
     return validateStatus(clientRequest!.statusCode);
   }

@@ -1,13 +1,14 @@
 part of '../pages.dart';
 
 class ClientProfilePage extends StatelessWidget {
-  const ClientProfilePage({super.key});
+  final ClientModel clientModel;
+  const ClientProfilePage({
+    super.key,
+    required this.clientModel,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final ClientModel clientModel =
-        ModalRoute.of(context)!.settings.arguments as ClientModel;
-
     final globalProvider = context.read<GlobalProvider>();
     return Scaffold(
       appBar: AppBarWithBackIcon(
@@ -20,14 +21,7 @@ class ClientProfilePage extends StatelessWidget {
             onPressed: () {
               context.push(
                 '/client_register_page',
-                extra: ClientData(
-                  idClient: clientModel.id,
-                  address: clientModel.address1,
-                  email: clientModel.email,
-                  lastName: clientModel.lastName,
-                  name: clientModel.firstName,
-                  phone: clientModel.phone,
-                ),
+                extra: clientModel,
               );
             },
           ),

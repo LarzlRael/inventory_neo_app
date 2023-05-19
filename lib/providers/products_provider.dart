@@ -25,20 +25,18 @@ class ProductsProvider extends ChangeNotifier {
     return true;
   } */
 
-  fetchProductsAllProducts() async {
+  Future<List<ProductsModel>> getProductsAllProducts() async {
     final clientRequest = await Request.sendRequestWithToken(
       RequestType.get,
       'products',
       {},
-      'xd',
     );
     productsState.copyWith(
       products: productsModelFromJson(clientRequest!.body),
     );
     notifyListeners();
+    return productsModelFromJson(clientRequest.body);
   }
-
-  get getProducts => productsState.products;
 
   deleteProductById(String id) {
     productsState.copyWith(
@@ -48,7 +46,7 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  getCategories() async {
+  Future<List<CategoriesModel>> getCategories() async {
     final res = await getAction('products/categories');
     final orders = categoriesModelFromJson(res!.body);
 
@@ -57,6 +55,7 @@ class ProductsProvider extends ChangeNotifier {
       isLoading: false,
     );
     notifyListeners();
+    return orders;
   }
 }
 

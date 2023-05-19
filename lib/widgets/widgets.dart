@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -28,6 +29,7 @@ part 'cards/card_item_inventory.dart';
 part 'cards/card_inventory_vertical.dart';
 part 'cards/card_inventory_selectable.dart';
 part 'cards/material_item_card.dart';
+part 'cards/image_gallery.dart';
 
 /* Clients */
 part 'client/client_item.dart';

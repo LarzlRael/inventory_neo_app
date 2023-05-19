@@ -7,31 +7,36 @@ class ItemDetails {
   String description;
   int category;
   List<String> idTags;
+  List<String> images = [];
   ItemDetails({
     required this.name,
     required this.price,
     required this.description,
     required this.category,
     required this.idTags,
+    required this.images,
     this.idProduct,
   });
 }
 
-class AddProduct extends StatefulWidget {
-  const AddProduct({super.key});
+class AddOrEditProduct extends StatefulWidget {
+  const AddOrEditProduct({super.key, this.itemDetails});
+  final ItemDetails? itemDetails;
 
   @override
-  State<AddProduct> createState() => _AddCategoriesState();
+  State<AddOrEditProduct> createState() => _AddOrEditCategoriesState();
 }
 
-class _AddCategoriesState extends State<AddProduct> {
+class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
   /* final productsBloc = ProductsBloc(); */
   bool _isLoading = false;
-
   late ProductsProvider productsProvider;
+  late ProductProvider productProvider;
   @override
   void initState() {
     productsProvider = context.read<ProductsProvider>();
+    productProvider = context.read<ProductProvider>();
+    /* productsProvider.loadProducts(); */
     super.initState();
   }
 
@@ -46,21 +51,38 @@ class _AddCategoriesState extends State<AddProduct> {
       description: '',
       category: 15,
       idTags: [],
+      images: [],
     );
-    final arguments =
-        ModalRoute.of(context)!.settings.arguments as ItemDetails?;
-    if (arguments != null) {
-      itemDetails.idProduct = arguments.idProduct;
-      itemDetails.name = arguments.name;
-      itemDetails.price = arguments.price;
-      itemDetails.description = arguments.description;
-      itemDetails.category = arguments.category;
-      itemDetails.idTags = arguments.idTags;
+
+    if (widget.itemDetails != null) {
+      itemDetails.idProduct = widget.itemDetails?.idProduct;
+      itemDetails.name = widget.itemDetails!.name;
+      itemDetails.price = widget.itemDetails!.price;
+      itemDetails.description = widget.itemDetails!.description;
+      itemDetails.category = widget.itemDetails!.category;
+      itemDetails.idTags = widget.itemDetails!.idTags;
+      itemDetails.images = widget.itemDetails!.images;
     }
     final formKey = GlobalKey<FormBuilderState>();
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
+        actions: itemDetails.idProduct != null
+            ? [
+                IconButton(
+                  onPressed: () async {
+                    await CamerGalleryServiceImp().takePhoto();
+                  },
+                  icon: const Icon(Icons.camera_alt),
+                ),
+                IconButton(
+                  onPressed: () async {
+                    await CamerGalleryServiceImp().selectFromGallery();
+                  },
+                  icon: const Icon(Icons.photo_album),
+                ),
+              ]
+            : null,
         title: itemDetails.idProduct == null
             ? 'Agregar producto'
             : 'Editar producto',
@@ -71,6 +93,17 @@ class _AddCategoriesState extends State<AddProduct> {
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
             children: [
+              itemDetails.images.isEmpty
+                  ? const SizedBox()
+                  : SizedBox(
+                      height: 250,
+                      width: 600,
+                      child: ImageGallery(
+                        /* change this by the original */
+                        images: itemDetails.images,
+                      ),
+                    ),
+              const SizedBox(height: 10),
               FormBuilder(
                 enabled: !_isLoading,
                 key: formKey,
@@ -127,9 +160,9 @@ class _AddCategoriesState extends State<AddProduct> {
                       options: itemDetails.idTags,
                       materiales: categoriesMaterialProviders.getMateriales,
                     ),
-                    const CustomFileField(
+                    /* const CustomFileField(
                       name: 'file',
-                    ),
+                    ), */
                   ],
                 ),
               ),
@@ -158,7 +191,6 @@ class _AddCategoriesState extends State<AddProduct> {
       'api/uploadFiles',
       {},
       File(path),
-      await getToken(),
       useAuxiliarUrl: true,
     );
 

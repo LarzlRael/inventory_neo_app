@@ -37,8 +37,13 @@ final appRouter = GoRouter(
           );
         }),
     GoRoute(
-        path: '/list_items_category',
-        builder: (context, state) => const ListCategoryItems()),
+        path: '/list_category_items',
+        builder: (context, state) {
+          int categoryId = state.extra as int;
+          return ListCategoryItems(
+            categoryId: categoryId,
+          );
+        }),
     /* clients */
     GoRoute(
       path: '/clients',
@@ -46,14 +51,19 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/client_profile',
-      builder: (context, state) => const ClientProfilePage(),
+      builder: (context, state) {
+        ClientModel clientModel = state.extra as ClientModel;
+        return ClientProfilePage(
+          clientModel: clientModel,
+        );
+      },
     ),
     GoRoute(
       path: '/client_register_page',
       builder: (context, state) {
-        ClientData? clientData = state.extra as ClientData?;
+        ClientModel? clientModel = state.extra as ClientModel?;
         return ClientRegisterPage(
-          clientData: clientData,
+          clientModel: clientModel,
         );
       },
     ),
@@ -73,11 +83,21 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/add_product',
-      builder: (context, state) => const AddProduct(),
+      builder: (context, state) {
+        ItemDetails? itemDetails = state.extra as ItemDetails?;
+        return AddOrEditProduct(
+          itemDetails: itemDetails,
+        );
+      },
     ),
     GoRoute(
       path: '/add_categories_page',
-      builder: (context, state) => const AddCategoryPage(),
+      builder: (context, state) {
+        CategoryForm? categoryForm = state.extra as CategoryForm?;
+        return AddCategoryPage(
+          categoryForm: categoryForm!,
+        );
+      },
     ),
     /* Sell routes */
     GoRoute(

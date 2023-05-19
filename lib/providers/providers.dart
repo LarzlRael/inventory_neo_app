@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:inventory_app/models/models.dart';
 import 'package:inventory_app/services/services.dart';
 import 'package:inventory_app/theme/app_theme.dart';

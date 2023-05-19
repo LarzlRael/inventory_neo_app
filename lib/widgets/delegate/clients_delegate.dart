@@ -81,6 +81,6 @@ class ClientsDelegate extends SearchDelegate {
   Future<List<ClientModel>> getClientsWithParameters(String parameters) async {
     final clientRequest =
         await getAction('api/client/search/$parameters', useAuxiliarUrl: true);
-    return clientModelFromJson(clientRequest!.body);
+    return clientsModelFromJson(clientRequest!.body);
   }
 }

@@ -1,26 +1,9 @@
 part of '../pages.dart';
 
-class ClientData {
-  int? idClient;
-  String name;
-  String lastName;
-  String address;
-  String phone;
-  String email;
-  ClientData({
-    this.idClient,
-    required this.name,
-    required this.lastName,
-    required this.address,
-    required this.phone,
-    required this.email,
-  });
-}
-
 class ClientRegisterPage extends StatefulWidget {
-  final ClientData? clientData;
+  final ClientModel? clientModel;
 
-  const ClientRegisterPage({super.key, this.clientData});
+  const ClientRegisterPage({super.key, this.clientModel});
 
   @override
   State<ClientRegisterPage> createState() => _ClientRegisterPageState();
@@ -28,6 +11,13 @@ class ClientRegisterPage extends StatefulWidget {
 
 class _ClientRegisterPageState extends State<ClientRegisterPage> {
   bool isLoading = false;
+  late ClientsServices clientsServices;
+
+  @override
+  void initState() {
+    super.initState();
+    clientsServices = ClientsServices();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,29 +25,33 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
 
     final textTheme = Theme.of(context).textTheme;
 
-    final clientData = ClientData(
-      idClient: null,
-      name: '',
+    final clientData = ClientModel(
+      id: null,
+      firstName: '',
       lastName: '',
-      address: '',
+      address1: '',
       phone: '',
       email: '',
+      gender: '',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
     );
-    if (widget.clientData != null) {
-      clientData.idClient = widget.clientData!.idClient;
-      clientData.name = widget.clientData!.name;
-      clientData.lastName = widget.clientData!.lastName;
-      clientData.address = widget.clientData!.address;
-      clientData.phone = widget.clientData!.phone;
+    if (widget.clientModel != null) {
+      clientData.id = widget.clientModel!.id;
+      clientData.firstName = widget.clientModel!.firstName;
+      clientData.lastName = widget.clientModel!.lastName;
+      clientData.address1 = widget.clientModel!.address1;
+      clientData.phone = widget.clientModel!.phone;
     }
 
-    final editable = clientData.idClient != null;
+    final editable = clientData.id != null;
+
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
         showTitle: true,
         title: editable
-            ? "Edicion de cliente ${clientData.name} ${clientData.lastName}"
+            ? "Edicion de cliente ${clientData.firstName} ${clientData.lastName}"
             : 'Registro de un nuevo cliente',
       ),
       body: SingleChildScrollView(
@@ -83,9 +77,9 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
               const SizedBox(height: 10),
               FormBuilder(
                 initialValue: {
-                  'first_name': clientData.name,
+                  'first_name': clientData.firstName,
                   'last_name': clientData.lastName,
-                  'address_1': clientData.address,
+                  'address_1': clientData.address1,
                   'phone': clientData.phone,
                 },
                 key: formKey,
@@ -164,7 +158,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
                   ? simpleLoading()
                   : FillButton(
                       onPressed: () {
-                        addOrEditClient(formKey, idClient: clientData.idClient);
+                        addOrEditClient(formKey, idClient: clientData.id);
                       },
                       label: editable ? "Editar Cliente" : "Guardar cliente",
                     ),
@@ -200,9 +194,22 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
       GlobalSnackBar.show(context, "Hubo un error al guardar el cliente",
           backgroundColor: Colors.red);
     } */
-    if (idClient == null) {
+
+    clientsServices.addOrEditClient(data, idClient: idClient).then((value) {
+      context.pop();
+      final message = idClient == null
+          ? "Cliente guardado con exito"
+          : "Cliente editado con exito";
+      final color = idClient == null ? Colors.green : Colors.blue;
+      globalProvider.showSnackBar(
+        context,
+        message,
+        backgroundColor: color,
+      );
+    });
+    /* if (idClient == null) {
       final post = await postAction('api/client', data, useAuxiliarUrl: true);
-      if (!mounted) return;
+
       if (validateStatus(post!.statusCode)) {
         globalProvider.showSnackBar(context, "Cliente guardado con exito",
             backgroundColor: Colors.green);
@@ -229,6 +236,6 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
           );
         }
       });
-    }
+    } */
   }
 }

@@ -8,7 +8,8 @@ class CategoryForm {
 }
 
 class AddCategoryPage extends StatefulWidget {
-  const AddCategoryPage({super.key});
+  final CategoryForm? categoryForm;
+  const AddCategoryPage({super.key, this.categoryForm});
 
   @override
   State<AddCategoryPage> createState() => _AddCategoryState();
@@ -26,13 +27,11 @@ class _AddCategoryState extends State<AddCategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments =
-        ModalRoute.of(context)!.settings.arguments as CategoryForm?;
     final globalProvider = context.read<GlobalProvider>();
-    if (arguments != null) {
-      categoryForm.name = arguments.name;
-      categoryForm.id = arguments.id;
-      categoryForm.image = arguments.image;
+    if (categoryForm != null) {
+      categoryForm.name = categoryForm.name;
+      categoryForm.id = categoryForm.id;
+      categoryForm.image = categoryForm.image;
     }
     final formKey = GlobalKey<FormBuilderState>();
     return Scaffold(
@@ -156,7 +155,6 @@ class _AddCategoryState extends State<AddCategoryPage> {
       'api/uploadFiles',
       {},
       File(path),
-      await getToken(),
       useAuxiliarUrl: true,
     );
 

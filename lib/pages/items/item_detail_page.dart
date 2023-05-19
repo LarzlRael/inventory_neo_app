@@ -24,7 +24,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
           IconButton(
             onPressed: () {
               context.push(
-                'add_product',
+                '/add_product',
                 extra: ItemDetails(
                   idProduct: widget.productModel.id,
                   category: widget.productModel.categories.first.id,
@@ -35,6 +35,12 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                   idTags: widget.productModel.tags
                       .map((e) => e.id.toString())
                       .toList(),
+                  /* Change this for the original images array */
+                  /* images: widget.productModel.images.map((e) => e.src).toList(), */
+                  images: [
+                    'https://i.pinimg.com/originals/49/fb/12/49fb12b526930c3756494a67b899859d.jpg',
+                    'https://i.ytimg.com/vi/V6UzcWt2wGg/maxresdefault.jpg'
+                  ],
                 ),
               );
             },
@@ -85,18 +91,45 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Hero(
+              /* Hero(
                 tag: widget.productModel.id,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
                     widget.productModel.images.isNotEmpty
-                        ? widget.productModel.images[0].src
+                        /* CHANGE THIS  */
+                        ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1EbnoClU2ybeReAasEBl-aSNItG0HU2aRqaYfsdL7&s'
+                        /* ? widget.productModel.images[0].src */
                         : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
                     height: MediaQuery.of(context).size.height * 0.30,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
+                ),
+              ), */
+              /* Change this */
+              /*  widget.productModel.images.isEmpty
+                  ? const SizedBox()
+                  : const SizedBox(
+                      height: 250,
+                      width: 600,
+                      child: ImageGallery(
+                        /* change this by the original */
+                        images: [
+                          'https://i.pinimg.com/originals/49/fb/12/49fb12b526930c3756494a67b899859d.jpg',
+                          'https://i.ytimg.com/vi/V6UzcWt2wGg/maxresdefault.jpg'
+                        ],
+                      ),
+                    ), */
+              const SizedBox(
+                height: 250,
+                width: 600,
+                child: ImageGallery(
+                  /* change this by the original */
+                  images: [
+                    'https://i.pinimg.com/originals/49/fb/12/49fb12b526930c3756494a67b899859d.jpg',
+                    'https://i.ytimg.com/vi/V6UzcWt2wGg/maxresdefault.jpg'
+                  ],
                 ),
               ),
               SimpleText(
@@ -163,6 +196,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 bottom: 5,
                 lightThemeColor: Colors.black,
               ), */
+
               Row(
                 children: [
                   SimpleText(

@@ -1,10 +1,23 @@
 part of '../pages.dart';
 
-class SellHistory extends StatelessWidget {
+class SellHistory extends StatefulWidget {
   const SellHistory({super.key});
+
+  @override
+  State<SellHistory> createState() => _SellHistoryState();
+}
+
+class _SellHistoryState extends State<SellHistory> {
+  late OrderProvider orderProvider;
+  @override
+  void initState() {
+    super.initState();
+    orderProvider = context.read<OrderProvider>();
+    orderProvider.fetchOrders();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final orderBloc = context.read<OrderProvider>();
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
@@ -15,33 +28,16 @@ class SellHistory extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            /* SimpleText(
-              text: 'Historial de ventas',
-              top: 20,
-            ), */
-            /* SellHistoryCard(),
-            SellHistoryCard(),
-            SellHistoryCard(), */
-            /* TODO change this  */
-            /* StreamBuilder(
-              stream: orderBloc.ordersList,
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<OrdersModel>> snapshot) {
-                if (!snapshot.hasData) {
-                  return simpleLoading();
-                }
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return SellHistoryCard(
-                        order: snapshot.data![index],
-                      );
-                    },
-                  ),
-                );
-              },
-            ), */
+            Expanded(
+              child: ListView.builder(
+                itemCount: orderProvider.orderState.orders.length,
+                itemBuilder: (_, int index) {
+                  return SellHistoryCard(
+                    order: orderProvider.orderState.orders[index],
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),
@@ -56,92 +52,50 @@ class SellHistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        child: ListTile(
-          onTap: (() {
-            context.push(
-              '/sell_detail',
-              extra: order,
-            );
-          }),
-          leading: Image.network(
-            order.lineItems[0].imageProduct!.src == ""
-                ? "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
-                : order.lineItems[0].imageProduct!.src,
-            width: 80,
-            height: 80,
-            fit: BoxFit.cover,
-          ),
-          title: SimpleText(
-            text: order.lineItems[0].name.length > 20
-                ? '${order.lineItems[0].name.substring(0, 20).toCapitalize()}...'
-                : order.lineItems[0].name.toCapitalize(),
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SimpleText(
-                text: '${order.billing.firstName} ${order.billing.lastName}'
-                    .toTitleCase(),
-                fontSize: 14,
-                top: 3,
-                bottom: 3,
-                fontWeight: FontWeight.w500,
-              ),
-              SimpleText(
-                text: '${order.lineItems.length.toString()} artículos',
-                lightThemeColor: Colors.grey,
-                fontWeight: FontWeight.w600,
-              ),
-            ],
-          ),
-          trailing: tranlateStatus(order.status),
-        )
-        /*  Row(
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      child: ListTile(
+        onTap: (() {
+          context.push(
+            '/sell_detail',
+            extra: order,
+          );
+        }),
+        leading: Image.network(
+          order.lineItems[0].imageProduct!.src == ""
+              ? "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
+              : order.lineItems[0].imageProduct!.src,
+          width: 80,
+          height: 80,
+          fit: BoxFit.cover,
+        ),
+        title: SimpleText(
+          text: order.lineItems[0].name.length > 20
+              ? '${order.lineItems[0].name.substring(0, 20).toCapitalize()}...'
+              : order.lineItems[0].name.toCapitalize(),
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              order.lineItems[0].imageProduct!.src == ""
-                  ? "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
-                  : order.lineItems[0].imageProduct!.src,
-              width: 80,
-              height: 80,
-              fit: BoxFit.cover,
+            SimpleText(
+              text: '${order.billing.firstName} ${order.billing.lastName}'
+                  .toTitleCase(),
+              fontSize: 14,
+              top: 3,
+              bottom: 3,
+              fontWeight: FontWeight.w500,
             ),
-            const SizedBox(width: 15),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SimpleText(
-                  text: order.lineItems[0].name.length > 20
-                      ? '${order.lineItems[0].name.substring(0, 20).toCapitalize()}...'
-                      : order.lineItems[0].name.toCapitalize(),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                ),
-                SimpleText(
-                  text: '${order.billing.firstName} ${order.billing.lastName}'
-                      .toTitleCase(),
-                  fontSize: 14,
-                  top: 3,
-                  bottom: 3,
-                  fontWeight: FontWeight.w500,
-                ),
-                SimpleText(
-                  text: '${order.lineItems.length.toString()} artículos',
-                  lightThemeColor: Colors.grey,
-                  fontWeight: FontWeight.w600,
-                ),
-              ],
+            SimpleText(
+              text: '${order.lineItems.length.toString()} artículos',
+              lightThemeColor: Colors.grey,
+              fontWeight: FontWeight.w600,
             ),
-            const Spacer(),
-            tranlateStatus(order.status),
-            const SizedBox(width: 10),
           ],
-        ), */
-
-        );
+        ),
+        trailing: tranlateStatus(order.status),
+      ),
+    );
   }
 }
 
@@ -151,9 +105,4 @@ Widget tranlateStatus(String status) {
     lightThemeColor: Colors.grey,
     fontWeight: FontWeight.w800,
   );
-}
-
-Future<List<OrdersModel>> getOrders() async {
-  final res = await getAction('/orders');
-  return ordersModelFromJson(res!.body);
 }
