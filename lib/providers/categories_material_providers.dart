@@ -1,29 +1,46 @@
 part of 'providers.dart';
 
 class CategoriesMaterialProviders extends ChangeNotifier {
-  List<CategoriesModel> _categories = [];
   List<TagsModel> _materiales = [];
-
-  set setCategories(List<CategoriesModel> categories) {
-    _categories = categories;
-    notifyListeners();
-  }
+  CategoriesState categoriesState = CategoriesState();
 
   set setMateriales(List<TagsModel> tags) {
     _materiales = tags;
     notifyListeners();
   }
 
-  get getCategories => _categories;
   get getMateriales => _materiales;
-
-  getFetchCategories() async {
-    final categories = await getAction('products/categories');
-    setCategories = categoriesModelFromJson(categories!.body);
-  }
 
   getFetchMaterialTagsFetch() async {
     final tags = await getAction('products/tags');
     _materiales = tagsModelFromJson(tags!.body);
   }
+
+  Future<void> getFetchCategories() async {
+    categoriesState = categoriesState.copyWith(isLoading: true);
+    final res = await getAction('products/categories');
+    final categories = categoriesModelFromJson(res!.body);
+    categoriesState = categoriesState.copyWith(
+      categories: categories,
+      isLoading: false,
+    );
+    notifyListeners();
+  }
+}
+
+class CategoriesState {
+  final bool isLoading;
+  final List<CategoriesModel> categories;
+  CategoriesState({
+    this.isLoading = false,
+    this.categories = const [],
+  });
+  CategoriesState copyWith({
+    bool? isLoading,
+    List<CategoriesModel>? categories,
+  }) =>
+      CategoriesState(
+        isLoading: isLoading ?? this.isLoading,
+        categories: categories ?? this.categories,
+      );
 }

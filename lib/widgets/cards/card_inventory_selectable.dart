@@ -7,7 +7,7 @@ class CardInventorySelectableItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productsServices = ProductsServices();
+    final productsProvider = context.read<ProductsProvider>();
     final cardInventoryProvider = context.watch<CardInventoryProvider>();
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -26,11 +26,15 @@ class CardInventorySelectableItems extends StatelessWidget {
                 },
                 icon: const Icon(Icons.chevron_left_sharp),
               ),
-              SimpleText(
-                text:
-                    'Productos Seleccionados: ${cardInventoryProvider.getProducts.length}',
-                fontSize: 16,
-                fontWeight: FontWeight.w800,
+              Text(
+                'Productos Seleccionados: ${cardInventoryProvider.getProducts.length}',
+/*                 fontSize: 16,
+                fontWeight: FontWeight.w800, */
+                style: GoogleFonts.montserratAlternates().copyWith(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
               const Spacer(),
               IconButton(
@@ -41,51 +45,23 @@ class CardInventorySelectableItems extends StatelessWidget {
               ),
             ],
           ),
-          FutureBuilder(
-            future: productsServices.getAllProducts(),
-            builder: (
-              BuildContext context,
-              AsyncSnapshot<List<ProductsModel>> snapshot,
-            ) {
-              if (!snapshot.hasData) {
-                return simpleLoading();
-              }
-
-              /* return Flexible(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
-                  ),
-                  itemCount: snapshot.data?.length,
-                  itemBuilder: (_, index) {
-                    final product = snapshot.data![index];
-                    return CardInventorySelectable(
-                      productModel: product,
-                      cardInventoryProvider: cardInventoryProvider,
-                    );
-                  },
-                ),
-              ); */
-              return Flexible(
-                child: GridView.count(
-                    /* shrinkWrap: true, */
-                    /* physics: NeverScrollableScrollPhysics(), */
-                    /* padding: const EdgeInsets.all(10), */
-                    childAspectRatio: 3 / 2,
-                    crossAxisCount: 2,
-                    children: snapshot.data!.map<Widget>(
-                      (product) {
-                        return CardInventorySelectable(
-                          productModel: product,
-                          cardInventoryProvider: cardInventoryProvider,
-                        );
-                      },
-                    ).toList()),
-              );
-            },
-          ),
+          Flexible(
+            child: GridView.count(
+              /* shrinkWrap: true, */
+              /* physics: NeverScrollableScrollPhysics(), */
+              /* padding: const EdgeInsets.all(10), */
+              childAspectRatio: 3 / 2,
+              crossAxisCount: 2,
+              children: productsProvider.productsState.products.map<Widget>(
+                (product) {
+                  return CardInventorySelectable(
+                    productModel: product,
+                    cardInventoryProvider: cardInventoryProvider,
+                  );
+                },
+              ).toList(),
+            ),
+          )
         ],
       ),
     );
@@ -130,13 +106,13 @@ class _CardInventorySelectableState extends State<CardInventorySelectable> {
         widget.cardInventoryProvider.addProduct(widget.productModel);
       },
       child: Card(
-        elevation: 2,
+        elevation: 1,
         /* margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), */
         child: Column(
           /* mainAxisAlignment: MainAxisAlignment.spaceAround, */
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(5),
               child: Image.network(
                 widget.productModel.images.isNotEmpty
                     /* ? widget.productModel.images[0].src */

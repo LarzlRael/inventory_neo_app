@@ -2,7 +2,6 @@ part of 'providers.dart';
 
 class ProductsProvider extends ChangeNotifier {
   ProductsState productsState = ProductsState();
-  CategoriesState categoriesState = CategoriesState();
 
   createOrUpdateProduct(Map<String, dynamic> productLike, {int? idProduct}) {}
   /* createOrUpdateProduct(Map<String, dynamic> productLike) {
@@ -25,17 +24,18 @@ class ProductsProvider extends ChangeNotifier {
     return true;
   } */
 
-  Future<List<ProductsModel>> getProductsAllProducts() async {
+  Future<void> getProductsAllProducts() async {
+    productsState = productsState.copyWith(isLoading: true);
     final clientRequest = await Request.sendRequestWithToken(
       RequestType.get,
       'products',
       {},
     );
-    productsState.copyWith(
+    productsState = productsState.copyWith(
       products: productsModelFromJson(clientRequest!.body),
+      isLoading: false,
     );
     notifyListeners();
-    return productsModelFromJson(clientRequest.body);
   }
 
   deleteProductById(String id) {
@@ -45,35 +45,6 @@ class ProductsProvider extends ChangeNotifier {
     );
     notifyListeners();
   }
-
-  Future<List<CategoriesModel>> getCategories() async {
-    final res = await getAction('products/categories');
-    final orders = categoriesModelFromJson(res!.body);
-
-    categoriesState.copyWith(
-      categories: orders,
-      isLoading: false,
-    );
-    notifyListeners();
-    return orders;
-  }
-}
-
-class CategoriesState {
-  final bool isLoading;
-  final List<CategoriesModel> categories;
-  CategoriesState({
-    this.isLoading = false,
-    this.categories = const [],
-  });
-  CategoriesState copyWith({
-    bool? isLoading,
-    List<CategoriesModel>? categories,
-  }) =>
-      CategoriesState(
-        isLoading: isLoading ?? this.isLoading,
-        categories: categories ?? this.categories,
-      );
 }
 
 class ProductsState {

@@ -8,18 +8,20 @@ class Inventory extends StatefulWidget {
 }
 
 class _InventoryState extends State<Inventory> {
+  bool isLoading = false;
   late CategoriesMaterialProviders inventoryProvider;
   @override
   void initState() {
     super.initState();
+
     inventoryProvider = context.read<CategoriesMaterialProviders>();
     inventoryProvider.getFetchCategories();
   }
 
-  final pageViewController = PageController();
-
   @override
   Widget build(BuildContext context) {
+    final catogoriesList =
+        context.watch<CategoriesMaterialProviders>().categoriesState.categories;
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(
@@ -47,22 +49,25 @@ class _InventoryState extends State<Inventory> {
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  /* childAspectRatio: 3 / 2, */
-                  crossAxisSpacing: 5,
-                  mainAxisSpacing: 5,
-                ),
-                itemCount: inventoryProvider.getCategories.length,
-                itemBuilder: (_, index) {
-                  return CategoryCard(
-                    categoriesModel: inventoryProvider.getCategories[index],
-                  );
-                },
-              ),
-            ),
+            isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : Expanded(
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        /* childAspectRatio: 3 / 2, */
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 5,
+                      ),
+                      itemCount: catogoriesList.length,
+                      itemBuilder: (_, index) {
+                        return CategoryCard(
+                          categoriesModel: catogoriesList[index],
+                        );
+                      },
+                    ),
+                  ),
           ],
         ),
       ),

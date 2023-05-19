@@ -1,12 +1,25 @@
 part of '../pages.dart';
 
-class CategoriesPage extends StatelessWidget {
+class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
 
   @override
+  State<CategoriesPage> createState() => _CategoriesPageState();
+}
+
+class _CategoriesPageState extends State<CategoriesPage> {
+  late CategoriesMaterialProviders categoriesMaterialProviders;
+  @override
+  void initState() {
+    super.initState();
+    categoriesMaterialProviders = context.read<CategoriesMaterialProviders>();
+    categoriesMaterialProviders.getFetchCategories();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final products = context.read<ProductsProvider>();
-    products.getCategories();
+    final categoriesList =
+        context.watch<CategoriesMaterialProviders>().categoriesState.categories;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
@@ -20,54 +33,41 @@ class CategoriesPage extends StatelessWidget {
         subTitle: 'Lista de las categorias',
         showTitle: true,
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-        ),
-        child: Column(
-          children: [
-            /* StreamBuilder(
-              stream: categoriesBloc.categoriesStream,
-              builder: (
-                BuildContext context,
-                AsyncSnapshot<List<CategoriesModel>> snapshot,
-              ) {
-                if (!snapshot.hasData) {
-                  return simpleLoading();
-                }
-
-                return Flexible(
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 5,
-                    ),
-                    itemCount: snapshot.data?.length,
-                    itemBuilder: (_, index) {
-                      final category = snapshot.data![index];
-                      return CategoryCard(
-                        categoriesModel: category,
-                        goToProductsByCategory: true,
-                      );
-                    },
-                  ),
-                );
-              },
+      body:
+          /* Flexible(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                ),
+                itemCount: categoriesList.length,
+                itemBuilder: (_, index) {
+                  final category = categoriesList[index];
+                  return CategoryCard(
+                    categoriesModel: category,
+                    goToProductsByCategory: true,
+                  );
+                },
+              ),
             ), */
-          ],
+          Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: MasonryGridView.count(
+          physics: const BouncingScrollPhysics(),
+          crossAxisCount: 2,
+          mainAxisSpacing: 20,
+          crossAxisSpacing: 35,
+          itemCount: categoriesList.length,
+          itemBuilder: (context, index) {
+            final category = categoriesList[index];
+            return CategoryCard(
+              categoriesModel: category,
+              goToProductsByCategory: true,
+            );
+          },
         ),
       ),
     );
-  }
-
-  Future<List<CategoriesModel>> getCategories() async {
-    final clientRequest = await Request.sendRequestWithToken(
-      RequestType.get,
-      'products/categories',
-      {},
-    );
-    return categoriesModelFromJson(clientRequest!.body);
   }
 }

@@ -151,7 +151,8 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                       title: 'Categoria',
                       formFieldName: 'category',
                       placeholder: 'Seleccione una categoria',
-                      categories: categoriesMaterialProviders.getCategories,
+                      categories: categoriesMaterialProviders
+                          .categoriesState.categories,
                     ),
                     CustomRadioButtons(
                       formFieldName: 'tags',

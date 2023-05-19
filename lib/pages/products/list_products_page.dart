@@ -11,15 +11,14 @@ class _ListProductsPageState extends State<ListProductsPage> {
   late ProductsProvider productsProvider;
   @override
   void initState() {
+    super.initState();
     productsProvider = context.read<ProductsProvider>();
     productsProvider.getProductsAllProducts();
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    /* productBloc.getProducts(); */
-
+    final products = productsProvider.productsState;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -45,56 +44,21 @@ class _ListProductsPageState extends State<ListProductsPage> {
         ],
         showTitle: true,
       ),
-      body: Column(
-        children: [
-          FutureBuilder(
-            future: productsProvider.getProductsAllProducts(),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<ProductsModel>> snapshot) {
-              if (!snapshot.hasData) {
-                return simpleLoading();
-              }
-              if (snapshot.data!.isEmpty) {
-                return const Expanded(
-                  child: NoInformation(
-                    text: 'No hay productos en esta categoria',
-                    icon: Icons.info_outline,
-                    showButton: false,
-                    iconButton: Icons.add,
-                  ),
-                );
-              }
-
-              return Expanded(
-                child: GridView.builder(
-                  /* shrinkWrap: true, */
-                  /* physics: NeverScrollableScrollPhysics(), */
-                  /* padding: const EdgeInsets.all(10), */
-                  /* childAspectRatio: 3 / 2, */
-                  /* crossAxisCount: 2,
-                    children: snapshot.data!.map<Widget>(
-                      (product) {
-                        return CardItemInventoryVertical(
-                          productModel: product,
-                        );
-                      },
-                    ).toList()), */
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 250,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
-                  ),
-                  itemCount: snapshot.data?.length,
-                  itemBuilder: (_, int index) {
-                    return CardItemInventoryVertical(
-                      productModel: snapshot.data![index],
-                    );
-                  },
-                ),
-              );
-            },
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: MasonryGridView.count(
+          physics: const BouncingScrollPhysics(),
+          crossAxisCount: 2,
+          mainAxisSpacing: 20,
+          crossAxisSpacing: 35,
+          itemCount: products.products.length,
+          itemBuilder: (context, index) {
+            final product = products.products[index];
+            return CardItemInventoryVertical(
+              productModel: product,
+            );
+          },
+        ),
       ),
     );
   }
