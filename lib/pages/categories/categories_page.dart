@@ -19,8 +19,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text('Agregar categoria'),
+        icon: const Icon(Icons.add),
         onPressed: () {
           context.push('/add_categories_page');
         },

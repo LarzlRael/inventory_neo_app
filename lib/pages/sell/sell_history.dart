@@ -26,19 +26,18 @@ class _SellHistoryState extends State<SellHistory> {
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: orderProvider.orderState.orders.length,
-                itemBuilder: (_, int index) {
-                  return SellHistoryCard(
-                    order: orderProvider.orderState.orders[index],
-                  );
-                },
-              ),
-            )
-          ],
+        child: Consumer<OrderProvider>(
+          builder: (context, state, widget) {
+            final orders = state.orderState.orders;
+            return ListView.builder(
+              itemCount: orders.length,
+              itemBuilder: (_, int index) {
+                return SellHistoryCard(
+                  order: orders[index],
+                );
+              },
+            );
+          },
         ),
       ),
     );

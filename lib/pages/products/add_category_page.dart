@@ -35,6 +35,15 @@ class _AddCategoryState extends State<AddCategoryPage> {
     }
     final formKey = GlobalKey<FormBuilderState>();
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text(
+          categoryForm.id == null ? 'Agregar categoria' : 'Editar categoria',
+        ),
+        icon: Icon(categoryForm.id == null ? Icons.save : Icons.edit),
+        onPressed: () {
+          context.push('/add_categories_page');
+        },
+      ),
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
         title:
@@ -131,7 +140,7 @@ class _AddCategoryState extends State<AddCategoryPage> {
                         width: 200,
                       ),
                     ),
-                    !_isLoading
+                    /* !_isLoading
                         ? FillButton(
                             onPressed: () {
                               register(formKey, categoryForm.id);
@@ -140,7 +149,7 @@ class _AddCategoryState extends State<AddCategoryPage> {
                                 ? 'Registrar'
                                 : 'Editar',
                           )
-                        : simpleLoading(),
+                        : simpleLoading(), */
                   ],
                 ),
               )

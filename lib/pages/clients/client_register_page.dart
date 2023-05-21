@@ -54,6 +54,12 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
             ? "Edicion de cliente ${clientData.firstName} ${clientData.lastName}"
             : 'Registro de un nuevo cliente',
       ),
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            addOrEditClient(formKey, idClient: clientData.id);
+          },
+          icon: Icon(editable ? Icons.edit : Icons.save),
+          label: Text(editable ? "Editar Cliente" : "Guardar cliente")),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(
@@ -154,14 +160,14 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
                   ],
                 ),
               ),
-              isLoading
+              /*  isLoading
                   ? simpleLoading()
                   : FillButton(
                       onPressed: () {
                         addOrEditClient(formKey, idClient: clientData.id);
                       },
                       label: editable ? "Editar Cliente" : "Guardar cliente",
-                    ),
+                    ), */
             ],
           ),
         ),

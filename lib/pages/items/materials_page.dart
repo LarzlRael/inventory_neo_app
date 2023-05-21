@@ -14,20 +14,18 @@ class _MaterialsPageState extends State<MaterialsPage> {
   initState() {
     super.initState();
     categoriesMaterialProviders = context.read<CategoriesMaterialProviders>();
-    categoriesMaterialProviders.getFetchCategories();
+    categoriesMaterialProviders.getFetchMaterialTags();
   }
 
   @override
   Widget build(BuildContext context) {
-    final materials = categoriesMaterialProviders.materialesState;
-
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Agregar material',
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text('Agregar material'),
         onPressed: () {
           context.push('/material_register_page');
         },
-        child: const Icon(Icons.add),
+        icon: const Icon(Icons.add),
       ),
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
@@ -35,21 +33,26 @@ class _MaterialsPageState extends State<MaterialsPage> {
         subTitle: 'Lista de los materiales',
         showTitle: true,
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: materials.materiales.length,
-                itemBuilder: (_, int index) {
-                  final tag = materials.materiales[index];
-                  return MaterialItemCard(tag: tag);
-                },
-              ),
+      body: Consumer<CategoriesMaterialProviders>(
+        builder: (context, state, widget) {
+          final materials = state.materialesState;
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: materials.materiales.length,
+                    itemBuilder: (_, int index) {
+                      final tag = materials.materiales[index];
+                      return MaterialItemCard(tag: tag);
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

@@ -9,11 +9,18 @@ class SellProductsPage extends StatefulWidget {
 
 class _SellProductsPageState extends State<SellProductsPage> {
   bool _isLoading = false;
+  late GlobalProvider globaProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    globaProvider = context.read<GlobalProvider>();
+  }
+
   @override
   Widget build(BuildContext context) {
     final cardInventoryProvider = context.watch<CardInventoryProvider>();
 
-    final globaProvider = context.read<GlobalProvider>();
     final clientSelect = cardInventoryProvider.getClient != null;
     final productsSelect = cardInventoryProvider.getProducts.isEmpty;
     return Scaffold(
@@ -30,19 +37,25 @@ class _SellProductsPageState extends State<SellProductsPage> {
               cardInventoryProvider.clearProducts();
             },
           ),
-          cardInventoryProvider.getProducts.isNotEmpty &&
-                  cardInventoryProvider.getClient != null
-              ? IconButton(
-                  tooltip: 'Confirmar venta',
-                  icon: const Icon(Icons.check_circle),
-                  color: Colors.green,
-                  onPressed: () {
-                    sendData(cardInventoryProvider);
-                  },
-                )
-              : const SizedBox(),
         ],
       ),
+      floatingActionButton: cardInventoryProvider.getProducts.isNotEmpty &&
+              cardInventoryProvider.getClient != null
+          ? /* IconButton(
+              tooltip: 'Confirmar venta',
+              icon: const Icon(Icons.check_circle),
+              color: Colors.green,
+              onPressed: () {},
+            )
+          : const SizedBox(), */
+          FloatingActionButton.extended(
+              onPressed: () {
+                sendData(cardInventoryProvider);
+              },
+              label: Text('Realizar venta'),
+              icon: Icon(Icons.shopping_cart),
+            )
+          : null,
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
@@ -181,7 +194,6 @@ class _SellProductsPageState extends State<SellProductsPage> {
   }
 
   sendData(CardInventoryProvider cardInventoryProvider) async {
-    final globaProvider = context.read<GlobalProvider>();
     final data = {
       "payment_method": "bacs",
       "payment_method_title": "Direct Bank Transfer",

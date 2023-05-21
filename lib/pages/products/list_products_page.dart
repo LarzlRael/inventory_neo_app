@@ -19,11 +19,12 @@ class _ListProductsPageState extends State<ListProductsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text('Nuevo producto'),
         onPressed: () {
           context.push('/add_product');
         },
-        child: const Icon(Icons.add),
+        icon: const Icon(Icons.add),
       ),
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),

@@ -15,7 +15,7 @@ List<Widget> registerOptions(BuildContext context) {
     CircleButton(
       color: Colors.blue,
       icon: Icons.home_work,
-      text: 'Agregar producto',
+      text: 'Productos',
       onPressed: () {
         context.push('/list_products_page');
       },
@@ -23,7 +23,7 @@ List<Widget> registerOptions(BuildContext context) {
     CircleButton(
       color: Colors.purple,
       icon: Icons.money,
-      text: 'Agregar categoria',
+      text: 'Categorias',
       onPressed: () {
         context.push('/categories_page');
       },
@@ -31,15 +31,15 @@ List<Widget> registerOptions(BuildContext context) {
     CircleButton(
       color: Colors.green,
       icon: Icons.person_search,
-      text: 'Agregar material',
+      text: 'Materiales',
       onPressed: () {
         context.push('/materials_page');
       },
     ),
     CircleButton(
       color: Colors.brown,
-      icon: Icons.person_add,
-      text: 'Agregar cliente',
+      icon: Icons.person,
+      text: 'Clientes',
       onPressed: () {
         context.push('/client_register_page');
       },
