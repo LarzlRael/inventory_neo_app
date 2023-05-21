@@ -17,6 +17,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
     final cardInventoryProvider = context.read<CardInventoryProvider>();
     final productsProvider = context.read<ProductsProvider>();
     final globalProvider = context.read<GlobalProvider>();
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
@@ -115,12 +116,9 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                   ],
                 ),
               ),
-              SimpleText(
-                text: widget.productModel.name.toTitleCase(),
-                fontSize: 22,
-                /* top: 10, */
-                fontWeight: FontWeight.w700,
-              ),
+              Text(widget.productModel.name.toTitleCase(),
+                  style: textTheme.titleSmall!
+                      .copyWith(fontWeight: FontWeight.w700)),
               /* Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

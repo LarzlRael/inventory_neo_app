@@ -9,6 +9,7 @@ class CardItemInventoryVertical extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return GestureDetector(
       onTap: () {
         /* Navigator.pushNamed(context, 'item_detail'); */
@@ -52,21 +53,23 @@ class CardItemInventoryVertical extends StatelessWidget {
                         /* mainAxisAlignment: MainAxisAlignment.start, */
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SimpleText(
-                            bottom: 2,
-                            top: 2,
-                            text: productModel.price,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                            lightThemeColor: Colors.pink,
+                          SizedBox(
+                            child: Text(productModel.price,
+                                style: textTheme.titleSmall!.copyWith(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.pink,
+                                )),
                           ),
-                          SimpleText(
-                            text: productModel.name.length > 60
-                                ? '${productModel.name.substring(0, 60).toCapitalize()}...'
-                                : productModel.name.toCapitalize(),
-                            fontSize: 13,
-                            fontWeight: FontWeight.w300,
-                          ),
+                          Text(
+                              productModel.name.length > 60
+                                  ? '${productModel.name.substring(0, 60).toCapitalize()}...'
+                                  : productModel.name.toCapitalize(),
+                              style:
+                                  GoogleFonts.montserratAlternates().copyWith(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w300,
+                              )),
                         ],
                       ),
                     )

@@ -28,7 +28,7 @@ class _AddCategoryState extends State<AddCategoryPage> {
   @override
   Widget build(BuildContext context) {
     final globalProvider = context.read<GlobalProvider>();
-    if (categoryForm != null) {
+    if (categoryForm.id != null) {
       categoryForm.name = categoryForm.name;
       categoryForm.id = categoryForm.id;
       categoryForm.image = categoryForm.image;

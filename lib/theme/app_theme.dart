@@ -25,6 +25,20 @@ class AppTheme {
   ThemeData getTheme() => ThemeData(
         useMaterial3: true,
         brightness: isDarkMode ? Brightness.dark : Brightness.light,
+        /* Text */
+        textTheme: TextTheme(
+          /*     titleLarge: GoogleFonts.montserratAlternates().copyWith(
+          fontSize: 40,
+          fontWeight: FontWeight.bold,
+        ),
+        titleMedium: GoogleFonts.montserratAlternates().copyWith(
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+        ), */
+          titleSmall: GoogleFonts.montserratAlternates().copyWith(
+            fontSize: 20,
+          ),
+        ),
         colorSchemeSeed: colorList[5],
         appBarTheme: AppBarTheme(
           titleTextStyle: GoogleFonts.montserratAlternates().copyWith(
