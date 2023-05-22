@@ -45,6 +45,24 @@ class ProductsProvider extends ChangeNotifier {
     );
     notifyListeners();
   }
+
+  Future<List<ProductsModel>> searchProductsByName(String query) async {
+    final clientRequest = await Request.sendRequestWithToken(
+      RequestType.get,
+      'products?search=$query',
+      {},
+    );
+    return productsModelFromJson(clientRequest!.body);
+  }
+
+  Future<List<ProductsModel>> getAllProducts() async {
+    final clientRequest = await Request.sendRequestWithToken(
+      RequestType.get,
+      'products',
+      {},
+    );
+    return productsModelFromJson(clientRequest!.body);
+  }
 }
 
 class ProductsState {

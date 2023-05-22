@@ -81,7 +81,9 @@ class _InventoryState extends State<Inventory> {
       onTap: () {
         showSearch(
           context: context,
-          delegate: ItemsInventoryDelegate(),
+          delegate: ItemsInventoryDelegate(
+            productsProvider: context.read<ProductsProvider>(),
+          ),
         );
       },
       child: Container(
@@ -220,7 +222,9 @@ class ListCategoryItems extends StatelessWidget {
             onPressed: () {
               showSearch(
                 context: context,
-                delegate: ItemsInventoryDelegate(),
+                delegate: ItemsInventoryDelegate(
+                  productsProvider: context.read<ProductsProvider>(),
+                ),
               );
             },
             color: Colors.black,

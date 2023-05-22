@@ -2,7 +2,7 @@ part of 'providers.dart';
 
 class OrderProvider with ChangeNotifier {
   OrderState orderState = OrderState();
-  fetchOrders() async {
+  getOrders() async {
     orderState = orderState.copyWith(isLoading: true);
     final res = await getAction('/orders');
     final orders = ordersModelFromJson(res!.body);
@@ -13,7 +13,13 @@ class OrderProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  get getOrders => orderState.orders;
+  Future<List<OrdersModel>> getOrderByClient(String userEmail) async {
+    final response = await getAction(
+      'orders?search=$userEmail',
+    );
+
+    return ordersModelFromJson(response!.body);
+  }
 }
 
 class OrderState {

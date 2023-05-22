@@ -37,7 +37,9 @@ class _ListProductsPageState extends State<ListProductsPage> {
             onPressed: () {
               showSearch(
                 context: context,
-                delegate: ItemsInventoryDelegate(),
+                delegate: ItemsInventoryDelegate(
+                  productsProvider: productsProvider,
+                ),
               );
             },
           ),

@@ -13,7 +13,7 @@ class _SellHistoryState extends State<SellHistory> {
   void initState() {
     super.initState();
     orderProvider = context.read<OrderProvider>();
-    orderProvider.fetchOrders();
+    orderProvider.getOrders();
   }
 
   @override

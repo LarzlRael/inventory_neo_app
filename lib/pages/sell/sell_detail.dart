@@ -13,9 +13,14 @@ class SellDetail extends StatefulWidget {
 
 class _SellDetailState extends State<SellDetail> {
   late String dropdownValue;
+
+  late GlobalProvider globalProvider;
+  late OrderProvider orderProvider;
   @override
   void initState() {
     dropdownValue = statusList[widget.args.status]!;
+    globalProvider = context.read<GlobalProvider>();
+    orderProvider = context.read<OrderProvider>();
     super.initState();
   }
 
@@ -145,14 +150,10 @@ class _SellDetailState extends State<SellDetail> {
   }
 
   updateStatus(orderId, dropdownValue) async {
-    final globalProvider = context.read<GlobalProvider>();
-    final orderBloc = context.read<OrderProvider>();
     putAction(
             'orders/$orderId', {'status': statusListTransalteEn[dropdownValue]})
         .then((value) {
       if (value!.statusCode == 200) {
-        /* TODO change orders in the state */
-        orderBloc.fetchOrders();
         globalProvider.showSnackBar(
           context,
           'Estado actualizado',

@@ -164,7 +164,7 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
   Future<String> getUrlFileResult(String path) async {
     final uploadFile = await Request.uploadFileRequest(
       RequestType.post,
-      'api/uploadFiles',
+      '/uploadFiles',
       {},
       File(path),
       useAuxiliarUrl: true,

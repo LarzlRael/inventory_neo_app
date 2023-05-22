@@ -10,14 +10,14 @@ import 'package:inventory_app/models/models.dart';
 import 'package:inventory_app/utils/utils.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:mime_type/mime_type.dart';
-
-import 'key_value_storage_service_impl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'request.dart';
-part 'clients_services.dart';
-part 'categories_service.dart';
 part 'products_service.dart';
 part 'tags_services.dart';
 part 'action.dart';
 part 'camera_gallery_service/camera_gallery_service_imp.dart';
 part 'camera_gallery_service/camera_gallery_service.dart';
+
+part 'key_value/key_value_storage_service_impl.dart';
+part 'key_value/key_value_storage_service.dart';

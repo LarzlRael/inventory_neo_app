@@ -1,4 +1,4 @@
-part of 'services.dart';
+/* part of 'services.dart';
 
 class ClientsServices {
   Future<List<ClientModel>> getClients() async {
@@ -62,3 +62,4 @@ class ClientsServices {
     }
   }
 }
+ */

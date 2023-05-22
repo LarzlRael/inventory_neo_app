@@ -1,10 +1,12 @@
 part of 'delegates.dart';
 
 class ClientsDelegate extends SearchDelegate {
+  final ClientsProvider clientsProvider;
   @override
   final String searchFieldLabel;
 
-  ClientsDelegate() : searchFieldLabel = 'Buscar cliente por nombre';
+  ClientsDelegate({required this.clientsProvider})
+      : searchFieldLabel = 'Buscar cliente por nombre';
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -27,7 +29,9 @@ class ClientsDelegate extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     return FutureBuilder(
-      future: query.isEmpty ? getClients() : getClientsWithParameters(query),
+      future: query.isEmpty
+          ? clientsProvider.getFetchClients()
+          : clientsProvider.getClientsWithParameters(query),
       builder: (_, AsyncSnapshot<List<ClientModel>> snapshot) {
         if (!snapshot.hasData) {
           return simpleLoading();
@@ -59,7 +63,7 @@ class ClientsDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder(
-      future: getClients(),
+      future: clientsProvider.getFetchClients(),
       builder:
           (BuildContext context, AsyncSnapshot<List<ClientModel>> snapshot) {
         if (!snapshot.hasData) {
@@ -76,11 +80,5 @@ class ClientsDelegate extends SearchDelegate {
         );
       },
     );
-  }
-
-  Future<List<ClientModel>> getClientsWithParameters(String parameters) async {
-    final clientRequest =
-        await getAction('api/client/search/$parameters', useAuxiliarUrl: true);
-    return clientsModelFromJson(clientRequest!.body);
   }
 }

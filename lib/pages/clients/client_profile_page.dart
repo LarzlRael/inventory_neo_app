@@ -10,6 +10,8 @@ class ClientProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final globalProvider = context.read<GlobalProvider>();
+    final clientsProvider = context.read<ClientsProvider>();
+
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
@@ -32,11 +34,8 @@ class ClientProfilePage extends StatelessWidget {
             onPressed: () {
               asyncShowConfirmDialog(context, 'Eliminar',
                   '¿Estás seguro de eliminar este cliente?', () async {
-                deleteAction(
-                  'api/client/${clientModel.id}',
-                  useAuxiliarUrl: true,
-                ).then((value) {
-                  if (value!.statusCode == 200) {
+                clientsProvider.deleteClient(clientModel.id!).then((value) {
+                  if (value) {
                     globalProvider.showSnackBar(
                       context,
                       "Cliente eliminado correctamente",
@@ -103,6 +102,7 @@ class ClientProfilePage extends StatelessWidget {
   }
 
   Widget _tabSection(BuildContext context, ClientModel clientModel) {
+    final orderProvider = context.read<OrderProvider>();
     return DefaultTabController(
       length: 2,
       child: Column(
@@ -161,7 +161,7 @@ class ClientProfilePage extends StatelessWidget {
                   'Historial de compras',
                   [
                     FutureBuilder(
-                      future: getOrderByClient(clientModel.email),
+                      future: orderProvider.getOrderByClient(clientModel.email),
                       builder: (BuildContext context,
                           AsyncSnapshot<List<OrdersModel>> snapshot) {
                         if (!snapshot.hasData) {
@@ -266,13 +266,5 @@ class ClientProfilePage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Future<List<OrdersModel>> getOrderByClient(String userEmail) async {
-    final response = await getAction(
-      'orders?search=$userEmail',
-    );
-
-    return ordersModelFromJson(response!.body);
   }
 }

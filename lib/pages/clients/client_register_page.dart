@@ -11,12 +11,14 @@ class ClientRegisterPage extends StatefulWidget {
 
 class _ClientRegisterPageState extends State<ClientRegisterPage> {
   bool isLoading = false;
-  late ClientsServices clientsServices;
+  late ClientsProvider clientsProvider;
+  late GlobalProvider globalProvider;
 
   @override
   void initState() {
     super.initState();
-    clientsServices = ClientsServices();
+    clientsProvider = context.read<ClientsProvider>();
+    globalProvider = context.read<GlobalProvider>();
   }
 
   @override
@@ -59,7 +61,9 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
             addOrEditClient(formKey, idClient: clientData.id);
           },
           icon: Icon(editable ? Icons.edit : Icons.save),
-          label: Text(editable ? "Editar Cliente" : "Guardar cliente")),
+          label: Text(
+            editable ? "Editar Cliente" : "Guardar cliente",
+          )),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(
@@ -176,7 +180,6 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
   }
 
   addOrEditClient(GlobalKey<FormBuilderState> formKey, {int? idClient}) async {
-    final globalProvider = context.read<GlobalProvider>();
     if (!formKey.currentState!.validate()) return;
     formKey.currentState?.save();
     final currentData = formKey.currentState?.value;
@@ -187,21 +190,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
       'phone': currentData['phone'],
     };
 
-    /* if (idClient == null) {
-      ok = await clientsServices.addClient(data);
-    } else {
-      ok = await clientsServices.editClient(idClient, data);
-    }
-    if (!mounted) return;
-    if (ok) {
-      GlobalSnackBar.show(context, "Cliente guardado con exito",
-          backgroundColor: Colors.green);
-    } else {
-      GlobalSnackBar.show(context, "Hubo un error al guardar el cliente",
-          backgroundColor: Colors.red);
-    } */
-
-    clientsServices.addOrEditClient(data, idClient: idClient).then((value) {
+    clientsProvider.addOrEditClient(data, idClient: idClient).then((value) {
       context.pop();
       final message = idClient == null
           ? "Cliente guardado con exito"
@@ -213,35 +202,5 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
         backgroundColor: color,
       );
     });
-    /* if (idClient == null) {
-      final post = await postAction('api/client', data, useAuxiliarUrl: true);
-
-      if (validateStatus(post!.statusCode)) {
-        globalProvider.showSnackBar(context, "Cliente guardado con exito",
-            backgroundColor: Colors.green);
-        /* Navigator.popAndPushNamed(context, 'clients'); */
-        context.pop();
-      } else {
-        globalProvider.showSnackBar(
-            context, "Hubo un error al guardar el cliente",
-            backgroundColor: Colors.red);
-      }
-    } else {
-      await putAction('api/client/$idClient', data, useAuxiliarUrl: true)
-          .then((value) {
-        if (validateStatus(value!.statusCode)) {
-          globalProvider.showSnackBar(context, "Cliente editado con exito",
-              backgroundColor: Colors.green);
-
-          context.pop('/clients');
-        } else {
-          globalProvider.showSnackBar(
-            context,
-            "Hubo un error al editar el cliente",
-            backgroundColor: Colors.red,
-          );
-        }
-      });
-    } */
   }
 }

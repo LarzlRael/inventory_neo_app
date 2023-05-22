@@ -1,11 +1,12 @@
 part of 'delegates.dart';
 
 class ItemsInventoryDelegate extends SearchDelegate {
-  final productsService = ProductsServices();
+  ProductsProvider productsProvider = ProductsProvider();
   @override
   final String searchFieldLabel;
 
-  ItemsInventoryDelegate() : searchFieldLabel = 'Buscar joya por nombre';
+  ItemsInventoryDelegate({required this.productsProvider})
+      : searchFieldLabel = 'Buscar joya por nombre';
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -29,7 +30,7 @@ class ItemsInventoryDelegate extends SearchDelegate {
         right: 10.0,
       ),
       child: FutureBuilder(
-        future: productsService.searchProductsByName(query),
+        future: productsProvider.searchProductsByName(query),
         builder: (BuildContext context,
             AsyncSnapshot<List<ProductsModel>> snapshot) {
           if (!snapshot.hasData) {
@@ -75,7 +76,7 @@ class ItemsInventoryDelegate extends SearchDelegate {
 
   Widget allProducts() {
     return FutureBuilder(
-      future: productsService.getAllProducts(),
+      future: productsProvider.getAllProducts(),
       builder:
           (BuildContext context, AsyncSnapshot<List<ProductsModel>> snapshot) {
         if (!snapshot.hasData) {

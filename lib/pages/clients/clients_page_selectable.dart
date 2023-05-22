@@ -1,12 +1,25 @@
 part of '../pages.dart';
 
-class ClientsPageSelectable extends StatelessWidget {
+class ClientsPageSelectable extends StatefulWidget {
   const ClientsPageSelectable({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final cardInventoryProvider = context.read<CardInventoryProvider>();
+  State<ClientsPageSelectable> createState() => _ClientsPageSelectableState();
+}
 
+class _ClientsPageSelectableState extends State<ClientsPageSelectable> {
+  late CardInventoryProvider cardInventoryProvider;
+  late ClientsProvider clientsProvider;
+  @override
+  void initState() {
+    super.initState();
+    cardInventoryProvider = context.read<CardInventoryProvider>();
+    clientsProvider = context.read<ClientsProvider>();
+    clientsProvider.getClients();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
@@ -14,34 +27,20 @@ class ClientsPageSelectable extends StatelessWidget {
         title: 'Seleccionar cliente',
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            FutureBuilder(
-              future: getClients(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<ClientModel>> snapshot) {
-                if (!snapshot.hasData) {
-                  return simpleLoading();
-                }
-                final clients = snapshot.data;
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: clients?.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ClientItem(
-                        clientModel: clients![index],
-                        onTap: () {
-                          cardInventoryProvider.setClient = clients[index];
-                          Navigator.pop(context);
-                        },
-                      );
-                    },
-                  ),
+        child: Consumer<ClientsProvider>(builder: (_, clientsProvider, __) {
+          final clients = clientsProvider.clientesState.clientsList;
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: ListView.builder(
+              itemCount: clients.length,
+              itemBuilder: (_, int index) {
+                return ClientItem(
+                  clientModel: clients[index],
                 );
               },
             ),
-          ],
-        ),
+          );
+        }),
       ),
     );
   }

@@ -43,11 +43,10 @@ class Request {
     bool useAuxiliarUrl = false,
   }) async {
     //headers with basic auth
-    String username = dotenv.get('wc_username');
-    String password = dotenv.get('wc_password');
+
     final token = await KeyValueStorageServiceImpl().getValue<String>('token');
     String basicAuth =
-        'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+        'Basic ${base64Encode(utf8.encode('${Environment.wcUsername}:${Environment.wcPassword}'))}';
 
     final headers = {
       'Content-Type': 'application/json',
