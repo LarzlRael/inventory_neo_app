@@ -1,108 +1,130 @@
 part of '../pages.dart';
 
-class ClientProfilePage extends StatelessWidget {
-  final ClientModel clientModel;
+class ClientProfilePage extends StatefulWidget {
+  final int idClient;
   const ClientProfilePage({
     super.key,
-    required this.clientModel,
+    required this.idClient,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final globalProvider = context.read<GlobalProvider>();
-    final clientsProvider = context.read<ClientsProvider>();
+  State<ClientProfilePage> createState() => _ClientProfilePageState();
+}
 
-    return Scaffold(
-      appBar: AppBarWithBackIcon(
-        appBar: AppBar(),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            color: Colors.black,
-            tooltip: 'Editar cliente',
-            onPressed: () {
-              context.push(
-                '/client_register_page',
-                extra: clientModel,
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.delete),
-            color: Colors.black,
-            tooltip: 'Eliminar cliente',
-            onPressed: () {
-              asyncShowConfirmDialog(context, 'Eliminar',
-                  '¿Estás seguro de eliminar este cliente?', () async {
-                clientsProvider.deleteClient(clientModel.id!).then((value) {
-                  if (value) {
-                    globalProvider.showSnackBar(
-                      context,
-                      "Cliente eliminado correctamente",
-                      backgroundColor: Colors.green,
-                    );
-                    context.pop();
-                  } else {
-                    globalProvider.showSnackBar(
-                      context,
-                      "Error al eliminar el cliente",
-                      backgroundColor: Colors.red,
-                    );
-                  }
-                });
-              });
-            },
-          ),
-        ],
-      ),
-      backgroundColor: const Color(0xffcdd2f9),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.35,
-              color: Colors.deepPurple,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                      radius: 75,
-                      child: SimpleText(
-                        text:
-                            "${clientModel.firstName[0]}${clientModel.lastName[0]}"
-                                .toUpperCase(),
-                        fontSize: 50,
-                        fontWeight: FontWeight.w700,
-                        lightThemeColor: Colors.white,
-                      )),
-                  SimpleText(
-                    text: '${clientModel.firstName} ${clientModel.lastName}'
-                        .toTitleCase(),
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    top: 10,
-                    bottom: 5,
-                    lightThemeColor: Colors.white,
-                  ),
-                  SimpleText(
-                    text: clientModel.address1.toCapitalize(),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
-                    lightThemeColor: Colors.white,
-                  ),
-                ],
-              ),
-            ),
-            _tabSection(context, clientModel),
-          ],
-        ),
-      ),
-    );
+class _ClientProfilePageState extends State<ClientProfilePage> {
+  late ClientsProvider clientsProvider;
+  late GlobalProvider globalProvider;
+  @override
+  void initState() {
+    super.initState();
+    clientsProvider = context.read<ClientsProvider>();
+    globalProvider = context.read<GlobalProvider>();
+    clientsProvider.getClient(widget.idClient);
   }
 
-  Widget _tabSection(BuildContext context, ClientModel clientModel) {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ClientsProvider>(builder: (_, clientsProvider, __) {
+      final clienteSeleccionado = clientsProvider.clientesState.clientSelected;
+      return Scaffold(
+        appBar: AppBarWithBackIcon(
+          appBar: AppBar(),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.edit),
+              color: Colors.black,
+              tooltip: 'Editar cliente',
+              onPressed: () {
+                context.push(
+                  '/client_register_page',
+                  extra: clienteSeleccionado,
+                );
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete),
+              color: Colors.black,
+              tooltip: 'Eliminar cliente',
+              onPressed: () {
+                asyncShowConfirmDialog(context, 'Eliminar',
+                    '¿Estás seguro de eliminar este cliente?', () async {
+                  clientsProvider
+                      .deleteClient(clienteSeleccionado!.id!)
+                      .then((value) {
+                    if (value) {
+                      globalProvider.showSnackBar(
+                        context,
+                        "Cliente eliminado correctamente",
+                        backgroundColor: Colors.green,
+                      );
+                      context.pop();
+                    } else {
+                      globalProvider.showSnackBar(
+                        context,
+                        "Error al eliminar el cliente",
+                        backgroundColor: Colors.red,
+                      );
+                    }
+                  });
+                });
+              },
+            ),
+          ],
+        ),
+        backgroundColor: const Color(0xffcdd2f9),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.35,
+                color: Colors.deepPurple,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                        radius: 60,
+                        child: SimpleText(
+                          text:
+                              "${clienteSeleccionado!.firstName[0]}${clienteSeleccionado.lastName[0]}"
+                                  .toUpperCase(),
+                          fontSize: 35,
+                          fontWeight: FontWeight.w700,
+                          lightThemeColor: Colors.white,
+                        )),
+                    SimpleText(
+                      text:
+                          '${clienteSeleccionado.firstName} ${clienteSeleccionado.lastName}'
+                              .toTitleCase(),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      top: 10,
+                      bottom: 5,
+                      lightThemeColor: Colors.white,
+                    ),
+                    SimpleText(
+                      text: clienteSeleccionado.address1.toCapitalize(),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
+                      lightThemeColor: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+              _tabSection(context),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  Widget _tabSection(
+    BuildContext context,
+  ) {
     final orderProvider = context.read<OrderProvider>();
+    final clientModel =
+        context.read<ClientsProvider>().clientesState.clientSelected!;
     return DefaultTabController(
       length: 2,
       child: Column(
@@ -235,7 +257,6 @@ class ClientProfilePage extends StatelessWidget {
   }
 
 /* params array widget */
-
   Widget cardContainer(
     String title,
     List<Widget> children,

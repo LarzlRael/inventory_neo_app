@@ -192,10 +192,14 @@ class CategoryCard extends StatelessWidget {
             Positioned(
               top: -10,
               right: -5,
-              child: Image.network(
-                categoriesModel.image == null
-                    ? 'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg'
-                    : categoriesModel.image!.src,
+              child: FadeInImage(
+                placeholder:
+                    const AssetImage('assets/loaders/bottle-loader.gif'),
+                image: NetworkImage(
+                  categoriesModel.image == null
+                      ? 'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg'
+                      : categoriesModel.image!.src,
+                ),
                 width: 100,
               ),
             ),

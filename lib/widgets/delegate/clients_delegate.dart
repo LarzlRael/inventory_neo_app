@@ -53,6 +53,7 @@ class ClientsDelegate extends SearchDelegate {
           itemBuilder: (BuildContext context, int index) {
             return ClientItem(
               clientModel: clients[index],
+              clientsProvider: clientsProvider,
             );
           },
         );
@@ -75,6 +76,7 @@ class ClientsDelegate extends SearchDelegate {
           itemBuilder: (BuildContext context, int index) {
             return ClientItem(
               clientModel: clients![index],
+              clientsProvider: clientsProvider,
             );
           },
         );

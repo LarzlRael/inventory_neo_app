@@ -14,11 +14,13 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
   late ProductsProvider productsProvider;
   late ProductProvider productProvider;
   late CategoriesMaterialProviders categoriesMaterialProviders;
+  late GlobalProvider globalProvider;
   @override
   void initState() {
     super.initState();
     productsProvider = context.read<ProductsProvider>();
     productProvider = context.read<ProductProvider>();
+    globalProvider = context.read<GlobalProvider>();
     categoriesMaterialProviders = context.read<CategoriesMaterialProviders>();
     productProvider.loadProduct(widget.idProduct);
   }
@@ -54,6 +56,16 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                 : 'Editar producto',
             showTitle: true,
           ),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () {
+              register(formKey, idProduct: selectProductState.idProduct);
+            },
+            label: Text(
+              selectProductState!.idProduct == null
+                  ? 'Registrar producto'
+                  : 'Editar producto',
+            ),
+          ),
           body: SingleChildScrollView(
             child: loadingState
                 ? const Center(child: CircularProgressIndicator())
@@ -63,7 +75,7 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                       children: [
                         selectProductState!.images.isEmpty
                             ? const SizedBox()
-                            : SizedBox(
+                            : const SizedBox(
                                 height: 250,
                                 width: 600,
                                 child: ImageGallery(
@@ -139,7 +151,7 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                             ],
                           ),
                         ),
-                        !_isLoading
+                        /* !_isLoading
                             ? FillButton(
                                 onPressed: () {
                                   register(formKey,
@@ -151,7 +163,7 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                               )
                             : const Center(
                                 child: CircularProgressIndicator(),
-                              ),
+                              ), */
                       ],
                     ),
                   ),
@@ -164,7 +176,7 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
   Future<String> getUrlFileResult(String path) async {
     final uploadFile = await Request.uploadFileRequest(
       RequestType.post,
-      '/uploadFiles',
+      'uploadFiles',
       {},
       File(path),
       useAuxiliarUrl: true,
@@ -174,8 +186,6 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
   }
 
   void register(GlobalKey<FormBuilderState> formkey, {int? idProduct}) async {
-    final globalProvider = context.read<GlobalProvider>();
-
     if (!formkey.currentState!.validate()) {
       return;
     }

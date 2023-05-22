@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:go_router/go_router.dart';
 
 import '../models/models.dart';
@@ -46,15 +48,15 @@ final appRouter = GoRouter(
         }),
     /* clients */
     GoRoute(
-      path: '/clients',
+      path: '/clients_page',
       builder: (context, state) => const ClientsPage(),
     ),
     GoRoute(
       path: '/client_profile',
       builder: (context, state) {
-        ClientModel clientModel = state.extra as ClientModel;
+        int idClient = state.extra as int;
         return ClientProfilePage(
-          clientModel: clientModel,
+          idClient: idClient,
         );
       },
     ),

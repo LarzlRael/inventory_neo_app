@@ -115,6 +115,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
                       ),
                       ClientItem(
                         clientModel: cardInventoryProvider.getClient!,
+                        clientsProvider: null,
                         trailing: IconButton(
                           icon: const Icon(
                             Icons.cancel_rounded,

@@ -14,8 +14,8 @@ class _HomePageState extends State<HomePage> {
     final authProvider = context.read<AuthProvider>();
     final categoriesMaterialProviders =
         context.read<CategoriesMaterialProviders>();
-    /* categoriesMaterialProviders.setCategoriesWithFetch();
-    categoriesMaterialProviders.setMaterialTagsFetch(); */
+    categoriesMaterialProviders.getFetchMaterialTags();
+    categoriesMaterialProviders.getFetchCategories();
     return Scaffold(
       appBar: AppBar(
         /*   iconTheme: const IconThemeData(

@@ -31,8 +31,8 @@ class CardItemInventory extends StatelessWidget {
               productModel.images.isNotEmpty
                   /* CHange this */
                   /* ? productModel.images[0].src */
-                  ? 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg'
-                  : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
+                  ? 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930'
+                  : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930',
               height: 75,
               width: 100,
               fit: BoxFit.cover,

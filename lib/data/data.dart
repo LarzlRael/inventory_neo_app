@@ -41,7 +41,7 @@ List<Widget> registerOptions(BuildContext context) {
       icon: Icons.person,
       text: 'Clientes',
       onPressed: () {
-        context.push('/client_register_page');
+        context.push('/clients_page');
       },
     ),
   ];

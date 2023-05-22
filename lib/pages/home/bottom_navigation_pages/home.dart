@@ -40,7 +40,7 @@ class Home extends StatelessWidget {
                   ManagementCards(
                     cardTitle: 'Clientes',
                     cardIcon: Icons.person,
-                    cardRoute: '/clients',
+                    cardRoute: '/clients_page',
                   ),
                   ManagementCards(
                     cardTitle: 'Productos',

@@ -9,7 +9,7 @@ class AuthProvider extends ChangeNotifier {
       KeyValueStorageServiceImpl();
 
   Future<bool> login(Map<String, dynamic> data) async {
-    final post = await postAction('/client/login', data, useAuxiliarUrl: true);
+    final post = await postAction('client/login', data, useAuxiliarUrl: true);
     final valid = validateStatus(post!.statusCode);
     if (valid) {
       final body = loginClientModelFromJson(post.body);
@@ -40,7 +40,7 @@ class AuthProvider extends ChangeNotifier {
     await keyValueStorageService.getValue<String>('token');
     final resp = await Request.sendRequestWithToken(
       RequestType.get,
-      '/client/renew',
+      'client/renew',
       {},
       useAuxiliarUrl: true,
     );

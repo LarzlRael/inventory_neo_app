@@ -115,7 +115,7 @@ class _CardInventorySelectableState extends State<CardInventorySelectable> {
                 widget.productModel.images.isNotEmpty
                     /* ? widget.productModel.images[0].src */
                     ? 'https://blog.hubstaff.com/wp-content/uploads/2016/05/Businesses-growth-post.png'
-                    : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
+                    : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930',
                 /* height: 75, */
                 width: 65,
                 fit: BoxFit.cover,

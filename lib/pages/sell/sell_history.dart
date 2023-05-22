@@ -60,9 +60,11 @@ class SellHistoryCard extends StatelessWidget {
           );
         }),
         leading: Image.network(
-          order.lineItems[0].imageProduct!.src == ""
+          /* changed this */
+          /* order.lineItems[0].imageProduct!.src == ""
               ? "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
-              : order.lineItems[0].imageProduct!.src,
+              : order.lineItems[0].imageProduct!.src, */
+          "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
           width: 80,
           height: 80,
           fit: BoxFit.cover,

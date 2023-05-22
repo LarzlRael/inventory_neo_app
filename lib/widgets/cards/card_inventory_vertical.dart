@@ -41,7 +41,7 @@ class CardItemInventoryVertical extends StatelessWidget {
                         /* Change this */
                         /* ? productModel.images[0].src */
                         ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1EbnoClU2ybeReAasEBl-aSNItG0HU2aRqaYfsdL7&s'
-                        : 'https://aeasa.com.mx/wp-content/uploads/2020/02/SIN-IMAGEN.jpg',
+                        : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930',
                     height: 100,
                     fit: BoxFit.cover,
                   ),

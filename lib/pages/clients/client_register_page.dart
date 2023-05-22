@@ -53,7 +53,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
         appBar: AppBar(),
         showTitle: true,
         title: editable
-            ? "Edicion de cliente ${clientData.firstName} ${clientData.lastName}"
+            ? "Editar cliente ${clientData.firstName} ${clientData.lastName}"
             : 'Registro de un nuevo cliente',
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -72,10 +72,10 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              /*  Text(
                 editable ? 'Editar cliente' : 'Agregar nuevo cliente',
                 style: textTheme.titleSmall,
-              ),
+              ), */
               Text(
                   editable
                       ? 'Edite los campos para actualizar el cliente'

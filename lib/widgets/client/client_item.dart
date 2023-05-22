@@ -4,9 +4,11 @@ class ClientItem extends StatelessWidget {
   final ClientModel clientModel;
   final Function? onTap;
   final Widget? trailing;
+  final ClientsProvider? clientsProvider;
   const ClientItem({
     super.key,
     required this.clientModel,
+    required this.clientsProvider,
     this.onTap,
     this.trailing,
   });
@@ -23,9 +25,10 @@ class ClientItem extends StatelessWidget {
           if (onTap != null) {
             onTap!();
           } else {
+            clientsProvider!.setClientSelected(clientModel);
             context.push(
               '/client_profile',
-              extra: clientModel,
+              extra: clientModel.id,
             );
           }
         },

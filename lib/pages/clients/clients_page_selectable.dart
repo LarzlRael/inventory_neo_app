@@ -36,6 +36,7 @@ class _ClientsPageSelectableState extends State<ClientsPageSelectable> {
               itemBuilder: (_, int index) {
                 return ClientItem(
                   clientModel: clients[index],
+                  clientsProvider: clientsProvider,
                 );
               },
             ),
