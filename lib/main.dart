@@ -29,11 +29,18 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => CardInventoryProvider()),
         ChangeNotifierProvider(create: (_) => CategoriesMaterialProviders()),
-        ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => GlobalProvider()),
-        ChangeNotifierProvider(create: (_) => ProductsProvider()),
         ChangeNotifierProvider(create: (_) => OrderProvider()),
         ChangeNotifierProvider(create: (_) => ClientsProvider()),
+        /* ChangeNotifierProvider(create: (_) => ProductsProvider()), */
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProxyProvider<ProductProvider, ProductsProvider>(
+          create: (_) => ProductsProvider(),
+          update: (_, productProvider, productsProvider) {
+            productsProvider!.update(productProvider);
+            return productsProvider;
+          },
+        )
       ],
       child: MaterialApp.router(
         title: appName,

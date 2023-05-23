@@ -247,7 +247,7 @@ class ListCategoryItems extends StatelessWidget {
           FutureBuilder(
             future: getProductsByCategory(categoryId),
             builder: (BuildContext context,
-                AsyncSnapshot<List<ProductsModel>> snapshot) {
+                AsyncSnapshot<List<ProductModel>> snapshot) {
               if (!snapshot.hasData) {
                 return simpleLoading();
               }
@@ -284,7 +284,7 @@ class ListCategoryItems extends StatelessWidget {
     );
   }
 
-  Future<List<ProductsModel>> getProductsByCategory(int category) async {
+  Future<List<ProductModel>> getProductsByCategory(int category) async {
     final clientRequest = await getAction(
       'products?category=$category',
     );

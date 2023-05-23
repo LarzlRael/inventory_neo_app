@@ -9,8 +9,8 @@ Widget simpleLoading() {
 }
 
 Widget simpleLoadingWithScaffold() {
-  return const Scaffold(
-    body: Expanded(
+  return Scaffold(
+    body: Container(
       child: Center(
         child: CircularProgressIndicator(),
       ),

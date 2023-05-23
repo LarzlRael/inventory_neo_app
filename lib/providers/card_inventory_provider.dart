@@ -1,7 +1,7 @@
 part of 'providers.dart';
 
 class CardInventoryProvider extends ChangeNotifier {
-  List<ProductsModel> products = [];
+  List<ProductModel> products = [];
   double total = 0;
   List<int> _productsId = [];
   ClientModel? _client;
@@ -13,7 +13,7 @@ class CardInventoryProvider extends ChangeNotifier {
 
   ClientModel? get getClient => _client;
 
-  addProduct(ProductsModel product) {
+  addProduct(ProductModel product) {
     if (_productsId.contains(product.id)) {
       products.removeWhere((element) => element.id == product.id);
       _productsId.remove(product.id);
@@ -25,7 +25,7 @@ class CardInventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  deleteProduct(ProductsModel product) {
+  deleteProduct(ProductModel product) {
     if (_productsId.contains(product.id)) {
       products.removeWhere((element) => element.id == product.id);
       _productsId.remove(product.id);
@@ -46,7 +46,7 @@ class CardInventoryProvider extends ChangeNotifier {
   }
 
   double get getTotalValue => total;
-  List<ProductsModel> get getProducts => products;
+  List<ProductModel> get getProducts => products;
   List<int> get getListProductsId => _productsId;
 
   clearProducts() {

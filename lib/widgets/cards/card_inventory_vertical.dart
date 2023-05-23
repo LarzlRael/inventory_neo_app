@@ -1,7 +1,7 @@
 part of '../widgets.dart';
 
 class CardItemInventoryVertical extends StatelessWidget {
-  final ProductsModel productModel;
+  final ProductModel productModel;
   const CardItemInventoryVertical({
     super.key,
     required this.productModel,
@@ -54,12 +54,14 @@ class CardItemInventoryVertical extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            child: Text(productModel.price,
-                                style: textTheme.titleSmall!.copyWith(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.pink,
-                                )),
+                            child: Text(
+                              productModel.price,
+                              style: textTheme.titleSmall!.copyWith(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.pink,
+                              ),
+                            ),
                           ),
                           Text(
                               productModel.name.length > 60

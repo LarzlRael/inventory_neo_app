@@ -10,7 +10,7 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   /* Items */
   'item_detail': (BuildContext context) => ItemDetailPage(
         productModel:
-            ModalRoute.of(context)?.settings.arguments as ProductsModel,
+            ModalRoute.of(context)?.settings.arguments as ProductModel,
       ),
   /* 'list_items_category': (_) => const ListCategoryItems(), */
 

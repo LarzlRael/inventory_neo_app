@@ -10,4 +10,3 @@ part 'new_product_model.dart';
 part 'order_modes.dart';
 part 'client_login_model.dart';
 part 'form_model.dart';
-part 'product_model.dart';

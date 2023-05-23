@@ -27,21 +27,26 @@ class _ClientsPageSelectableState extends State<ClientsPageSelectable> {
         title: 'Seleccionar cliente',
       ),
       body: SafeArea(
-        child: Consumer<ClientsProvider>(builder: (_, clientsProvider, __) {
-          final clients = clientsProvider.clientesState.clientsList;
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ListView.builder(
-              itemCount: clients.length,
-              itemBuilder: (_, int index) {
-                return ClientItem(
-                  clientModel: clients[index],
-                  clientsProvider: clientsProvider,
-                );
-              },
-            ),
-          );
-        }),
+        child: Consumer<ClientsProvider>(
+          builder: (_, clientsProvider, __) {
+            final clients = clientsProvider.clientesState.clientsList;
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListView.builder(
+                itemCount: clients.length,
+                itemBuilder: (_, int index) {
+                  return ClientItem(
+                      clientModel: clients[index],
+                      clientsProvider: clientsProvider,
+                      onTap: () {
+                        context.pop();
+                        cardInventoryProvider.setClient = clients[index];
+                      });
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }

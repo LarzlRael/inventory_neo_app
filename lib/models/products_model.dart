@@ -1,14 +1,18 @@
 part of 'models.dart';
 
-List<ProductsModel> productsModelFromJson(String str) =>
-    List<ProductsModel>.from(
-        json.decode(str).map((x) => ProductsModel.fromJson(x)));
+List<ProductModel> productsModelFromJson(String str) => List<ProductModel>.from(
+    json.decode(str).map((x) => ProductModel.fromJson(x)));
 
-String productsModelToJson(List<ProductsModel> data) =>
+String productsModelToJson(List<ProductModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class ProductsModel {
-  ProductsModel({
+ProductModel productModelFromJson(String str) =>
+    ProductModel.fromJson(json.decode(str));
+
+String productModelToJson(ProductModel data) => json.encode(data.toJson());
+
+class ProductModel {
+  ProductModel({
     required this.id,
     required this.name,
     required this.slug,
@@ -146,7 +150,7 @@ class ProductsModel {
   bool hasOptions;
   Links links;
 
-  factory ProductsModel.fromJson(Map<String, dynamic> json) => ProductsModel(
+  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
         name: json["name"],
         slug: json["slug"],

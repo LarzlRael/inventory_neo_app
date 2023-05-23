@@ -33,7 +33,7 @@ final appRouter = GoRouter(
     GoRoute(
         path: '/item_detail',
         builder: (context, state) {
-          ProductsModel sample = state.extra as ProductsModel;
+          ProductModel sample = state.extra as ProductModel;
           return ItemDetailPage(
             productModel: sample,
           );

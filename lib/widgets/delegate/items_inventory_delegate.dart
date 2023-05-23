@@ -31,8 +31,8 @@ class ItemsInventoryDelegate extends SearchDelegate {
       ),
       child: FutureBuilder(
         future: productsProvider.searchProductsByName(query),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<ProductsModel>> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (!snapshot.hasData) {
             return simpleLoading();
           }
@@ -78,7 +78,7 @@ class ItemsInventoryDelegate extends SearchDelegate {
     return FutureBuilder(
       future: productsProvider.getAllProducts(),
       builder:
-          (BuildContext context, AsyncSnapshot<List<ProductsModel>> snapshot) {
+          (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshot) {
         if (!snapshot.hasData) {
           return simpleLoading();
         }

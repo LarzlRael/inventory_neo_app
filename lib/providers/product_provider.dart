@@ -20,8 +20,6 @@ class ItemDetails {
 }
 
 class ProductProvider extends ChangeNotifier {
-  late ProductsProvider productsProvider;
-
   ProductState _state = ProductState(
     id: '',
     product: null,
@@ -32,15 +30,12 @@ class ProductProvider extends ChangeNotifier {
     isLoading: false,
   );
 
-  ProductProvider() {
-    productsProvider = ProductsProvider();
-  }
   Future<void> loadProduct(int? idProduct) async {
     try {
       selectProductState = selectProductState.copyWith(isLoading: true);
       if (idProduct == null) {
-        final emptySelectedProduct = SelectedProductState(
-          product: SelectedProduct(
+        selectProductState = selectProductState.copyWith(
+          selectedProduct: SelectedProduct(
             idProduct: null,
             name: '',
             price: '',
@@ -51,14 +46,12 @@ class ProductProvider extends ChangeNotifier {
           ),
           isLoading: false,
         );
-        selectProductState = selectProductState.copyWith(
-          product: emptySelectedProduct.product,
-          isLoading: false,
-        );
+
         // No notificar aquí, ya que no hay cambios relevantes
         return;
       }
 
+      selectProductState = selectProductState.copyWith(isLoading: true);
       final clientRequest = await Request.sendRequestWithToken(
         RequestType.get,
         'products/$idProduct',
@@ -67,8 +60,10 @@ class ProductProvider extends ChangeNotifier {
 
       final product = productModelFromJson(clientRequest!.body);
 
-      final productSelected = SelectedProductState(
-        product: SelectedProduct(
+      selectProductState = selectProductState.copyWith(
+        product: product,
+        isLoading: false,
+        selectedProduct: SelectedProduct(
           idProduct: product.id,
           name: product.name,
           price: product.price,
@@ -79,17 +74,13 @@ class ProductProvider extends ChangeNotifier {
         ),
       );
 
-      selectProductState = selectProductState.copyWith(
-        product: productSelected.product,
-        isLoading: false,
-      );
       notifyListeners(); // Notificar después de completar la carga del producto
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<ProductModel> deleteProduct(String idProduct) async {
+  Future<bool> deleteProduct(int idProduct) async {
     try {
       final clientRequest = await Request.sendRequestWithToken(
         RequestType.delete,
@@ -97,8 +88,7 @@ class ProductProvider extends ChangeNotifier {
         {},
       );
 
-      productsProvider.deleteProductById(idProduct);
-      return productModelFromJson(clientRequest!.body);
+      return validateStatus(clientRequest!.statusCode);
     } catch (e) {
       rethrow;
     }
@@ -116,8 +106,14 @@ class ProductProvider extends ChangeNotifier {
         idProduct == null ? 'products' : 'products/$idProduct',
         body,
       );
-      return productModelFromJson(clientRequest!.body);
-      /* final valid = validateStatus(clientRequest!.statusCode); */
+
+      final productResult = productModelFromJson(clientRequest!.body);
+      selectProductState = selectProductState.copyWith(
+        isLoading: false,
+        product: productResult,
+      );
+      notifyListeners();
+      return productResult;
     } catch (e) {
       rethrow;
     }
@@ -170,23 +166,27 @@ class SelectedProduct {
 }
 
 class SelectedProductState {
-  final SelectedProduct? product;
+  final ProductModel? product;
+  final SelectedProduct? selectedProduct;
   final bool isLoading;
   final bool isSaving;
 
   SelectedProductState({
     this.product,
+    this.selectedProduct,
     this.isLoading = true,
     this.isSaving = false,
   });
   SelectedProductState copyWith({
-    SelectedProduct? product,
+    ProductModel? product,
     bool? isLoading,
     bool? isSaving,
+    SelectedProduct? selectedProduct,
   }) =>
       SelectedProductState(
         product: product ?? this.product,
         isLoading: isLoading ?? this.isLoading,
         isSaving: isSaving ?? this.isSaving,
+        selectedProduct: selectedProduct ?? this.selectedProduct,
       );
 }

@@ -1,6 +1,6 @@
 part of '../widgets.dart';
 
-Future<void> showMyDialogTagMaterial(BuildContext context, String tagId) async {
+Future<void> showMyDialogTagMaterial(BuildContext context, int tagId) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -74,7 +74,7 @@ void asyncShowConfirmDialog(
         ),
         TextButton(
           onPressed: () async {
-            Navigator.pop(context, 'OK');
+            context.pop();
             await onAccept!();
             /* GlobalSnackBar.show(context, 'Comentario eliminado'); */
           },

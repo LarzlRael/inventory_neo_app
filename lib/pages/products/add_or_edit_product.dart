@@ -30,7 +30,8 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
     final formKey = GlobalKey<FormBuilderState>();
     return Consumer<ProductProvider>(
       builder: (context, product, child) {
-        final selectProductState = productProvider.selectProductState.product;
+        final selectProductState =
+            productProvider.selectProductState.selectedProduct;
         final loadingState = productProvider.selectProductState.isLoading;
         return Scaffold(
           appBar: AppBarWithBackIcon(
@@ -39,15 +40,15 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                 ? [
                     IconButton(
                       onPressed: () async {
-                        await CamerGalleryServiceImp().takePhoto();
-                      },
-                      icon: const Icon(Icons.camera_alt),
-                    ),
-                    IconButton(
-                      onPressed: () async {
                         await CamerGalleryServiceImp().selectFromGallery();
                       },
                       icon: const Icon(Icons.photo_album),
+                    ),
+                    IconButton(
+                      onPressed: () async {
+                        await CamerGalleryServiceImp().takePhoto();
+                      },
+                      icon: const Icon(Icons.camera_alt),
                     ),
                   ]
                 : null,
@@ -60,8 +61,11 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
             onPressed: () {
               register(formKey, idProduct: selectProductState.idProduct);
             },
+            icon: Icon(
+              selectProductState!.idProduct == null ? Icons.add : Icons.edit,
+            ),
             label: Text(
-              selectProductState!.idProduct == null
+              selectProductState.idProduct == null
                   ? 'Registrar producto'
                   : 'Editar producto',
             ),
@@ -234,8 +238,8 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
         .then((value) {
       globalProvider.showSnackBar(
         context,
-        'Registro exitoso',
-        backgroundColor: Colors.green,
+        idProduct == null ? 'Registro exitoso' : 'Actualizacion exitosa',
+        backgroundColor: idProduct == null ? Colors.green : Colors.blue,
       );
 
       setState(() {

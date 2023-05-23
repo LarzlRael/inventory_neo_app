@@ -1,7 +1,7 @@
 part of '../widgets.dart';
 
 class CardItemInventory extends StatelessWidget {
-  final ProductsModel productModel;
+  final ProductModel productModel;
   const CardItemInventory({super.key, required this.productModel});
 
   @override

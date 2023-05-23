@@ -67,7 +67,7 @@ class CardInventorySelectableItems extends StatelessWidget {
 }
 
 class CardInventorySelectable extends StatefulWidget {
-  final ProductsModel productModel;
+  final ProductModel productModel;
   final CardInventoryProvider cardInventoryProvider;
   const CardInventorySelectable({
     super.key,

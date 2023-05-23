@@ -18,7 +18,7 @@ class Home extends StatelessWidget {
                 ),
                 child: Text(
                   'Gestiona tu negocio',
-                  style: textTheme.titleMedium,
+                  style: textTheme.titleSmall,
                   /*  fontSize: 15,
                   fontWeight: FontWeight.w700, */
                 )),

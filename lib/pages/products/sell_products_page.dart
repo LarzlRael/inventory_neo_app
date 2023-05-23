@@ -114,6 +114,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
                         bottom: 0,
                       ),
                       ClientItem(
+                        onTap: () {},
                         clientModel: cardInventoryProvider.getClient!,
                         clientsProvider: null,
                         trailing: IconButton(
@@ -166,7 +167,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
     );
   }
 
-  Map<String, dynamic> getProdutsId(List<ProductsModel> products) {
+  Map<String, dynamic> getProdutsId(List<ProductModel> products) {
     if (products.isEmpty) {
       return {};
     }

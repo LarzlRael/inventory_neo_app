@@ -1,9 +1,45 @@
 part of 'providers.dart';
 
 class ProductsProvider extends ChangeNotifier {
+  late ProductProvider productProvider;
+
+  void update(ProductProvider newProductProvider) {
+    productProvider = newProductProvider;
+  }
+
   ProductsState productsState = ProductsState();
 
-  createOrUpdateProduct(Map<String, dynamic> productLike, {int? idProduct}) {}
+  createOrUpdateProduct(Map<String, dynamic> productLike,
+      {int? idProduct}) async {
+    final result = await productProvider.createOrUpdateProduct(productLike,
+        idProduct: idProduct);
+
+    if (idProduct == null) {
+      productsState = productsState.copyWith(products: [
+        ...productsState.products,
+        result,
+      ]);
+      return;
+    }
+    productsState = productsState.copyWith(
+      products: productsState.products
+          .map((element) => element.id == idProduct ? result : element)
+          .toList(),
+    );
+    notifyListeners();
+  }
+
+  Future<bool> deleteProductById(int idProduct) async {
+    final result = await productProvider.deleteProduct(idProduct);
+    if (!result) return false;
+    productsState = productsState.copyWith(
+      products: productsState.products
+          .where((element) => element.id != idProduct)
+          .toList(),
+    );
+    notifyListeners();
+    return true;
+  }
   /* createOrUpdateProduct(Map<String, dynamic> productLike) {
     final isProductIsList =
         _products.any((element) => element.id == product.id);
@@ -38,15 +74,7 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  deleteProductById(String id) {
-    productsState.copyWith(
-      products:
-          productsState.products.where((element) => element.id != id).toList(),
-    );
-    notifyListeners();
-  }
-
-  Future<List<ProductsModel>> searchProductsByName(String query) async {
+  Future<List<ProductModel>> searchProductsByName(String query) async {
     final clientRequest = await Request.sendRequestWithToken(
       RequestType.get,
       'products?search=$query',
@@ -55,7 +83,7 @@ class ProductsProvider extends ChangeNotifier {
     return productsModelFromJson(clientRequest!.body);
   }
 
-  Future<List<ProductsModel>> getAllProducts() async {
+  Future<List<ProductModel>> getAllProducts() async {
     final clientRequest = await Request.sendRequestWithToken(
       RequestType.get,
       'products',
@@ -70,7 +98,7 @@ class ProductsState {
   final int limit;
   final int offset;
   final bool isLoading;
-  final List<ProductsModel> products;
+  final List<ProductModel> products;
 
   ProductsState({
     this.isLastPage = false,
@@ -85,7 +113,7 @@ class ProductsState {
     int? limit,
     int? offset,
     bool? isLoading,
-    List<ProductsModel>? products,
+    List<ProductModel>? products,
   }) =>
       ProductsState(
         isLastPage: isLastPage ?? this.isLastPage,
