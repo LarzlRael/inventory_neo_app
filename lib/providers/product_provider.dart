@@ -50,8 +50,7 @@ class ProductProvider extends ChangeNotifier {
             name: '',
             price: '',
             description: '',
-            /* FROM backend is uncategorized */
-            category: 16,
+            category: null,
             idTags: [],
             images: [],
           ),
@@ -171,14 +170,14 @@ class SelectedProduct {
   String name;
   String price;
   String description;
-  int category;
+  int? category;
   List<String> idTags = [];
   List<String> images = [];
   SelectedProduct({
     required this.name,
     required this.price,
     required this.description,
-    required this.category,
+    this.category,
     required this.idTags,
     required this.images,
     this.idProduct,
