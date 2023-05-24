@@ -39,8 +39,7 @@ class CardItemInventoryVertical extends StatelessWidget {
                   child: Image.network(
                     productModel.images.isNotEmpty
                         /* Change this */
-                        /* ? productModel.images[0].src */
-                        ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1EbnoClU2ybeReAasEBl-aSNItG0HU2aRqaYfsdL7&s'
+                        ? productModel.images[0].src
                         : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930',
                     height: 100,
                     fit: BoxFit.cover,

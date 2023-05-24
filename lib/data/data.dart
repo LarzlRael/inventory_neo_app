@@ -10,6 +10,29 @@ final List<Widget> bottomItemsWithLogin = <Widget>[
   const Profile(),
 ];
 
+const menuAdminItems = [
+  ManagementCards(
+    cardTitle: 'Clientes',
+    cardIcon: Icons.person,
+    cardRoute: '/clients_page',
+  ),
+  ManagementCards(
+    cardTitle: 'Productos',
+    cardIcon: Icons.production_quantity_limits,
+    cardRoute: '/list_products_page',
+  ),
+  ManagementCards(
+    cardTitle: 'Ventas',
+    cardIcon: Icons.sell,
+    cardRoute: '/sell_products',
+  ),
+  ManagementCards(
+    cardTitle: 'Historial',
+    cardIcon: Icons.history,
+    cardRoute: '/sell_history',
+  ),
+];
+
 List<Widget> registerOptions(BuildContext context) {
   return [
     CircleButton(

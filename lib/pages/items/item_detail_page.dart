@@ -94,7 +94,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                     floatingActionButton: FloatingActionButton.extended(
                       onPressed: () {
                         cardInventoryProvider.addProduct(productSelected);
-                        context.go(
+                        context.push(
                           '/sell_products',
                         );
                       },
@@ -139,15 +139,14 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                             ],
                           ),
                         ), */
-                            const SizedBox(
+                            SizedBox(
                               height: 250,
                               width: 600,
                               child: ImageGallery(
                                 /* change this by the original */
-                                images: [
-                                  'https://i.pinimg.com/originals/49/fb/12/49fb12b526930c3756494a67b899859d.jpg',
-                                  'https://i.ytimg.com/vi/V6UzcWt2wGg/maxresdefault.jpg'
-                                ],
+                                images: productSelected.images
+                                    .map((e) => e.src)
+                                    .toList(),
                               ),
                             ),
                             Text(productSelected.name.toTitleCase(),

@@ -8,8 +8,8 @@ class CategoryForm {
 }
 
 class AddCategoryPage extends StatefulWidget {
-  final CategoryForm? categoryForm;
-  const AddCategoryPage({super.key, this.categoryForm});
+  final CategoryForm? categoryFormParams;
+  const AddCategoryPage({super.key, this.categoryFormParams});
 
   @override
   State<AddCategoryPage> createState() => _AddCategoryState();
@@ -18,20 +18,22 @@ class AddCategoryPage extends StatefulWidget {
 class _AddCategoryState extends State<AddCategoryPage> {
   bool _isLoading = false;
   final categoryForm = CategoryForm(name: '', id: null);
-  /* late CategoriesBloc categoriesBloc; */
+
+  late CategoriesMaterialProviders categoriesMaterialProviders;
+  late GlobalProvider globalProvider;
   @override
   void initState() {
-    /* categoriesBloc = CategoriesBloc(); */
     super.initState();
+    categoriesMaterialProviders = context.read<CategoriesMaterialProviders>();
+    globalProvider = context.read<GlobalProvider>();
   }
 
   @override
   Widget build(BuildContext context) {
-    final globalProvider = context.read<GlobalProvider>();
-    if (categoryForm.id != null) {
-      categoryForm.name = categoryForm.name;
-      categoryForm.id = categoryForm.id;
-      categoryForm.image = categoryForm.image;
+    if (widget.categoryFormParams?.id != null) {
+      categoryForm.id = widget.categoryFormParams!.id;
+      categoryForm.name = widget.categoryFormParams!.name;
+      categoryForm.image = widget.categoryFormParams!.image;
     }
     final formKey = GlobalKey<FormBuilderState>();
     return Scaffold(
@@ -41,7 +43,7 @@ class _AddCategoryState extends State<AddCategoryPage> {
         ),
         icon: Icon(categoryForm.id == null ? Icons.save : Icons.edit),
         onPressed: () {
-          context.push('/add_categories_page');
+          register(formKey, categoryForm.id);
         },
       ),
       appBar: AppBarWithBackIcon(
@@ -63,17 +65,15 @@ class _AddCategoryState extends State<AddCategoryPage> {
                     setState(() {
                       _isLoading = true;
                     });
-                    deleteAction(
-                            'products/categories/${categoryForm.id}?force=true')
+                    categoriesMaterialProviders
+                        .deleteCategory(categoryForm.id!)
                         .then((value) {
-                      if (validateStatus(value!.statusCode)) {
+                      if (value) {
                         globalProvider.showSnackBar(
                           context,
                           "Categoria eliminado correctamente",
                           backgroundColor: Colors.green,
                         );
-                        /* TODO change this in a categories provider */
-                        /* categoriesBloc.getCategories(); */
                         context.pop();
                       } else {
                         globalProvider.showSnackBar(
@@ -195,14 +195,26 @@ class _AddCategoryState extends State<AddCategoryPage> {
     }
     debugPrint(json.toString());
 
-    if (idCategory != null) {
-      await updateCategory(idCategory, json);
-    } else {
-      await postCategory(json);
-    }
+    categoriesMaterialProviders
+        .addOrEditCategory(json, idCategory: idCategory)
+        .then((value) {
+      if (value) {
+        responsePost(
+          value,
+          'Categoria actualizada',
+          'Error al actualizar registro',
+        );
+      } else {
+        responsePost(
+          value,
+          'Hubo un error',
+          'Hubo un error al actualizar registro',
+        );
+      }
+    });
   }
 
-  updateCategory(
+  /*  updateCategory(
     int idCategory,
     Map<String, dynamic> json,
   ) async {
@@ -225,10 +237,9 @@ class _AddCategoryState extends State<AddCategoryPage> {
       'Categoria registrada',
       'Error al registrar',
     );
-  }
+  } */
 
   responsePost(bool isok, String messageSuccess, String messageError) {
-    final globalProvider = context.read<GlobalProvider>();
     if (isok) {
       globalProvider.showSnackBar(
         context,

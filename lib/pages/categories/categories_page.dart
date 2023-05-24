@@ -32,25 +32,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         subTitle: 'Lista de las categorias',
         showTitle: true,
       ),
-      body:
-          /* Flexible(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  crossAxisSpacing: 5,
-                  mainAxisSpacing: 5,
-                ),
-                itemCount: categoriesList.length,
-                itemBuilder: (_, index) {
-                  final category = categoriesList[index];
-                  return CategoryCard(
-                    categoriesModel: category,
-                    goToProductsByCategory: true,
-                  );
-                },
-              ),
-            ), */
-          Consumer<CategoriesMaterialProviders>(
+      body: Consumer<CategoriesMaterialProviders>(
         builder: (_, categoriesMaterialProviders, child) {
           final categoriesList =
               categoriesMaterialProviders.categoriesState.categoriesList;
@@ -63,9 +45,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
               crossAxisSpacing: 35,
               itemCount: categoriesList.length,
               itemBuilder: (context, index) {
-                final category = categoriesList[index];
                 return CategoryCard(
-                  categoriesModel: category,
+                  categoriesModel: categoriesList[index],
                   goToProductsByCategory: true,
                 );
               },

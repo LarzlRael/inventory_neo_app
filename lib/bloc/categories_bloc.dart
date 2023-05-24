@@ -7,9 +7,9 @@ class CategoriesBloc {
   factory CategoriesBloc() {
     return _singleton;
   }
-  final _ordersLists = StreamController<List<CategoriesModel>>.broadcast();
+  final _ordersLists = StreamController<List<CategorieModel>>.broadcast();
 
-  Stream<List<CategoriesModel>> get categoriesStream => _ordersLists.stream;
+  Stream<List<CategorieModel>> get categoriesStream => _ordersLists.stream;
   dispose() {
     _ordersLists.close();
   }

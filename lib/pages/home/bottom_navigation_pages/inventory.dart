@@ -116,7 +116,7 @@ class _InventoryState extends State<Inventory> {
 }
 
 class CategoryCard extends StatelessWidget {
-  final CategoriesModel categoriesModel;
+  final CategorieModel categoriesModel;
   final bool goToProductsByCategory;
   const CategoryCard({
     Key? key,
@@ -129,7 +129,7 @@ class CategoryCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (goToProductsByCategory) {
-          context.go(
+          context.push(
             '/add_categories_page',
             extra: CategoryForm(
               id: categoriesModel.id,

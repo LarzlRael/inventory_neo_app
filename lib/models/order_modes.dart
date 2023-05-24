@@ -298,12 +298,15 @@ class ImageOrder {
 
   factory ImageOrder.fromJson(Map<String, dynamic> json) => ImageOrder(
         id: json["id"],
-        src: json["src"] == null ? null : json["src"],
+        /* TODO change this */
+        /* src: json["src"], */
+        src:
+            'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930',
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "src": src == null ? null : src,
+        "id": id,
+        "src": src,
       };
 }
 /* class Image {

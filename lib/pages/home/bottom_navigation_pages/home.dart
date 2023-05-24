@@ -8,21 +8,22 @@ class Home extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 5,
-                ),
-                child: Text(
-                  'Gestiona tu negocio',
-                  style: textTheme.titleSmall,
-                  /*  fontSize: 15,
+              padding: const EdgeInsets.symmetric(
+                vertical: 0,
+              ),
+              child: Text(
+                'Gestiona tu negocio',
+                style: textTheme.titleSmall,
+                /*  fontSize: 15,
                   fontWeight: FontWeight.w700, */
-                )),
-            SizedBox(
+              ),
+            ),
+            /* SizedBox(
               /* fit: FlexFit.tight, */
               height: MediaQuery.of(context).size.height * 0.25,
               child: GridView.count(
@@ -58,6 +59,15 @@ class Home extends StatelessWidget {
                     cardRoute: '/sell_history',
                   ),
                 ],
+              ),
+            ), */
+            Expanded(
+              child: AlignedGridView.count(
+                crossAxisCount: 3,
+                mainAxisSpacing: 1,
+                crossAxisSpacing: 1,
+                itemCount: menuAdminItems.length,
+                itemBuilder: (context, index) => menuAdminItems[index],
               ),
             ),
             /*  const SimpleText(
@@ -97,23 +107,23 @@ class ManagementCards extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
         elevation: 2,
-        child: FittedBox(
-            child: Container(
+        child: Container(
           padding: const EdgeInsets.all(5),
           child: Column(
             children: [
-              Icon(cardIcon),
-              const SizedBox(
-                height: 5,
+              Icon(
+                cardIcon,
+                size: 25,
               ),
+              const SizedBox(height: 5),
               SimpleText(
                 text: cardTitle,
-                fontSize: 12,
+                fontSize: 14,
                 fontWeight: FontWeight.w400,
               ),
             ],
           ),
-        )),
+        ),
       ),
     );
   }

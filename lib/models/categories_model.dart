@@ -1,14 +1,19 @@
 part of 'models.dart';
 
-List<CategoriesModel> categoriesModelFromJson(String str) =>
-    List<CategoriesModel>.from(
-        json.decode(str).map((x) => CategoriesModel.fromJson(x)));
+List<CategorieModel> categoriesModelFromJson(String str) =>
+    List<CategorieModel>.from(
+        json.decode(str).map((x) => CategorieModel.fromJson(x)));
 
-String categoriesModelToJson(List<CategoriesModel> data) =>
+String categoriesModelToJson(List<CategorieModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class CategoriesModel {
-  CategoriesModel({
+CategorieModel categoryModelFromJson(String str) =>
+    CategorieModel.fromJson(json.decode(str));
+
+String categoryModelToJson(CategorieModel data) => json.encode(data.toJson());
+
+class CategorieModel {
+  CategorieModel({
     required this.id,
     required this.name,
     required this.slug,
@@ -32,8 +37,7 @@ class CategoriesModel {
   int count;
   LinksCategories links;
 
-  factory CategoriesModel.fromJson(Map<String, dynamic> json) =>
-      CategoriesModel(
+  factory CategorieModel.fromJson(Map<String, dynamic> json) => CategorieModel(
         id: json["id"],
         name: json["name"],
         slug: json["slug"],
@@ -88,7 +92,11 @@ class ImageClass {
         dateCreatedGmt: DateTime.parse(json["date_created_gmt"]),
         dateModified: DateTime.parse(json["date_modified"]),
         dateModifiedGmt: DateTime.parse(json["date_modified_gmt"]),
+        /* TODO change this 
         src: json["src"],
+        */
+        src:
+            'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930',
         name: json["name"],
         alt: json["alt"],
       );

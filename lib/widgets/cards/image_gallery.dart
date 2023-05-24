@@ -14,8 +14,8 @@ class ImageGallery extends StatelessWidget {
     if (images.isEmpty) {
       return ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(20)),
-        child: Image.asset(
-          'assets/images/no-image.jpg',
+        child: Image.network(
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png',
           fit: BoxFit.cover,
         ),
       );

@@ -139,10 +139,10 @@ class _SellDetailState extends State<SellDetail> {
         ),
         leading: Image.network(
           /* Change this */
-          /* widget.args.lineItems[0].imageProduct!.src == ""
+          widget.args.lineItems[0].imageProduct!.src == ""
               ? "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
-              : widget.args.lineItems[0].imageProduct!.src, */
-          'https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg',
+              : widget.args.lineItems[0].imageProduct!.src,
+          /* 'https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg', */
           width: 100,
           height: 100,
           fit: BoxFit.cover,

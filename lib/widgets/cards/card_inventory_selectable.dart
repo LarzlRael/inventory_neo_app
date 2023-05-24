@@ -10,9 +10,7 @@ class CardInventorySelectableItems extends StatelessWidget {
     final productsProvider = context.read<ProductsProvider>();
     final cardInventoryProvider = context.watch<CardInventoryProvider>();
     return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: 15,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 15),
       height: MediaQuery.of(context).size.height * 0.9,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -43,22 +41,29 @@ class CardInventorySelectableItems extends StatelessWidget {
               ),
             ],
           ),
-          Flexible(
-            child: GridView.count(
-              /* shrinkWrap: true, */
-              /* physics: NeverScrollableScrollPhysics(), */
-              /* padding: const EdgeInsets.all(10), */
-              childAspectRatio: 3 / 2,
-              crossAxisCount: 2,
-              children: productsProvider.productsState.products.map<Widget>(
+          Expanded(
+            child: AlignedGridView.count(
+                /* shrinkWrap: true, */
+                /* physics: NeverScrollableScrollPhysics(), */
+                /* padding: const EdgeInsets.all(10), */
+                itemCount: productsProvider.productsState.products.length,
+                crossAxisCount: 2,
+                mainAxisSpacing: 2,
+                crossAxisSpacing: 2,
+                itemBuilder: (context, index) => CardInventorySelectable(
+                      productModel:
+                          productsProvider.productsState.products[index],
+                      cardInventoryProvider: cardInventoryProvider,
+                    )
+                /* children: productsProvider.productsState.products.map<Widget>(
                 (product) {
                   return CardInventorySelectable(
                     productModel: product,
                     cardInventoryProvider: cardInventoryProvider,
                   );
                 },
-              ).toList(),
-            ),
+              ).toList(), */
+                ),
           )
         ],
       ),
@@ -85,13 +90,13 @@ class _CardInventorySelectableState extends State<CardInventorySelectable> {
 
   @override
   void initState() {
+    super.initState();
     setState(
       () {
         isSelectable = widget.cardInventoryProvider.getListProductsId
             .contains(widget.productModel.id);
       },
     );
-    super.initState();
   }
 
   @override
@@ -104,6 +109,9 @@ class _CardInventorySelectableState extends State<CardInventorySelectable> {
         widget.cardInventoryProvider.addProduct(widget.productModel);
       },
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.0),
+        ),
         elevation: 1,
         /* margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), */
         child: Column(
@@ -113,8 +121,7 @@ class _CardInventorySelectableState extends State<CardInventorySelectable> {
               borderRadius: BorderRadius.circular(5),
               child: Image.network(
                 widget.productModel.images.isNotEmpty
-                    /* ? widget.productModel.images[0].src */
-                    ? 'https://blog.hubstaff.com/wp-content/uploads/2016/05/Businesses-growth-post.png'
+                    ? widget.productModel.images[0].src
                     : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930',
                 /* height: 75, */
                 width: 65,

@@ -97,7 +97,7 @@ final appRouter = GoRouter(
       builder: (context, state) {
         CategoryForm? categoryForm = state.extra as CategoryForm?;
         return AddCategoryPage(
-          categoryForm: categoryForm,
+          categoryFormParams: categoryForm,
         );
       },
     ),

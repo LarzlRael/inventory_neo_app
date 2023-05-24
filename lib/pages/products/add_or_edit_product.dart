@@ -40,13 +40,19 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                 ? [
                     IconButton(
                       onPressed: () async {
-                        await CamerGalleryServiceImp().selectFromGallery();
+                        final photoPath =
+                            await CamerGalleryServiceImp().selectFromGallery();
+                        if (photoPath == null) return;
+                        productProvider.updateProductImage(photoPath);
                       },
                       icon: const Icon(Icons.photo_album),
                     ),
                     IconButton(
                       onPressed: () async {
-                        await CamerGalleryServiceImp().takePhoto();
+                        final photoPath =
+                            await CamerGalleryServiceImp().takePhoto();
+                        if (photoPath == null) return;
+                        productProvider.updateProductImage(photoPath);
                       },
                       icon: const Icon(Icons.camera_alt),
                     ),
@@ -77,17 +83,14 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Column(
                       children: [
-                        selectProductState!.images.isEmpty
+                        selectProductState.images.isEmpty
                             ? const SizedBox()
-                            : const SizedBox(
+                            : SizedBox(
                                 height: 250,
                                 width: 600,
                                 child: ImageGallery(
                                   /* change this by the original */
-                                  images: [
-                                    'https://i.pinimg.com/originals/49/fb/12/49fb12b526930c3756494a67b899859d.jpg',
-                                    'https://i.ytimg.com/vi/V6UzcWt2wGg/maxresdefault.jpg'
-                                  ],
+                                  images: selectProductState.images,
                                 ),
                               ),
                         const SizedBox(height: 10),

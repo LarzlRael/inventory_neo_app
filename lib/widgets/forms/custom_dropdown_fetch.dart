@@ -4,7 +4,7 @@ class CustomFormBuilderFetchDropdown extends StatelessWidget {
   final String title;
   final String formFieldName;
   final String placeholder;
-  final List<CategoriesModel> categories;
+  final List<CategorieModel> categories;
   const CustomFormBuilderFetchDropdown({
     Key? key,
     required this.title,

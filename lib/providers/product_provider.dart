@@ -80,6 +80,15 @@ class ProductProvider extends ChangeNotifier {
     }
   }
 
+  void updateProductImage(String path) {
+    selectProductState = selectProductState.copyWith(
+      selectedProduct: selectProductState.selectedProduct!.copyWith(
+        images: [...selectProductState.selectedProduct!.images, path],
+      ),
+    );
+    notifyListeners();
+  }
+
   Future<bool> deleteProduct(int idProduct) async {
     try {
       final clientRequest = await Request.sendRequestWithToken(
@@ -163,6 +172,25 @@ class SelectedProduct {
     required this.images,
     this.idProduct,
   });
+
+  SelectedProduct copyWith({
+    String? name,
+    String? price,
+    String? description,
+    int? category,
+    List<String>? idTags,
+    int? idProduct,
+    List<String>? images,
+  }) =>
+      SelectedProduct(
+        name: this.name,
+        price: this.price,
+        description: this.description,
+        category: this.category,
+        idTags: this.idTags,
+        images: images ?? this.images,
+        idProduct: this.idProduct,
+      );
 }
 
 class SelectedProductState {

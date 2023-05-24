@@ -7,6 +7,7 @@ class CardItemInventory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardInventoryProvider = context.watch<CardInventoryProvider>();
+    final textTheme = Theme.of(context).textTheme;
     return GestureDetector(
       onTap: () {
         /* Navigator.pushNamed(context, 'item_detail'); */
@@ -30,9 +31,8 @@ class CardItemInventory extends StatelessWidget {
             child: Image.network(
               productModel.images.isNotEmpty
                   /* CHange this */
-                  /* ? productModel.images[0].src */
-                  ? 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930'
-                  : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930',
+                  ? productModel.images[0].src
+                  : 'https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg',
               height: 75,
               width: 100,
               fit: BoxFit.cover,
@@ -54,11 +54,16 @@ class CardItemInventory extends StatelessWidget {
                 lightThemeColor: Colors.grey,
                 bottom: 5,
               ),
-              SimpleText(
-                top: 5,
-                text: productModel.price,
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
+              Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Text(
+                  productModel.price,
+                  style: textTheme.titleSmall!.copyWith(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.pink,
+                  ),
+                ),
               ),
             ],
           ),
