@@ -50,7 +50,8 @@ class ProductProvider extends ChangeNotifier {
             name: '',
             price: '',
             description: '',
-            category: 0,
+            /* FROM backend is uncategorized */
+            category: 16,
             idTags: [],
             images: [],
           ),

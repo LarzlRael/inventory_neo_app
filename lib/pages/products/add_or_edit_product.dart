@@ -138,8 +138,8 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                                 name: 'description',
                               ),
                               CustomFormBuilderFetchDropdown(
-                                title: 'Categoria',
                                 formFieldName: 'category',
+                                title: 'Categoria',
                                 placeholder: 'Seleccione una categoria',
                                 categories: categoriesMaterialProviders
                                     .categoriesState.categoriesList,
