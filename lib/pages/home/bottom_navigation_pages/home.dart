@@ -18,49 +18,12 @@ class Home extends StatelessWidget {
               ),
               child: Text(
                 'Gestiona tu negocio',
-                style: textTheme.titleSmall,
-                /*  fontSize: 15,
-                  fontWeight: FontWeight.w700, */
+                style: textTheme.titleSmall!.copyWith(
+                  /* fontSize: 15, */
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
-            /* SizedBox(
-              /* fit: FlexFit.tight, */
-              height: MediaQuery.of(context).size.height * 0.25,
-              child: GridView.count(
-                /* shrinkWrap: true, */
-                /* physics: NeverScrollableScrollPhysics(), */
-                /* padding: const EdgeInsets.all(10), */
-                childAspectRatio: 3 / 2,
-                crossAxisCount: 3,
-                children: const [
-                  /* ManagementCards(
-                    cardTitle: 'Empleados',
-                    cardIcon: Icons.person_pin_circle,
-                    cardRoute: 'clients',
-                  ), */
-                  ManagementCards(
-                    cardTitle: 'Clientes',
-                    cardIcon: Icons.person,
-                    cardRoute: '/clients_page',
-                  ),
-                  ManagementCards(
-                    cardTitle: 'Productos',
-                    cardIcon: Icons.production_quantity_limits,
-                    cardRoute: '/list_products_page',
-                  ),
-                  ManagementCards(
-                    cardTitle: 'Vender producto',
-                    cardIcon: Icons.sell,
-                    cardRoute: '/sell_products',
-                  ),
-                  ManagementCards(
-                    cardTitle: 'Historial de ventas',
-                    cardIcon: Icons.history,
-                    cardRoute: '/sell_history',
-                  ),
-                ],
-              ),
-            ), */
             Expanded(
               child: AlignedGridView.count(
                 crossAxisCount: 3,
@@ -97,6 +60,7 @@ class ManagementCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return GestureDetector(
       onTap: () {
         context.push(cardRoute);
@@ -116,10 +80,11 @@ class ManagementCards extends StatelessWidget {
                 size: 25,
               ),
               const SizedBox(height: 5),
-              SimpleText(
-                text: cardTitle,
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
+              Text(
+                cardTitle,
+                style: textTheme.titleSmall!.copyWith(
+                  fontSize: 13,
+                ),
               ),
             ],
           ),

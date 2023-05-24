@@ -19,6 +19,7 @@ class _InventoryState extends State<Inventory> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(
@@ -27,33 +28,36 @@ class _InventoryState extends State<Inventory> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SimpleText(
-              top: 50,
-              text: 'Busca tu ',
-              fontSize: 25,
-              fontWeight: FontWeight.w500,
-            ),
-            const SimpleText(
-              text: 'Joya',
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+            const SizedBox(height: 40),
+            Text(
+              /* top: 50, */
+              'Busca tu \nJoya',
+              style: textTheme.titleSmall!.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
             ),
             searchBar(context),
-            const SimpleText(
-              top: 10,
-              bottom: 10,
-              text: 'Escoge \nuna categoria',
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 10,
+              ),
+              child: Text(
+                'Escoge \nuna categoria',
+                style: textTheme.titleSmall!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
             ),
             Consumer<CategoriesMaterialProviders>(
                 builder: (_, categoriesMaterialProviders, __) {
               final categories = categoriesMaterialProviders.categoriesState;
 
               return categories.isLoading
-                  ? const Center(child: CircularProgressIndicator())
+                  ? simpleLoading()
                   : Expanded(
-                      child: GridView.builder(
+                      /* child: GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 200,
@@ -67,6 +71,15 @@ class _InventoryState extends State<Inventory> {
                             categoriesModel: categories.categoriesList[index],
                           );
                         },
+                      ), */
+                      child: AlignedGridView.count(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 2,
+                        crossAxisSpacing: 2,
+                        itemCount: categories.categoriesList.length,
+                        itemBuilder: (_, index) => CategoryCard(
+                          categoriesModel: categories.categoriesList[index],
+                        ),
                       ),
                     );
             })
@@ -142,14 +155,17 @@ class CategoryCard extends StatelessWidget {
         } else {
           context.push(
             '/list_category_items',
-            extra: categoriesModel.id,
+            extra: CategoryTitle(
+              categoryId: categoriesModel.id,
+              title: categoriesModel.name,
+            ),
           );
         }
       },
       child: Container(
-        width: 125,
-        height: 125,
-        margin: const EdgeInsets.only(right: 10),
+        /* width: 125, */
+        height: 175,
+        margin: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           /* hex color */
           /* color: const Color(0xffff7648), */
@@ -210,15 +226,21 @@ class CategoryCard extends StatelessWidget {
   }
 }
 
-class ListCategoryItems extends StatelessWidget {
+class CategoryTitle {
+  final String title;
   final int categoryId;
-  const ListCategoryItems({super.key, required this.categoryId});
+  const CategoryTitle({required this.title, required this.categoryId});
+}
+
+class ListCategoryItems extends StatelessWidget {
+  final CategoryTitle categoryTitle;
+  const ListCategoryItems({super.key, required this.categoryTitle});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWithBackIcon(
-        title: 'Productos',
+        title: categoryTitle.title,
         appBar: AppBar(),
         showTitle: true,
         actions: [
@@ -238,14 +260,8 @@ class ListCategoryItems extends StatelessWidget {
       ),
       body: Column(
         children: [
-          /*  CategoryCard(
-            title: 'Anillos',
-            urlImage:
-                'https://i.pinimg.com/originals/56/37/66/56376681bea0c4135a00f87520e9d02e.png',
-            color: Colors.blue,
-          ), */
           FutureBuilder(
-            future: getProductsByCategory(categoryId),
+            future: getProductsByCategory(categoryTitle.categoryId),
             builder: (BuildContext context,
                 AsyncSnapshot<List<ProductModel>> snapshot) {
               if (!snapshot.hasData) {

@@ -17,7 +17,7 @@ class AddCategoryPage extends StatefulWidget {
 
 class _AddCategoryState extends State<AddCategoryPage> {
   bool _isLoading = false;
-  final categoryForm = CategoryForm(name: '', id: null);
+  CategoryForm categoryForm = CategoryForm(name: '', id: null);
 
   late CategoriesMaterialProviders categoriesMaterialProviders;
   late GlobalProvider globalProvider;
@@ -51,50 +51,59 @@ class _AddCategoryState extends State<AddCategoryPage> {
         title:
             categoryForm.id == null ? 'Agregar categoria' : 'Editar categoria',
         showTitle: true,
-        actions: [
-          Visibility(
-            visible: categoryForm.id != null,
-            child: IconButton(
-              icon: const Icon(Icons.delete, color: Colors.red),
-              onPressed: () {
-                asyncShowConfirmDialog(
-                  context,
-                  'Eliminar categoria',
-                  '¿Estas seguro de eliminar esta categoria?',
-                  () async {
-                    setState(() {
-                      _isLoading = true;
-                    });
-                    categoriesMaterialProviders
-                        .deleteCategory(categoryForm.id!)
-                        .then((value) {
-                      if (value) {
-                        globalProvider.showSnackBar(
-                          context,
-                          "Categoria eliminado correctamente",
-                          backgroundColor: Colors.green,
-                        );
-                        context.pop();
-                      } else {
-                        globalProvider.showSnackBar(
-                          context,
-                          "No se pudo eliminar esta categoria",
-                          backgroundColor: Colors.red,
-                        );
+        actions: categoryForm.id != null
+            ? [
+                IconButton(
+                  onPressed: () async {
+                    final photoPath =
+                        await CamerGalleryServiceImp().selectFromGallery();
+                    if (photoPath == null) return;
+                    categoryForm.image = photoPath;
+                    setState(() {});
+                  },
+                  icon: const Icon(Icons.photo_album),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  onPressed: () {
+                    asyncShowConfirmDialog(
+                      context,
+                      'Eliminar categoria',
+                      '¿Estas seguro de eliminar esta categoria?',
+                      () async {
+                        setState(() {
+                          _isLoading = true;
+                        });
+                        categoriesMaterialProviders
+                            .deleteCategory(categoryForm.id!)
+                            .then((value) {
+                          if (value) {
+                            globalProvider.showSnackBar(
+                              context,
+                              "Categoria eliminado correctamente",
+                              backgroundColor: Colors.green,
+                            );
+                            context.pop();
+                          } else {
+                            globalProvider.showSnackBar(
+                              context,
+                              "No se pudo eliminar esta categoria",
+                              backgroundColor: Colors.red,
+                            );
+                            setState(() {
+                              _isLoading = false;
+                            });
+                          }
+                        });
                         setState(() {
                           _isLoading = false;
                         });
-                      }
-                    });
-                    setState(() {
-                      _isLoading = false;
-                    });
+                      },
+                    );
                   },
-                );
-              },
-            ),
-          )
-        ],
+                )
+              ]
+            : null,
       ),
       body: SingleChildScrollView(
         child: !_isLoading
@@ -105,7 +114,7 @@ class _AddCategoryState extends State<AddCategoryPage> {
                     FormBuilder(
                       initialValue: {
                         'name': categoryForm.name,
-                        'file': categoryForm.image,
+                        /* 'file': categoryForm.image, */
                         'id': categoryForm.id,
                         'imageUrl': categoryForm.image,
                       },
@@ -115,6 +124,16 @@ class _AddCategoryState extends State<AddCategoryPage> {
                       skipDisabled: true,
                       child: Column(
                         children: [
+                          categoryForm.image != null
+                              ? SizedBox(
+                                  height: 250,
+                                  width: 600,
+                                  child: ImageGallery(
+                                    /* change this by the original */
+                                    images: [categoryForm.image!],
+                                  ),
+                                )
+                              : const SizedBox(),
                           CustomTextField(
                             label: 'Nombre de categoria',
                             name: 'name',
@@ -123,23 +142,14 @@ class _AddCategoryState extends State<AddCategoryPage> {
                                   errorText: "Este campo es requerido"),
                             ]),
                           ),
-                          const CustomFileField(
-                            name: 'file',
-                          ),
+                          /* const CustomFileField(name: 'file'), */
                         ],
                       ),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    Visibility(
-                      visible: categoryForm.image != null,
-                      child: Image.network(
-                        categoryForm.image ?? '',
-                        height: 200,
-                        width: 200,
-                      ),
-                    ),
+
                     /* !_isLoading
                         ? FillButton(
                             onPressed: () {

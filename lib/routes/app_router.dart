@@ -41,9 +41,9 @@ final appRouter = GoRouter(
     GoRoute(
         path: '/list_category_items',
         builder: (context, state) {
-          int categoryId = state.extra as int;
+          CategoryTitle categoryTitle = state.extra as CategoryTitle;
           return ListCategoryItems(
-            categoryId: categoryId,
+            categoryTitle: categoryTitle,
           );
         }),
     /* clients */

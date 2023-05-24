@@ -58,3 +58,4 @@ part 'form_generator/global_form.dart';
 
 /* Common widget */
 part 'common/stream_data_builder.dart';
+part 'buttons/selectable_items.dart';

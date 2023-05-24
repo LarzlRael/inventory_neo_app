@@ -29,6 +29,16 @@ class ProductProvider extends ChangeNotifier {
     product: null,
     isLoading: false,
   );
+  void onMaterialChanged(TagsModel newMaterial) {
+    selectProductState = selectProductState.copyWith(
+      selectedProduct: selectProductState.selectedProduct!.copyWith(
+        idTags: [
+          ...selectProductState.selectedProduct!.idTags,
+          newMaterial.id.toString()
+        ],
+      ),
+    );
+  }
 
   Future<void> loadProduct(int? idProduct) async {
     try {
@@ -69,7 +79,7 @@ class ProductProvider extends ChangeNotifier {
           price: product.price,
           description: product.description,
           category: product.categories.first.id,
-          idTags: [] /* product.tags.map((e) => e.id).toList() */,
+          idTags: product.tags.map((e) => e.id.toString()).toList(),
           images: product.images.map((e) => e.src).toList(),
         ),
       );
@@ -161,7 +171,7 @@ class SelectedProduct {
   String price;
   String description;
   int category;
-  List<String> idTags;
+  List<String> idTags = [];
   List<String> images = [];
   SelectedProduct({
     required this.name,

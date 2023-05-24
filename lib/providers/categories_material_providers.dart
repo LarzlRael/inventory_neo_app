@@ -23,6 +23,14 @@ class CategoriesMaterialProviders extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addImageGallery(String path) {
+    categoriesState = categoriesState.copyWith(
+      categories: [
+        ...categoriesState.categoriesList,
+      ],
+    );
+  }
+
   Future<bool> addOrEditCategory(
     Map<String, dynamic> body, {
     int? idCategory,

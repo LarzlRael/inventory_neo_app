@@ -64,10 +64,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                               '¿Estas seguro de eliminar este producto?',
                               () {
                                 return productsProvider
-                                    .deleteProductById(
-                                  productSelected!.id,
-                                  /* widget.productModel.images[0].src, */
-                                )
+                                    .deleteProductById(productSelected.id)
                                     .then((value) {
                                   if (value) {
                                     globalProvider.showSnackBar(

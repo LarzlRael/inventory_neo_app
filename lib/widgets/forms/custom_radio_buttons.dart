@@ -25,9 +25,7 @@ class CustomRadioButtons extends StatelessWidget {
           fontSize: 16,
           fontWeight: FontWeight.w800,
         ),
-        const SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Card(
           elevation: 5,
           child: Padding(
@@ -35,7 +33,6 @@ class CustomRadioButtons extends StatelessWidget {
             child: FormBuilderCheckboxGroup<String>(
               decoration: const InputDecoration(
                 border: InputBorder.none,
-                /* hintText: placeholder, */
               ),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               name: formFieldName,
@@ -48,12 +45,6 @@ class CustomRadioButtons extends StatelessWidget {
                     ),
                   )
                   .toList(growable: false),
-              /* onChanged: _onChanged, */
-
-              /*    validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.minLength(1),
-                        FormBuilderValidators.maxLength(3),
-                      ]), */
             ),
           ),
         ),
