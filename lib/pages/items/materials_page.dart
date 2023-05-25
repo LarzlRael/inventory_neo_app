@@ -23,7 +23,7 @@ class _MaterialsPageState extends State<MaterialsPage> {
       floatingActionButton: FloatingActionButton.extended(
         label: const Text('Agregar material'),
         onPressed: () {
-          context.push('/material_register_page');
+          context.push('/material_add_edit_page');
         },
         icon: const Icon(Icons.add),
       ),
@@ -44,8 +44,9 @@ class _MaterialsPageState extends State<MaterialsPage> {
                   child: ListView.builder(
                     itemCount: materials.materiales.length,
                     itemBuilder: (_, int index) {
-                      final tag = materials.materiales[index];
-                      return MaterialItemCard(tag: tag);
+                      return MaterialItemCard(
+                        tag: materials.materiales[index],
+                      );
                     },
                   ),
                 ),

@@ -35,6 +35,7 @@ class _AddCategoryState extends State<AddCategoryPage> {
       categoryForm.name = widget.categoryFormParams!.name;
       categoryForm.image = widget.categoryFormParams!.image;
     }
+
     final formKey = GlobalKey<FormBuilderState>();
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
@@ -53,16 +54,17 @@ class _AddCategoryState extends State<AddCategoryPage> {
         showTitle: true,
         actions: categoryForm.id != null
             ? [
-                IconButton(
+                /*  IconButton(
                   onPressed: () async {
                     final photoPath =
                         await CamerGalleryServiceImp().selectFromGallery();
                     if (photoPath == null) return;
                     categoryForm.image = photoPath;
                     setState(() {});
+                    print(categoryForm.image);
                   },
                   icon: const Icon(Icons.photo_album),
-                ),
+                ), */
                 IconButton(
                   icon: const Icon(Icons.delete, color: Colors.red),
                   onPressed: () {
@@ -142,13 +144,11 @@ class _AddCategoryState extends State<AddCategoryPage> {
                                   errorText: "Este campo es requerido"),
                             ]),
                           ),
-                          /* const CustomFileField(name: 'file'), */
+                          const CustomFileField(name: 'file'),
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
 
                     /* !_isLoading
                         ? FillButton(
@@ -203,7 +203,6 @@ class _AddCategoryState extends State<AddCategoryPage> {
         },
       );
     }
-    debugPrint(json.toString());
 
     categoriesMaterialProviders
         .addOrEditCategory(json, idCategory: idCategory)

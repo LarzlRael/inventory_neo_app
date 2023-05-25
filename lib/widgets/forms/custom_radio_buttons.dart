@@ -5,7 +5,7 @@ class CustomRadioButtons extends StatelessWidget {
   final String formFieldName;
   final String placeholder;
   final List<String> options;
-  final List<TagsModel> materiales;
+  final List<TagModel> materiales;
   const CustomRadioButtons({
     Key? key,
     required this.title,

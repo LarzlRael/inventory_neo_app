@@ -111,6 +111,15 @@ final appRouter = GoRouter(
       builder: (context, state) => const ListProductsPage(),
     ),
     GoRoute(
+      path: '/material_add_edit_page',
+      builder: (context, state) {
+        TagModel? tagModel = state.extra as TagModel?;
+        return MaterialAddEditPage(
+          materialTag: tagModel,
+        );
+      },
+    ),
+    GoRoute(
       path: '/sell_detail',
       builder: (context, state) {
         OrdersModel sample = state.extra as OrdersModel;

@@ -71,6 +71,55 @@ class CategoriesMaterialProviders extends ChangeNotifier {
     return validateStatus(clientRequest.statusCode);
   }
 
+  Future<bool> addOrEditMaterial(Map<String, dynamic> body) async {
+    final isNew = body['id'] == null;
+    final url = isNew ? 'products/tags/' : 'products/tags/${body['id']}';
+    final method = isNew ? RequestType.post : RequestType.put;
+    final clientRequest = await Request.sendRequestWithToken(
+      method,
+      url,
+      body,
+    );
+    final response = tagModelFromJson(clientRequest!.body);
+
+    if (isNew) {
+      materialesState = materialesState.copyWith(
+        materiales: [
+          ...materialesState.materiales,
+          response,
+        ],
+        isLoading: false,
+      );
+
+      return validateStatus(clientRequest.statusCode);
+    }
+    materialesState = materialesState.copyWith(
+      materiales: [
+        ...materialesState.materiales
+            .map((e) => e.id == response.id ? response : e)
+      ],
+      isLoading: false,
+    );
+
+    notifyListeners();
+    return validateStatus(clientRequest.statusCode);
+  }
+
+  Future<bool> deleteMaterial(int idCategory) async {
+    final clientRequest =
+        await deleteAction('products/tags/$idCategory?force=true');
+    if (validateStatus(clientRequest!.statusCode)) {
+      materialesState = materialesState.copyWith(
+        isLoading: false,
+        materiales: materialesState.materiales
+            .where((element) => element.id != idCategory)
+            .toList(),
+      );
+    }
+    notifyListeners();
+    return validateStatus(clientRequest.statusCode);
+  }
+
   Future<bool> deleteCategory(int idCategory) async {
     final clientRequest =
         await deleteAction('products/categories/$idCategory?force=true');
@@ -131,14 +180,14 @@ class CategoriesState {
 
 class MaterialState {
   final bool isLoading;
-  final List<TagsModel> materiales;
+  final List<TagModel> materiales;
   MaterialState({
     this.isLoading = false,
     this.materiales = const [],
   });
   MaterialState copyWith({
     bool? isLoading,
-    List<TagsModel>? materiales,
+    List<TagModel>? materiales,
   }) =>
       MaterialState(
         isLoading: isLoading ?? this.isLoading,

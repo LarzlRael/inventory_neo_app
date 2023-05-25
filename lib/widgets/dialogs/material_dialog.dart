@@ -8,7 +8,7 @@ Future<void> showMyDialogTagMaterial(BuildContext context, int tagId) async {
       final tagServices = TagsServices();
       return FutureBuilder(
         future: tagServices.getTagById(tagId),
-        builder: (BuildContext context, AsyncSnapshot<TagsModel> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<TagModel> snapshot) {
           if (!snapshot.hasData) {
             return simpleLoading();
           }

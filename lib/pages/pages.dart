@@ -57,3 +57,6 @@ part 'products/add_category_page.dart';
 part 'sell/sell_history.dart';
 part 'sell/sell_detail.dart';
 part 'loading_page.dart';
+
+/* Materiales */
+part 'material/material_add_edit_page.dart';

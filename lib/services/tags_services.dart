@@ -1,7 +1,7 @@
 part of 'services.dart';
 
 class TagsServices {
-  Future<TagsModel> getTagById(int categoryId) async {
+  Future<TagModel> getTagById(int categoryId) async {
     final clientRequest = await Request.sendRequestWithToken(
       RequestType.get,
       'products/tags/$categoryId',
@@ -10,7 +10,7 @@ class TagsServices {
     return tagModelFromJson(clientRequest!.body);
   }
 
-  Future<List<TagsModel>> getAllTags() async {
+  Future<List<TagModel>> getAllTags() async {
     final clientRequest = await Request.sendRequestWithToken(
       RequestType.get,
       'products/tags',

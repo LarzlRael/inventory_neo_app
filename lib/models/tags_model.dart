@@ -1,14 +1,17 @@
 part of 'models.dart';
 
-List<TagsModel> tagsModelFromJson(String str) =>
-    List<TagsModel>.from(json.decode(str).map((x) => TagsModel.fromJson(x)));
+List<TagModel> tagsModelFromJson(String str) =>
+    List<TagModel>.from(json.decode(str).map((x) => TagModel.fromJson(x)));
 
-String tagsModelToJson(List<TagsModel> data) =>
+String tagsModelToJson(List<TagModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-TagsModel tagModelFromJson(String str) => TagsModel.fromJson(json.decode(str));
 
-class TagsModel {
-  TagsModel({
+String tagModelToJson(TagModel data) => json.encode(data.toJson());
+
+TagModel tagModelFromJson(String str) => TagModel.fromJson(json.decode(str));
+
+class TagModel {
+  TagModel({
     required this.id,
     required this.name,
     required this.slug,
@@ -24,7 +27,7 @@ class TagsModel {
   int count;
   Links links;
 
-  factory TagsModel.fromJson(Map<String, dynamic> json) => TagsModel(
+  factory TagModel.fromJson(Map<String, dynamic> json) => TagModel(
         id: json["id"],
         name: json["name"],
         slug: json["slug"],

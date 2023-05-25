@@ -9,6 +9,7 @@ class GlobalProvider extends ChangeNotifier {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        behavior: SnackBarBehavior.floating,
         content: Text(message),
         backgroundColor: backgroundColor,
       ),

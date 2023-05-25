@@ -1,7 +1,7 @@
 part of '../widgets.dart';
 
 class MaterialItemCard extends StatelessWidget {
-  final TagsModel tag;
+  final TagModel tag;
   const MaterialItemCard({super.key, required this.tag});
 
   @override
@@ -10,6 +10,9 @@ class MaterialItemCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5.0),
       child: ListTile(
+          onTap: () {
+            context.push('/material_add_edit_page', extra: tag);
+          },
           leading: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: Image.network(
@@ -24,13 +27,14 @@ class MaterialItemCard extends StatelessWidget {
             style: textTheme.bodyMedium,
           ),
           subtitle: tag.description.isNotEmpty
-              ? SimpleText(
-                  text: tag.description.length > 75
+              ? Text(
+                  tag.description.length > 75
                       ? '${tag.description.substring(0, 75)}...'
                       : tag.description,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300,
-                )
+                  style: textTheme.bodySmall!.copyWith(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w300,
+                  ))
               : null),
     );
   }

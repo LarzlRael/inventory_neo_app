@@ -29,7 +29,7 @@ class ProductProvider extends ChangeNotifier {
     product: null,
     isLoading: false,
   );
-  void onMaterialChanged(TagsModel newMaterial) {
+  void onMaterialChanged(TagModel newMaterial) {
     selectProductState = selectProductState.copyWith(
       selectedProduct: selectProductState.selectedProduct!.copyWith(
         idTags: [
