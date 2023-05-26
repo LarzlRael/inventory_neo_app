@@ -1,9 +1,12 @@
 part of '../widgets.dart';
 
-Widget simpleLoading() {
-  return const Expanded(
+Widget simpleLoading({double strokeWith = 4.0, Color? color}) {
+  return Expanded(
     child: Center(
-      child: CircularProgressIndicator(),
+      child: CircularProgressIndicator(
+        strokeWidth: strokeWith,
+        color: color,
+      ),
     ),
   );
 }
@@ -11,7 +14,7 @@ Widget simpleLoading() {
 Widget simpleLoadingWithScaffold() {
   return Scaffold(
     body: Container(
-      child: Center(
+      child: const Center(
         child: CircularProgressIndicator(),
       ),
     ),

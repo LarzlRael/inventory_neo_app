@@ -48,8 +48,10 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                       actions: [
                         IconButton(
                           onPressed: () {
-                            context.push('/add_product',
-                                extra: productSelected!.id);
+                            context.push(
+                              '/add_product',
+                              extra: productSelected.id,
+                            );
                           },
                           icon: const Icon(
                             Icons.edit,

@@ -1,51 +1,51 @@
 part of '../widgets.dart';
 
-Future<void> showMyDialogTagMaterial(BuildContext context, int tagId) async {
+Future<void> showMyDialogTagMaterial(
+  BuildContext context,
+  int tagId,
+) async {
   return showDialog<void>(
     context: context,
-    barrierDismissible: false, // user must tap button!
+    barrierDismissible: false,
     builder: (BuildContext context) {
-      final tagServices = TagsServices();
+      final categoriesMaterialProviders =
+          context.read<CategoriesMaterialProviders>();
+      final textTheme = Theme.of(context).textTheme;
       return FutureBuilder(
-        future: tagServices.getTagById(tagId),
-        builder: (BuildContext context, AsyncSnapshot<TagModel> snapshot) {
+        future: categoriesMaterialProviders.getTagById(tagId),
+        builder: (_, AsyncSnapshot<TagModel> snapshot) {
           if (!snapshot.hasData) {
-            return simpleLoading();
+            return simpleLoading(
+              color: Colors.white,
+              strokeWith: 2,
+            );
           }
           final tag = snapshot.data!;
           return AlertDialog(
-            title: SimpleText(
-              text: tag.name,
+            title: Text(
+              tag.name.toCapitalize(),
+              style: textTheme.titleSmall!.copyWith(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
               textAlign: TextAlign.center,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
             ),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: [
-                  const ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                    child: Image(
-                      image: NetworkImage(
-                          'https://i1.wp.com/edgartica.com/wp-content/uploads/2019/11/73040527_10156222877376330_4430677903092482048_o-1-e1573360227974.jpg?fit=300%2C300&ssl=1'),
-                      height: 200,
-                      width: 200,
-                      fit: BoxFit.cover,
+            content: tag.description.isEmpty
+                ? null
+                : SingleChildScrollView(
+                    child: ListBody(
+                      children: [
+                        Text(
+                          tag.description.toCapitalize(),
+                        ),
+                      ],
                     ),
                   ),
-                  SimpleText(
-                    text: tag.description,
-                    top: 10,
-                    lineHeight: 1.3,
-                  ),
-                ],
-              ),
-            ),
             actions: <Widget>[
               TextButton(
                 child: const Text('Cerrar'),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  context.pop();
                 },
               ),
             ],

@@ -38,19 +38,13 @@ class _MaterialsPageState extends State<MaterialsPage> {
           final materials = state.materialesState;
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: materials.materiales.length,
-                    itemBuilder: (_, int index) {
-                      return MaterialItemCard(
-                        tag: materials.materiales[index],
-                      );
-                    },
-                  ),
-                ),
-              ],
+            child: ListView.builder(
+              itemCount: materials.materiales.length,
+              itemBuilder: (_, int index) {
+                return MaterialItemCard(
+                  tag: materials.materiales[index],
+                );
+              },
             ),
           );
         },

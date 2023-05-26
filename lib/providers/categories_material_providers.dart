@@ -135,6 +135,15 @@ class CategoriesMaterialProviders extends ChangeNotifier {
     return validateStatus(clientRequest.statusCode);
   }
 
+  Future<TagModel> getTagById(int categoryId) async {
+    final clientRequest = await Request.sendRequestWithToken(
+      RequestType.get,
+      'products/tags/$categoryId',
+      {},
+    );
+    return tagModelFromJson(clientRequest!.body);
+  }
+
   /* updateCategory(
     int idCategory,
     Map<String, dynamic> json,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:inventory_app/providers/providers.dart';
 import 'package:inventory_app/routes/app_router.dart';
-import 'package:inventory_app/routes/routes.dart';
 import 'package:inventory_app/utils/utils.dart';
 import 'package:provider/provider.dart';
 

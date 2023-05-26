@@ -19,13 +19,13 @@ class _ClientsPageState extends State<ClientsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Agregar cliente',
-        onPressed: () {
-          context.push('/client_register_page');
-        },
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: FloatingActionButton.extended(
+          label: const Text('Agregar cliente'),
+          tooltip: 'Agregar cliente',
+          onPressed: () {
+            context.push('/client_register_page');
+          },
+          icon: const Icon(Icons.add)),
       appBar: AppBarWithBackIcon(
         appBar: AppBar(),
         title: 'Clientes',
