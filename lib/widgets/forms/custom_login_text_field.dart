@@ -30,7 +30,7 @@ class _CustomFormBuilderTextFieldState extends State<CustomLoginTextField> {
       margin: const EdgeInsets.symmetric(vertical: 10.0),
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: FormBuilderTextField(
           keyboardType: widget.keyboardType,
@@ -42,14 +42,12 @@ class _CustomFormBuilderTextFieldState extends State<CustomLoginTextField> {
             labelText: widget.placeholder,
             labelStyle: const TextStyle(
               color: Colors.grey,
-              fontSize: 18,
+              fontSize: 16,
             ),
             suffixIcon: widget.passwordField
                 ? IconButton(
                     icon: Icon(
-                      _obscureText
-                          ? Icons.link_off_sharp
-                          : Icons.remove_red_eye,
+                      _obscureText ? Icons.password : Icons.remove_red_eye,
                       color: colors.primary,
                     ),
                     onPressed: () {

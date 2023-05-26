@@ -77,7 +77,7 @@ class ProductProvider extends ChangeNotifier {
           idProduct: product.id,
           name: product.name,
           price: product.price,
-          description: product.description,
+          description: removeAllHtmlTags(product.description),
           category: product.categories.first.id,
           idTags: product.tags.map((e) => e.id.toString()).toList(),
           images: product.images.map((e) => e.src).toList(),

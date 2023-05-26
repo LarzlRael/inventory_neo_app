@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           CustomLoginTextField(
                             placeholder: 'Contraseña',
-                            icon: Icons.password,
+                            icon: Icons.lock,
                             name: 'password',
                             passwordField: true,
                             /* keyboardType: TextInputType.phone, */
@@ -134,16 +134,12 @@ class _LoginPageState extends State<LoginPage> {
         context.go('/home');
         globalProvider.showSnackBar(context, 'Bienvenido');
       } else {
-        globalProvider.showSnackBar(context, "Contraseña incorrecta");
+        globalProvider.showSnackBar(
+          context,
+          "Contraseña incorrecta",
+          backgroundColor: Colors.red,
+        );
       }
     });
-    /* );
-    if (body) {
-      Navigator.pushReplacementNamed(context, 'home');
-      GlobalSnackBar.show(context, "Bienvenido", backgroundColor: Colors.green);
-    } else {
-      GlobalSnackBar.show(context, "Contraseña incorrecta",
-          backgroundColor: Colors.red);
-    } */
   }
 }

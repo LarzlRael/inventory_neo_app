@@ -209,10 +209,13 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                                         );
                                       },
                                       child: Chip(
+                                        side: const BorderSide(
+                                          color: Colors.grey,
+                                        ),
                                         label: Text(
                                           e.name.toCapitalize(),
                                           style: textTheme.bodySmall!.copyWith(
-                                            color: Colors.blueGrey,
+                                            color: Colors.grey,
                                           ),
                                         ),
                                       ),
