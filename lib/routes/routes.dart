@@ -28,6 +28,6 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   'sell_products': (_) => const SellProductsPage(),
   'sell_history': (_) => const SellHistory(),
   'sell_detail': (BuildContext context) => SellDetail(
-        args: ModalRoute.of(context)?.settings.arguments as OrdersModel,
+        args: ModalRoute.of(context)?.settings.arguments as OrderModel,
       ),
 };

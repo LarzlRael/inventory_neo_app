@@ -13,7 +13,22 @@ class OrderProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<OrdersModel>> getOrderByClient(String userEmail) async {
+  Future<bool> updateStatus(int idOrder, String dropdownValue) async {
+    final response =
+        await putAction('orders/$idOrder', {'status': dropdownValue});
+    final orderConverted = orderModelFromJson(response!.body);
+    orderState = orderState.copyWith(
+      isLoading: true,
+      orders: orderState.orders
+          .map(
+              (order) => order.id == orderConverted.id ? orderConverted : order)
+          .toList(),
+    );
+    notifyListeners();
+    return validateStatus(response.statusCode);
+  }
+
+  Future<List<OrderModel>> getOrderByClient(String userEmail) async {
     final response = await getAction(
       'orders?search=$userEmail',
     );
@@ -24,14 +39,14 @@ class OrderProvider with ChangeNotifier {
 
 class OrderState {
   final bool isLoading;
-  final List<OrdersModel> orders;
+  final List<OrderModel> orders;
   OrderState({
     this.isLoading = false,
     this.orders = const [],
   });
   copyWith({
     bool? isLoading,
-    List<OrdersModel>? orders,
+    List<OrderModel>? orders,
   }) =>
       OrderState(
         isLoading: isLoading ?? this.isLoading,

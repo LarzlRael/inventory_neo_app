@@ -1,7 +1,7 @@
 part of '../pages.dart';
 
 class SellDetail extends StatefulWidget {
-  final OrdersModel args;
+  final OrderModel args;
   const SellDetail({
     super.key,
     required this.args,
@@ -18,10 +18,10 @@ class _SellDetailState extends State<SellDetail> {
   late OrderProvider orderProvider;
   @override
   void initState() {
+    super.initState();
     dropdownValue = statusList[widget.args.status]!;
     globalProvider = context.read<GlobalProvider>();
     orderProvider = context.read<OrderProvider>();
-    super.initState();
   }
 
   @override
@@ -102,9 +102,7 @@ class _SellDetailState extends State<SellDetail> {
               ListView.builder(
                 shrinkWrap: true,
                 itemCount: widget.args.lineItems.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return listTile(index);
-                },
+                itemBuilder: (_, int index) => listTile(index),
               ),
             ],
           ),
@@ -152,10 +150,10 @@ class _SellDetailState extends State<SellDetail> {
   }
 
   updateStatus(orderId, dropdownValue) async {
-    putAction(
-            'orders/$orderId', {'status': statusListTransalteEn[dropdownValue]})
+    orderProvider
+        .updateStatus(orderId, statusListTransalteEn[dropdownValue]!)
         .then((value) {
-      if (value!.statusCode == 200) {
+      if (value) {
         globalProvider.showSnackBar(
           context,
           'Estado actualizado',

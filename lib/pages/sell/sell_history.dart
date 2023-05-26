@@ -45,7 +45,7 @@ class _SellHistoryState extends State<SellHistory> {
 }
 
 class SellHistoryCard extends StatelessWidget {
-  final OrdersModel order;
+  final OrderModel order;
   const SellHistoryCard({super.key, required this.order});
 
   @override

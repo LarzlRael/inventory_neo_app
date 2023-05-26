@@ -47,21 +47,8 @@ class ItemsInventoryDelegate extends SearchDelegate {
             );
           }
 
-          /*  return GridView.count(
-              /* shrinkWrap: true, */
-              /* physics: NeverScrollableScrollPhysics(), */
-              /* padding: const EdgeInsets.all(10), */
-              /* childAspectRatio: 3 / 2, */
-              crossAxisCount: 2,
-              children: snapshot.data!.map<Widget>(
-                (product) {
-                  return CardItemInventoryVertical(
-                    productModel: product,
-                  );
-                },
-              ).toList()); */
           final products = snapshot.data;
-          return AlignedGridView.count(
+          return MasonryGridView.count(
             crossAxisCount: 2,
             mainAxisSpacing: 1,
             crossAxisSpacing: 1,
@@ -101,19 +88,6 @@ class ItemsInventoryDelegate extends SearchDelegate {
           );
         }
 
-        /* return GridView.count(
-            /* shrinkWrap: true, */
-            /* physics: NeverScrollableScrollPhysics(), */
-            /* padding: const EdgeInsets.all(10), */
-            /* childAspectRatio: 3 / 2, */
-            crossAxisCount: 2,
-            children: snapshot.data!.map<Widget>(
-              (product) {
-                return CardItemInventoryVertical(
-                  productModel: product,
-                );
-              },
-            ).toList()); */
         final products = snapshot.data;
         return Expanded(
           child: AlignedGridView.count(

@@ -1,13 +1,19 @@
 part of 'models.dart';
 
-List<OrdersModel> ordersModelFromJson(String str) => List<OrdersModel>.from(
-    json.decode(str).map((x) => OrdersModel.fromJson(x)));
+List<OrderModel> ordersModelFromJson(String str) =>
+    List<OrderModel>.from(json.decode(str).map((x) => OrderModel.fromJson(x)));
 
-String ordersModelToJson(List<OrdersModel> data) =>
+String ordersModelToJson(List<OrderModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class OrdersModel {
-  OrdersModel({
+OrderModel orderModelFromJson(String str) =>
+    OrderModel.fromJson(json.decode(str));
+
+String orderModelToJson(List<OrderModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class OrderModel {
+  OrderModel({
     required this.id,
     required this.parentId,
     required this.status,
@@ -105,7 +111,7 @@ class OrdersModel {
   String currencySymbol;
   Links links;
 
-  factory OrdersModel.fromJson(Map<String, dynamic> json) => OrdersModel(
+  factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
         id: json["id"],
         parentId: json["parent_id"],
         status: json["status"],

@@ -13,33 +13,39 @@ class Home extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 0,
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 0),
               child: Text(
                 'Gestiona tu negocio',
                 style: textTheme.titleSmall!.copyWith(
-                  /* fontSize: 15, */
                   fontWeight: FontWeight.w700,
                 ),
               ),
             ),
             Expanded(
-              child: AlignedGridView.count(
-                crossAxisCount: 3,
-                mainAxisSpacing: 1,
-                crossAxisSpacing: 1,
-                itemCount: menuAdminItems.length,
-                itemBuilder: (context, index) => menuAdminItems[index],
+              // Envuelve el ListView en un Expanded widget
+              child: ListView(
+                children: [
+                  AlignedGridView.count(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 1,
+                    crossAxisSpacing: 1,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: menuAdminItems.length,
+                    itemBuilder: (context, index) {
+                      return menuAdminItems[index];
+                    },
+                  ),
+                  /*  const SimpleText(
+                    text: 'Que tus clientes te conozcan',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    top: 5,
+                    bottom: 5,
+                  ), */
+                ],
               ),
             ),
-            /*  const SimpleText(
-              text: 'Que tus clientes te conozcan',
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              top: 25,
-              bottom: 5,
-            ), */
           ],
         ),
       ),

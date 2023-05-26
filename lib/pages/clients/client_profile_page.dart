@@ -185,7 +185,7 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
                     FutureBuilder(
                       future: orderProvider.getOrderByClient(clientModel.email),
                       builder: (BuildContext context,
-                          AsyncSnapshot<List<OrdersModel>> snapshot) {
+                          AsyncSnapshot<List<OrderModel>> snapshot) {
                         if (!snapshot.hasData) {
                           return simpleLoading();
                         }

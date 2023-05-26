@@ -122,7 +122,7 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/sell_detail',
       builder: (context, state) {
-        OrdersModel sample = state.extra as OrdersModel;
+        OrderModel sample = state.extra as OrderModel;
         return SellDetail(
           args: sample,
         );
