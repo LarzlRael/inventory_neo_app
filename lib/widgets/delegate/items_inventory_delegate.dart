@@ -47,7 +47,7 @@ class ItemsInventoryDelegate extends SearchDelegate {
             );
           }
 
-          return GridView.count(
+          /*  return GridView.count(
               /* shrinkWrap: true, */
               /* physics: NeverScrollableScrollPhysics(), */
               /* padding: const EdgeInsets.all(10), */
@@ -59,7 +59,17 @@ class ItemsInventoryDelegate extends SearchDelegate {
                     productModel: product,
                   );
                 },
-              ).toList());
+              ).toList()); */
+          final products = snapshot.data;
+          return AlignedGridView.count(
+            crossAxisCount: 2,
+            mainAxisSpacing: 1,
+            crossAxisSpacing: 1,
+            itemCount: products!.length,
+            itemBuilder: (context, index) => CardItemInventoryVertical(
+              productModel: products[index],
+            ),
+          );
         },
       ),
     );
@@ -91,7 +101,7 @@ class ItemsInventoryDelegate extends SearchDelegate {
           );
         }
 
-        return GridView.count(
+        /* return GridView.count(
             /* shrinkWrap: true, */
             /* physics: NeverScrollableScrollPhysics(), */
             /* padding: const EdgeInsets.all(10), */
@@ -103,7 +113,19 @@ class ItemsInventoryDelegate extends SearchDelegate {
                   productModel: product,
                 );
               },
-            ).toList());
+            ).toList()); */
+        final products = snapshot.data;
+        return Expanded(
+          child: AlignedGridView.count(
+            crossAxisCount: 2,
+            mainAxisSpacing: 1,
+            crossAxisSpacing: 1,
+            itemCount: products!.length,
+            itemBuilder: (context, index) => CardItemInventoryVertical(
+              productModel: products[index],
+            ),
+          ),
+        );
       },
     );
   }

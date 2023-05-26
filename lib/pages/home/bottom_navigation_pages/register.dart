@@ -5,18 +5,18 @@ class Register extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final options = registerOptions(context);
     return Scaffold(
-      body: Column(children: [
-        Expanded(
-          child: GridView.count(
-              /* shrinkWrap: true, */
-              /* physics: NeverScrollableScrollPhysics(), */
-              crossAxisCount: 2,
-              children: registerOptions(context).map((category) {
-                return (category);
-              }).toList()),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: AlignedGridView.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          itemCount: options.length,
+          itemBuilder: (context, index) => options[index],
         ),
-      ]),
+      ),
     );
   }
 }

@@ -24,10 +24,10 @@ class CircleButton extends StatelessWidget {
         },
         child: Container(
           height: 180.0,
-          margin: const EdgeInsets.all(15.0),
+          /* margin: const EdgeInsets.all(15.0), */
           decoration: BoxDecoration(
             color: const Color.fromRGBO(62, 66, 107, 0.7),
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(15.0),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

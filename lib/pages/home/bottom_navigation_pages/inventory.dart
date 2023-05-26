@@ -57,21 +57,6 @@ class _InventoryState extends State<Inventory> {
               return categories.isLoading
                   ? simpleLoading()
                   : Expanded(
-                      /* child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 200,
-                          /* childAspectRatio: 3 / 2, */
-                          crossAxisSpacing: 5,
-                          mainAxisSpacing: 5,
-                        ),
-                        itemCount: categories.categoriesList.length,
-                        itemBuilder: (_, index) {
-                          return CategoryCard(
-                            categoriesModel: categories.categoriesList[index],
-                          );
-                        },
-                      ), */
                       child: AlignedGridView.count(
                         crossAxisCount: 2,
                         mainAxisSpacing: 2,
@@ -278,20 +263,17 @@ class ListCategoryItems extends StatelessWidget {
                 );
               }
 
+              final products = snapshot.data;
               return Expanded(
-                child: GridView.count(
-                    /* shrinkWrap: true, */
-                    /* physics: NeverScrollableScrollPhysics(), */
-                    /* padding: const EdgeInsets.all(10), */
-                    /* childAspectRatio: 3 / 2, */
-                    crossAxisCount: 2,
-                    children: snapshot.data!.map<Widget>(
-                      (product) {
-                        return CardItemInventoryVertical(
-                          productModel: product,
-                        );
-                      },
-                    ).toList()),
+                child: AlignedGridView.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 1,
+                  crossAxisSpacing: 1,
+                  itemCount: products!.length,
+                  itemBuilder: (context, index) => CardItemInventoryVertical(
+                    productModel: products[index],
+                  ),
+                ),
               );
             },
           ),
