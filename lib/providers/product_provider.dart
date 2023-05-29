@@ -129,6 +129,7 @@ class ProductProvider extends ChangeNotifier {
     int? idProduct,
   }) async {
     try {
+      selectProductState = selectProductState.copyWith(isSaving: true);
       final requestType =
           idProduct == null ? RequestType.post : RequestType.put;
       final clientRequest = await Request.sendRequestWithToken(
@@ -139,7 +140,7 @@ class ProductProvider extends ChangeNotifier {
 
       final productResult = productModelFromJson(clientRequest!.body);
       selectProductState = selectProductState.copyWith(
-        isLoading: false,
+        isSaving: false,
         product: productResult,
       );
       notifyListeners();

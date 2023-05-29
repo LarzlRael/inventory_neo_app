@@ -25,8 +25,11 @@ Future<http.Response?> postAction(
   );
 }
 
-Future<http.Response?> putAction(String url, Map<String, dynamic> body,
-    {bool useAuxiliarUrl = false}) async {
+Future<http.Response?> putAction(
+  String url,
+  Map<String, dynamic> body, {
+  bool useAuxiliarUrl = false,
+}) async {
   return await Request.sendRequestWithToken(
     RequestType.put,
     url,

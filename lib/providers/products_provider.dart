@@ -9,22 +9,27 @@ class ProductsProvider extends ChangeNotifier {
 
   ProductsState productsState = ProductsState();
 
-  createOrUpdateProduct(Map<String, dynamic> productLike,
-      {int? idProduct}) async {
+  createOrUpdateProduct(
+    Map<String, dynamic> productLike, {
+    int? idProduct,
+  }) async {
     final result = await productProvider.createOrUpdateProduct(productLike,
         idProduct: idProduct);
 
     if (idProduct == null) {
-      productsState = productsState.copyWith(products: [
-        ...productsState.products,
-        result,
-      ]);
+      productsState = productsState.copyWith(
+        products: [
+          ...productsState.products,
+          result,
+        ],
+      );
       return;
     }
     productsState = productsState.copyWith(
       products: productsState.products
           .map((element) => element.id == idProduct ? result : element)
           .toList(),
+      isLoading: false,
     );
     notifyListeners();
   }
@@ -40,25 +45,6 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
     return true;
   }
-  /* createOrUpdateProduct(Map<String, dynamic> productLike) {
-    final isProductIsList =
-        _products.any((element) => element.id == product.id);
-    final isProductIsList =
-        _products.any((element) => element.id == product.id);
-
-    if (!isProductIsList) {
-      _products = _products.copyWith(products: [...state.products, product]);
-      return true;
-    }
-
-    _state.copyWith(
-        products: _state.products
-            .map((element) => element.id == product.id ? product : element)
-            /* products: _state.products.map((element) => element.id == product.id ? product : element) */
-
-            .toList());
-    return true;
-  } */
 
   Future<void> getProductsAllProducts() async {
     productsState = productsState.copyWith(isLoading: true);

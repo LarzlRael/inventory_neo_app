@@ -10,7 +10,6 @@ import 'package:mime_type/mime_type.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'request.dart';
-part 'products_service.dart';
 part 'action.dart';
 part 'camera_gallery_service/camera_gallery_service_imp.dart';
 part 'camera_gallery_service/camera_gallery_service.dart';

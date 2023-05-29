@@ -33,6 +33,7 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
         final selectProductState =
             productProvider.selectProductState.selectedProduct;
         final loadingState = productProvider.selectProductState.isLoading;
+        final isSaving = productProvider.selectProductState.isSaving;
         if (loadingState) {
           return simpleLoadingWithScaffold();
         }
@@ -66,29 +67,33 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                 : 'Editar producto',
             showTitle: true,
           ),
-          floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {
-              register(
-                formKey,
-                selectProductState,
-                idProduct: selectProductState.idProduct,
-              );
-            },
-            icon: Icon(
-              selectProductState!.idProduct == null ? Icons.add : Icons.edit,
-            ),
-            label: Text(
-              selectProductState.idProduct == null
-                  ? 'Registrar producto'
-                  : 'Editar producto',
-            ),
-          ),
+          floatingActionButton: isSaving
+              ? const CircularProgressIndicator()
+              : FloatingActionButton.extended(
+                  onPressed: () {
+                    register(
+                      formKey,
+                      selectProductState,
+                      idProduct: selectProductState.idProduct,
+                    );
+                  },
+                  icon: Icon(
+                    selectProductState!.idProduct == null
+                        ? Icons.add
+                        : Icons.edit,
+                  ),
+                  label: Text(
+                    selectProductState.idProduct == null
+                        ? 'Registrar producto'
+                        : 'Editar producto',
+                  ),
+                ),
           body: SingleChildScrollView(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(
                 children: [
-                  selectProductState.images.isEmpty
+                  selectProductState!.images.isEmpty
                       ? const SizedBox()
                       : SizedBox(
                           height: 250,
