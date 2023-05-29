@@ -44,7 +44,7 @@ class WelcomePage extends StatelessWidget {
                     context,
                     PageTransition(
                       type: PageTransitionType.bottomToTop,
-                      child: const LoginPage(),
+                      child: LoginPage(),
                       duration: const Duration(milliseconds: 400),
                     ),
                   );

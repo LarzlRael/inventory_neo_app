@@ -57,7 +57,10 @@ class _CustomFormBuilderTextFieldState extends State<CustomLoginTextField> {
                     },
                   )
                 : null,
-            prefixIcon: Icon(widget.icon, color: colors.primary),
+            prefixIcon: Icon(
+              widget.icon,
+              color: colors.primary,
+            ),
           ),
         ),
       ),

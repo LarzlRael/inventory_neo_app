@@ -22,7 +22,7 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/login_page',
-      builder: (context, state) => const LoginPage(),
+      builder: (context, state) => LoginPage(),
     ),
     GoRoute(
       path: '/home',

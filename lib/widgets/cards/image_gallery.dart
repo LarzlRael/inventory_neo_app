@@ -2,11 +2,11 @@ part of '../widgets.dart';
 
 class ImageGallery extends StatelessWidget {
   final List<String> images;
-  /* final Function(String image) deleteImage; */
+  final Function(String image)? deleteImage;
   const ImageGallery({
     super.key,
     required this.images,
-    /* required this.deleteImage, */
+    this.deleteImage,
   });
 
   @override
@@ -44,19 +44,24 @@ class ImageGallery extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              Positioned(
-                top: 0,
-                right: 0,
-                child: IconButton(
-                    onPressed: () {
-                      /* deleteImage(image); */
-                    },
-                    icon: Icon(
-                      Icons.cancel,
-                      color: Colors.grey[300],
-                      size: 30,
-                    )),
-              ),
+              image.startsWith('/data')
+                  ? Positioned(
+                      top: 0,
+                      right: 0,
+                      child: IconButton(
+                        onPressed: () {
+                          if (deleteImage != null) {
+                            deleteImage!(image);
+                          }
+                        },
+                        icon: Icon(
+                          Icons.cancel,
+                          color: Colors.red[700],
+                          size: 30,
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
         );

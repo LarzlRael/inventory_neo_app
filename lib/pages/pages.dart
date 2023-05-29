@@ -20,6 +20,8 @@ import 'package:inventory_app/widgets/widgets.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
+import '../constants/constants.dart';
+
 part 'home/home_page.dart';
 part 'auth/login_page.dart';
 /* Auth */

@@ -3,15 +3,17 @@ part of './../services.dart';
 class CamerGalleryServiceImp extends CameraGalleryService {
   final ImagePicker _picker = ImagePicker();
   @override
-  Future<String?> selectFromGallery() async {
-    // TODO: implement selectFromGallery
-    final XFile? photo = await _picker.pickImage(
-      source: ImageSource.gallery,
+  Future<List<String>?> selectFromGallery() async {
+    final List<XFile> photos = await _picker.pickMultiImage(
       imageQuality: 80,
     );
 
-    if (photo == null) return null;
-    return photo.path;
+    if (photos.isEmpty) {
+      return null;
+    }
+
+    final List<String> photoPaths = photos.map((photo) => photo.path).toList();
+    return photoPaths;
   }
 
   @override

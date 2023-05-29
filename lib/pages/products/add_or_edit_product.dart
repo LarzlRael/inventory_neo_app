@@ -55,7 +55,7 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                         final photoPath =
                             await CamerGalleryServiceImp().takePhoto();
                         if (photoPath == null) return;
-                        productProvider.updateProductImage(photoPath);
+                        productProvider.updateProductImage([photoPath]);
                       },
                       icon: const Icon(Icons.camera_alt),
                     ),
@@ -96,6 +96,9 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                           child: ImageGallery(
                             /* change this by the original */
                             images: selectProductState.images,
+                            deleteImage: (image) {
+                              productProvider.deleteImageToUpload(image);
+                            },
                           ),
                         ),
                   const SizedBox(height: 10),

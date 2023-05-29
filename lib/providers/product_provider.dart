@@ -90,10 +90,10 @@ class ProductProvider extends ChangeNotifier {
     }
   }
 
-  void updateProductImage(String path) {
+  void updateProductImage(List<String> pathImages) {
     selectProductState = selectProductState.copyWith(
       selectedProduct: selectProductState.selectedProduct!.copyWith(
-        images: [...selectProductState.selectedProduct!.images, path],
+        images: [...selectProductState.selectedProduct!.images, ...pathImages],
       ),
     );
     notifyListeners();
@@ -111,6 +111,17 @@ class ProductProvider extends ChangeNotifier {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<void> deleteImageToUpload(String imagePath) async {
+    selectProductState = selectProductState.copyWith(
+      selectedProduct: selectProductState.selectedProduct!.copyWith(
+        images: selectProductState.selectedProduct!.images
+            .where((element) => element != imagePath)
+            .toList(),
+      ),
+    );
+    notifyListeners();
   }
 
   Future<ProductModel> createOrUpdateProduct(
