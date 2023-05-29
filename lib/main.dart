@@ -12,9 +12,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await UserPreferences.init();
   await Environment.initEnviroment();
-  // mergeWith optional, you can include Platform.environment for Mobile/Desktop app
-  runApp(ChangeNotifierProvider(
-      create: (_) => ThemeProviderNotifier(), child: const MyApp()));
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeProviderNotifier(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

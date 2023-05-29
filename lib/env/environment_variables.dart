@@ -1,7 +1,4 @@
-/* const baseURL = 'https://subastareas2.herokuapp.com'; */
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-/* const serverHttpUrl = baseURL; */
 
 class Environment {
   static initEnviroment() async {
