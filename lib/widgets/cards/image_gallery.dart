@@ -37,11 +37,11 @@ class ImageGallery extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
-                child: FadeInImage(
-                  image: imageProvider,
-                  placeholder:
-                      const AssetImage('assets/loaders/bottle-loader.gif'),
-                  fit: BoxFit.cover,
+                child: InstaImageViewer(
+                  child: Image(
+                    image: imageProvider,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               image.startsWith('/data')

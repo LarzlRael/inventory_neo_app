@@ -132,8 +132,8 @@ class _MaterialAddEditPageState extends State<MaterialAddEditPage> {
     formkey.currentState!.save();
 
     final json = {
-      "name": formkey.currentState!.value['name'],
       "id": materialId,
+      "name": formkey.currentState!.value['name'],
       "description": formkey.currentState!.value['description'],
     };
     categoriesMaterialProviders.addOrEditMaterial(json).then((value) {

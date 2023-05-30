@@ -68,6 +68,8 @@ dependencies:
 
   flutter_localization: ^0.1.11
   http_parser: ^4.0.2
+
+  insta_image_viewer: ^1.0.2
   
   google_fonts: ^4.0.3
 dev_dependencies:
