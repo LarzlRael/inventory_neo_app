@@ -83,8 +83,7 @@ class SellHistoryCard extends StatelessWidget {
               text: '${order.billing.firstName} ${order.billing.lastName}'
                   .toTitleCase(),
               fontSize: 14,
-              top: 3,
-              bottom: 3,
+              padding: const EdgeInsets.only(top: 3, bottom: 3),
               fontWeight: FontWeight.w500,
             ),
             SimpleText(

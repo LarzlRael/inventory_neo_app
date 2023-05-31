@@ -31,8 +31,8 @@ class SlideBannerItem extends StatelessWidget {
           fontSize: titleSize,
           /* color: Colors.black,
           darkThemeColor: Colors.white, */
-          bottom: 10,
-          top: 10,
+
+          padding: const EdgeInsets.only(top: 10, bottom: 10),
           fontWeight: FontWeight.bold,
           textAlign: TextAlign.center,
         ),
@@ -42,8 +42,7 @@ class SlideBannerItem extends StatelessWidget {
           /* color: Colors.black,
           darkThemeColor: Colors.white, */
           textAlign: TextAlign.center,
-          left: 20,
-          right: 20,
+          padding: const EdgeInsets.only(left: 20, right: 20),
         ),
       ],
     );

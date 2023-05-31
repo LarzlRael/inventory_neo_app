@@ -24,7 +24,7 @@ class CustomTextField extends StatelessWidget {
             text: label,
             fontSize: 15,
             lightThemeColor: Colors.black87,
-            bottom: 2,
+            padding: const EdgeInsets.only(bottom: 2),
             fontWeight: FontWeight.w600,
           ),
           Container(

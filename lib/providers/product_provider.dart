@@ -100,6 +100,10 @@ class ProductProvider extends ChangeNotifier {
   }
 
   Future<bool> deleteProduct(int idProduct) async {
+    final jobDeleteImages = selectProductState.selectedProduct!.images
+        .map(deleteImagesFromServer)
+        .toList();
+    await Future.wait(jobDeleteImages);
     try {
       final clientRequest = await Request.sendRequestWithToken(
         RequestType.delete,
@@ -122,6 +126,24 @@ class ProductProvider extends ChangeNotifier {
       ),
     );
     notifyListeners();
+  }
+
+  Future<void> deleteImagesFromServer(String imageUrl) async {
+    if (imageUrl.contains('cloudinary')) {
+      return;
+    }
+    try {
+      final clientRequest = await Request.sendRequestWithToken(
+        RequestType.delete,
+        useAuxiliarUrl: true,
+        'uploadFiles',
+        {
+          'url': imageUrl,
+        },
+      );
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<ProductModel> createOrUpdateProduct(

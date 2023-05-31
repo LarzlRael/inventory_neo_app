@@ -17,8 +17,7 @@ class Profile extends StatelessWidget {
               text: 'Información personal',
               fontSize: 20,
               fontWeight: FontWeight.w700,
-              top: 10,
-              bottom: 5,
+              padding: EdgeInsets.only(top: 10, bottom: 5),
               lightThemeColor: Colors.deepPurple,
             ),
             subtitle(
@@ -47,8 +46,7 @@ Widget subtitle(String title, String subtitle) {
           text: title,
           fontSize: 16,
           fontWeight: FontWeight.w700,
-          top: 5,
-          bottom: 3,
+          padding: const EdgeInsets.only(top: 5, bottom: 3),
           lightThemeColor: Colors.deepPurple,
         ),
         SimpleText(

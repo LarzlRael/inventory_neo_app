@@ -66,7 +66,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
                   'Productos seleccionados: ${cardInventoryProvider.getProducts.length}',
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              bottom: 5,
+              padding: const EdgeInsets.only(bottom: 5),
             ),
 
             /*  FillButton(
@@ -111,7 +111,6 @@ class _SellProductsPageState extends State<SellProductsPage> {
                         text: 'Cliente',
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        bottom: 0,
                       ),
                       ClientItem(
                         onTap: () {},
@@ -148,7 +147,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
                 : const SimpleText(
                     text:
                         'Selecciona productos, para agregarlos a la lista de venta',
-                    top: 20,
+                    padding: EdgeInsets.only(top: 20),
                   ),
           ],
         ),

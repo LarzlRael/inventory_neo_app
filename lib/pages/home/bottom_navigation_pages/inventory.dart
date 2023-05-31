@@ -181,7 +181,7 @@ class CategoryCard extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                   child: SimpleText(
-                    top: 10,
+                    padding: const EdgeInsets.only(top: 10),
                     text: categoriesModel.name,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,

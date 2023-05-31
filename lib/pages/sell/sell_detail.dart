@@ -60,13 +60,11 @@ class _SellDetailState extends State<SellDetail> {
               ),
               SimpleText(
                 text: widget.args.billing.address1.toCapitalize(),
-                top: 10,
-                bottom: 10,
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
               ),
               SimpleText(
                 text: widget.args.billing.phone,
-                top: 10,
-                bottom: 10,
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
               ),
               DropdownButton<String>(
                 value: dropdownValue,
@@ -125,8 +123,7 @@ class _SellDetailState extends State<SellDetail> {
           children: [
             SimpleText(
               text: 'Cantidad: ${widget.args.lineItems[index].quantity}',
-              bottom: 5,
-              top: 5,
+              padding: const EdgeInsets.only(top: 5, bottom: 5),
               fontSize: 12,
             ),
             SimpleText(

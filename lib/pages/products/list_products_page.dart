@@ -51,19 +51,30 @@ class _ListProductsPageState extends State<ListProductsPage> {
           final products2 = person.productsState;
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: MasonryGridView.count(
-              physics: const BouncingScrollPhysics(),
-              crossAxisCount: 2,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 35,
-              itemCount: products2.products.length,
-              itemBuilder: (context, index) {
-                final product = products2.products[index];
-                return CardItemInventoryVertical(
-                  productModel: product,
-                );
-              },
-            ),
+            child: products2.products.isEmpty
+                ? NoInformation(
+                    icon: Icons.inventory,
+                    text: 'No hay productos registrados',
+                    showButton: true,
+                    buttonText: 'Agregar producto',
+                    onPressed: () {
+                      context.push('/add_product');
+                    },
+                    iconButton: Icons.add,
+                  )
+                : MasonryGridView.count(
+                    physics: const BouncingScrollPhysics(),
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 35,
+                    itemCount: products2.products.length,
+                    itemBuilder: (context, index) {
+                      final product = products2.products[index];
+                      return CardItemInventoryVertical(
+                        productModel: product,
+                      );
+                    },
+                  ),
           );
         },
       ),

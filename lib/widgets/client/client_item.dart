@@ -47,8 +47,7 @@ class ClientItem extends StatelessWidget {
           fontSize: 16,
           fontWeight: FontWeight.w500,
           lightThemeColor: Colors.black87,
-          top: 5,
-          bottom: 5,
+          padding: const EdgeInsets.only(top: 5, bottom: 5),
         ),
         subtitle: SimpleText(
           text: clientModel.address1.toCapitalize(),

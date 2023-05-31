@@ -31,7 +31,7 @@ class Request {
         res = await http.put(uri, body: jsonEncode(body), headers: headers);
         break;
       case RequestType.delete:
-        res = await http.delete(uri);
+        res = await http.delete(uri, body: jsonEncode(body), headers: headers);
     }
     return res;
   }
@@ -77,7 +77,8 @@ class Request {
             await httpClient.put(uri, body: jsonEncode(body), headers: headers);
         break;
       case RequestType.delete:
-        res = await httpClient.delete(uri, headers: headers);
+        res = await httpClient.delete(uri,
+            headers: headers, body: jsonEncode(body));
     }
     return res;
   }

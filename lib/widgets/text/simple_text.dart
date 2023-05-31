@@ -7,10 +7,8 @@ class SimpleText extends StatelessWidget {
   final Color? lightThemeColor;
   final Color? darkThemeColor;
   final TextStyle? style;
-  final double? top;
-  final double? bottom;
-  final double? left;
-  final double? right;
+  final EdgeInsetsGeometry? padding;
+
   final TextAlign? textAlign;
   final double? lineHeight;
   final bool setUniqueColor;
@@ -18,10 +16,7 @@ class SimpleText extends StatelessWidget {
     Key? key,
     required this.text,
     this.fontWeight,
-    this.top,
-    this.bottom,
-    this.left,
-    this.right,
+    this.padding,
     this.fontSize,
     this.style,
     this.textAlign,
@@ -36,11 +31,7 @@ class SimpleText extends StatelessWidget {
     final themeStatus = false;
     /* final themeStatus = Provider.of<ThemeChanger>(context, listen: true); */
     return Padding(
-      padding: EdgeInsets.only(
-          top: top ?? 0,
-          bottom: bottom ?? 0,
-          left: left ?? 0,
-          right: right ?? 0),
+      padding: padding ?? const EdgeInsets.all(0),
       child: Text(
         text,
         textAlign: textAlign ?? TextAlign.start,

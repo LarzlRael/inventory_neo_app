@@ -21,6 +21,7 @@ class NoInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /* final getDarkTheme = Provider.of<ThemeChanger>(context).getDarkTheme; */
+    final colors = Theme.of(context).colorScheme;
     return Container(
       /* color: Colors.yellow, */
       padding: const EdgeInsets.all(40),
@@ -31,30 +32,38 @@ class NoInformation extends StatelessWidget {
             Icon(icon, size: 150, color: Colors.black),
             SimpleText(
               text: text,
-              top: 10,
-              bottom: 10,
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
               textAlign: TextAlign.center,
             ),
             showButton
-                ? Row(
-                    /* mainAxisAlignment: MainAxisAlignment.center, */
-                    children: [
-                      Expanded(
-                        child: LoginButton(
-                          onPressed: () {},
-                          paddingVertical: 12,
-                          spaceBetweenIconAndText: 15,
-                          label: buttonText ?? 'Text del boton',
-                          fontSize: 15,
-                          ghostButton: true,
-                          backGroundColor: Colors.blue,
-                          icon: iconButton,
-                          textColor: Colors.white,
-                        ),
+                ? OutlinedButton.icon(
+                    style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
                       ),
-                    ],
+                      side: BorderSide(color: colors.primary), //<-- SEE HERE
+                    ),
+                    onPressed: () {
+                      onPressed!();
+                    },
+                    icon: Icon(iconButton),
+                    label: Text(
+                      buttonText!,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    /* paddingVertical: 12,
+                        spaceBetweenIconAndText: 15,
+                        label: buttonText ?? 'Text del boton',
+                        fontSize: 15,
+                        ghostButton: true,
+                        backGroundColor: Colors.blue,
+                        icon: iconButton,
+                        textColor: Colors.white, */
                   )
-                : Container(),
+                : const SizedBox(),
           ],
         ),
       ),

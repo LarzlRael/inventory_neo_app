@@ -98,8 +98,7 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
                               .toTitleCase(),
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      top: 10,
-                      bottom: 5,
+                      padding: const EdgeInsets.only(top: 10, bottom: 5),
                       lightThemeColor: Colors.white,
                     ),
                     SimpleText(
@@ -242,7 +241,7 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
                 lightThemeColor: Colors.black26,
               ),
               SimpleText(
-                top: 3,
+                padding: const EdgeInsets.only(top: 3),
                 text: value,
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
@@ -277,8 +276,7 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
                 text: title,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                top: 10,
-                bottom: 5,
+                padding: const EdgeInsets.only(top: 10, bottom: 5),
                 lightThemeColor: Colors.deepPurple,
               ),
               ...children,

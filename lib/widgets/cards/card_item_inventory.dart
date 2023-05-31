@@ -42,7 +42,7 @@ class CardItemInventory extends StatelessWidget {
             text: productModel.name.toCapitalize(),
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            bottom: 5,
+            padding: const EdgeInsets.only(bottom: 5),
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +52,7 @@ class CardItemInventory extends StatelessWidget {
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
                 lightThemeColor: Colors.grey,
-                bottom: 5,
+                padding: const EdgeInsets.only(top: 10, bottom: 5),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 5),

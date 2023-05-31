@@ -171,8 +171,8 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                             SimpleText(
                               text: productSelected.categories[0].name,
                               fontSize: 14,
-                              top: 5,
-                              bottom: 10,
+                              padding:
+                                  const EdgeInsets.only(top: 5, bottom: 10),
                               lightThemeColor: Colors.grey,
                             ),
                             Text(
