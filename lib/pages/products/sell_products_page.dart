@@ -82,8 +82,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
                     children: [
                       FillButton(
                         onPressed: () {
-                          showBottomFindClientSheet(
-                              context, cardInventoryProvider);
+                          showBottomFindClientSheet(cardInventoryProvider);
                         },
                         backgroundColor:
                             clientSelect ? Colors.orange : Colors.blue,
@@ -93,7 +92,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
                       ),
                       FillButton(
                         onPressed: () {
-                          showBottomSheet(context, cardInventoryProvider);
+                          showBottomSheet(cardInventoryProvider);
                         },
                         label: productsSelect
                             ? 'Buscar productos'
@@ -155,12 +154,11 @@ class _SellProductsPageState extends State<SellProductsPage> {
     );
   }
 
-  showBottomSheet(
-      BuildContext context, CardInventoryProvider cardInventoryProvider) {
+  showBottomSheet(CardInventoryProvider cardInventoryProvider) {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (BuildContext context) {
+      builder: (_) {
         return const CardInventorySelectableItems();
       },
     );
@@ -181,35 +179,36 @@ class _SellProductsPageState extends State<SellProductsPage> {
     };
   }
 
-  showBottomFindClientSheet(
-      BuildContext context, CardInventoryProvider cardInventoryProvider) {
+  showBottomFindClientSheet(CardInventoryProvider cardInventoryProvider) {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (BuildContext context) {
+      builder: (_) {
         return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.8,
-            child: const ClientsPageSelectable());
+          height: MediaQuery.of(context).size.height * 0.8,
+          child: const ClientsPageSelectable(),
+        );
       },
     );
   }
 
   sendData(CardInventoryProvider cardInventoryProvider) async {
+    final client = cardInventoryProvider.getClient!;
     final data = {
       "payment_method": "bacs",
       "payment_method_title": "Direct Bank Transfer",
       "set_paid": true,
       "billing": {
-        "first_name": cardInventoryProvider.getClient!.firstName,
-        "last_name": cardInventoryProvider.getClient!.lastName,
-        "address_1": cardInventoryProvider.getClient!.address1,
+        "first_name": client.firstName,
+        "last_name": client.lastName,
+        "address_1": client.address1,
         "address_2": "",
         "city": "San Francisco",
         "state": "CA",
         "postcode": "94103",
         "country": "US",
-        "email": cardInventoryProvider.getClient!.email,
-        "phone": "(555) 555-5555"
+        "email": client.email,
+        "phone": client.phone
       },
       ...getProdutsId(cardInventoryProvider.getProducts)
     };

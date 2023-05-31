@@ -149,17 +149,6 @@ class _AddCategoryState extends State<AddCategoryPage> {
                       ),
                     ),
                     const SizedBox(height: 20),
-
-                    /* !_isLoading
-                        ? FillButton(
-                            onPressed: () {
-                              register(formKey, categoryForm.id);
-                            },
-                            label: categoryForm.id == null
-                                ? 'Registrar'
-                                : 'Editar',
-                          )
-                        : simpleLoading(), */
                   ],
                 ),
               )
@@ -223,31 +212,6 @@ class _AddCategoryState extends State<AddCategoryPage> {
     });
   }
 
-  /*  updateCategory(
-    int idCategory,
-    Map<String, dynamic> json,
-  ) async {
-    final updateCategory =
-        await putAction('products/categories/$idCategory', json);
-    responsePost(
-      validateStatus(updateCategory!.statusCode),
-      'Categoria actualizada',
-      'Error al actualizar registro',
-    );
-  }
-
-  postCategory(
-    Map<String, dynamic> json,
-  ) async {
-    final newCategory = await postAction('products/categories/', json);
-
-    responsePost(
-      validateStatus(newCategory!.statusCode),
-      'Categoria registrada',
-      'Error al registrar',
-    );
-  } */
-
   responsePost(bool isok, String messageSuccess, String messageError) {
     if (isok) {
       globalProvider.showSnackBar(
@@ -255,8 +219,7 @@ class _AddCategoryState extends State<AddCategoryPage> {
         messageSuccess,
         backgroundColor: Colors.green,
       );
-      /* Change this */
-      /* categoriesBloc.getCategories(); */
+
       setState(() {
         _isLoading = false;
       });

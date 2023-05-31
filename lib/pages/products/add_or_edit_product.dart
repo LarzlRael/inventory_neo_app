@@ -9,8 +9,6 @@ class AddOrEditProduct extends StatefulWidget {
 }
 
 class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
-  /* final productsBloc = ProductsBloc(); */
-  bool _isLoading = false;
   late ProductsProvider productsProvider;
   late ProductProvider productProvider;
   late CategoriesMaterialProviders categoriesMaterialProviders;
@@ -108,7 +106,7 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                         ),
                   const SizedBox(height: 10),
                   FormBuilder(
-                    enabled: !_isLoading,
+                    enabled: !isSaving,
                     key: formKey,
                     initialValue: {
                       'name': selectProductState.name,
@@ -116,11 +114,6 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                       'description': selectProductState.description,
                       'category': selectProductState.category,
                       'tags': selectProductState.idTags,
-                      /* 'file': itemDetails.file, */
-                    },
-                    onChanged: () {
-                      /*  _formKey.currentState!.save();
-                  debugPrint(_formKey.currentState!.value.toString()); */
                     },
                     autovalidateMode: AutovalidateMode.disabled,
                     skipDisabled: true,
@@ -165,25 +158,9 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                           materiales: categoriesMaterialProviders
                               .materialesState.materiales,
                         ),
-                        /* const CustomFileField(
-                      name: 'file',
-                    ), */
                       ],
                     ),
                   ),
-                  /* !_isLoading
-                            ? FillButton(
-                                onPressed: () {
-                                  register(formKey,
-                                      idProduct: selectProductState.idProduct);
-                                },
-                                label: selectProductState.idProduct == null
-                                    ? 'Registrar'
-                                    : 'Editar',
-                              )
-                            : const Center(
-                                child: CircularProgressIndicator(),
-                              ), */
                 ],
               ),
             ),
@@ -230,9 +207,6 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
     }
     formkey.currentState!.save();
 
-    setState(() {
-      _isLoading = true;
-    });
     final Map<String, dynamic> json = {
       "name": formkey.currentState!.value['name'],
       "manage_stock": true,
@@ -270,9 +244,6 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
         backgroundColor: idProduct == null ? Colors.green : Colors.blue,
       );
 
-      setState(() {
-        _isLoading = false;
-      });
       context.pop();
     }).catchError((error) {
       globalProvider.showSnackBar(
@@ -280,9 +251,6 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
         'Error al registrar',
         backgroundColor: Colors.red,
       );
-      setState(() {
-        _isLoading = false;
-      });
     });
   }
 }
