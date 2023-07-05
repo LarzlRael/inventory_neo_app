@@ -16,8 +16,7 @@ class GlobalSnackBar {
         behavior: SnackBarBehavior.floating,
         content: SimpleText(
           text: message,
-          lightThemeColor: Colors.white,
-          setUniqueColor: true,
+          color: Colors.white,
         ),
         backgroundColor: backgroundColor,
       ),

@@ -40,7 +40,7 @@ class CircleButton extends StatelessWidget {
               ),
               SimpleText(
                 text: text,
-                lightThemeColor: Colors.white,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
                 padding: const EdgeInsets.only(top: 5),
               ),

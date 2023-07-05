@@ -13,9 +13,7 @@ class LoginPage extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
     return Scaffold(
-      body: SizedBox(
-        height: double.infinity,
-        width: double.infinity,
+      body: SizedBox.expand(
         child: Stack(
           children: [
             Image.network(

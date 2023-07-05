@@ -88,7 +88,7 @@ class SellHistoryCard extends StatelessWidget {
             ),
             SimpleText(
               text: '${order.lineItems.length.toString()} artículos',
-              lightThemeColor: Colors.grey,
+              color: Colors.grey,
               fontWeight: FontWeight.w600,
             ),
           ],
@@ -102,7 +102,7 @@ class SellHistoryCard extends StatelessWidget {
 Widget tranlateStatus(String status) {
   return SimpleText(
     text: statusList[status]!,
-    lightThemeColor: Colors.grey,
+    color: Colors.grey,
     fontWeight: FontWeight.w800,
   );
 }

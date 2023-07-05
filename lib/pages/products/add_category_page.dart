@@ -131,7 +131,6 @@ class _AddCategoryState extends State<AddCategoryPage> {
                                   height: 250,
                                   width: 600,
                                   child: ImageGallery(
-                                    /* change this by the original */
                                     images: [categoryForm.image!],
                                   ),
                                 )

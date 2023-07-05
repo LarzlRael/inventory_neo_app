@@ -71,7 +71,7 @@ class LoginButton extends StatelessWidget {
                   SimpleText(
                     text: label,
                     fontSize: fontSize,
-                    lightThemeColor: ghostButton ? backGroundColor : textColor,
+                    color: ghostButton ? backGroundColor : textColor,
                   ),
                 ],
               )
@@ -80,7 +80,7 @@ class LoginButton extends StatelessWidget {
                 child: SimpleText(
                   text: label,
                   fontSize: fontSize,
-                  lightThemeColor: ghostButton ? backGroundColor : textColor,
+                  color: ghostButton ? backGroundColor : textColor,
                   /* color: textColor, */
                 ),
               ),

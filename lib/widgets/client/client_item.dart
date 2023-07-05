@@ -38,7 +38,7 @@ class ClientItem extends StatelessWidget {
             text:
                 '${clientModel.firstName[0].toUpperCase()}${clientModel.lastName[0].toUpperCase()}',
             fontSize: 17,
-            lightThemeColor: Colors.white,
+            color: Colors.white,
           ),
         ),
         title: SimpleText(
@@ -46,7 +46,7 @@ class ClientItem extends StatelessWidget {
               '${clientModel.firstName} ${clientModel.lastName}'.toTitleCase(),
           fontSize: 16,
           fontWeight: FontWeight.w500,
-          lightThemeColor: Colors.black87,
+          color: Colors.black87,
           padding: const EdgeInsets.only(top: 5, bottom: 5),
         ),
         subtitle: SimpleText(

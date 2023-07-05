@@ -29,10 +29,9 @@ class CardItemInventory extends StatelessWidget {
           leading: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.network(
-              productModel.images.isNotEmpty
-                  /* CHange this */
-                  ? productModel.images[0].src
-                  : 'https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg',
+              productModel.images.isEmpty
+                  ? 'https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg'
+                  : productModel.images[0].src,
               height: 75,
               width: 100,
               fit: BoxFit.cover,
@@ -51,7 +50,7 @@ class CardItemInventory extends StatelessWidget {
                 text: productModel.categories[0].name.toCapitalize(),
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
-                lightThemeColor: Colors.grey,
+                color: Colors.grey,
                 padding: const EdgeInsets.only(top: 10, bottom: 5),
               ),
               Padding(

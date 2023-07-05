@@ -3,7 +3,7 @@ part of 'buttons.dart';
 class FillButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String label;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final Color textColor;
 
   final double marginVertical;
@@ -18,7 +18,7 @@ class FillButton extends StatelessWidget {
     required this.label,
     this.fontWeight,
     this.labelButtonFontSize = 16.0,
-    this.backgroundColor = Colors.blue,
+    this.backgroundColor,
     this.textColor = Colors.white,
     this.marginVertical = 5,
     this.marginHorizontal = 0,
@@ -28,6 +28,7 @@ class FillButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final textStyle = TextStyle(
       color: ghostButton ? backgroundColor : textColor,
       fontSize: labelButtonFontSize,
@@ -41,9 +42,9 @@ class FillButton extends StatelessWidget {
       ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: ghostButton ? Colors.white : backgroundColor,
+          backgroundColor: backgroundColor ?? colorScheme.primary,
           side: BorderSide(
-            color: backgroundColor,
+            color: backgroundColor ?? colorScheme.primary,
           ),
           padding: const EdgeInsets.symmetric(
             vertical: 15.0,

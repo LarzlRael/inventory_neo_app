@@ -28,16 +28,19 @@ class _SellProductsPageState extends State<SellProductsPage> {
         appBar: AppBar(),
         title: 'Vender productos',
         showTitle: true,
-        actions: [
-          IconButton(
-            tooltip: 'Limpiar',
-            icon: const Icon(Icons.delete),
-            color: Colors.black,
-            onPressed: () {
-              cardInventoryProvider.clearProducts();
-            },
-          ),
-        ],
+        actions: cardInventoryProvider.getProducts.isNotEmpty ||
+                cardInventoryProvider.getClient != null
+            ? [
+                IconButton(
+                  tooltip: 'Limpiar',
+                  icon: const Icon(Icons.delete),
+                  color: Colors.black,
+                  onPressed: () {
+                    cardInventoryProvider.clearProducts();
+                  },
+                ),
+              ]
+            : null,
       ),
       floatingActionButton: cardInventoryProvider.getProducts.isNotEmpty &&
               cardInventoryProvider.getClient != null
@@ -84,8 +87,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
                         onPressed: () {
                           showBottomFindClientSheet(cardInventoryProvider);
                         },
-                        backgroundColor:
-                            clientSelect ? Colors.orange : Colors.blue,
+                        backgroundColor: clientSelect ? Colors.orange : null,
                         label: clientSelect
                             ? 'Cambiar cliente'
                             : 'Seleccionar cliente',
@@ -97,8 +99,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
                         label: productsSelect
                             ? 'Buscar productos'
                             : 'Cambiar productos',
-                        backgroundColor:
-                            !productsSelect ? Colors.orange : Colors.blue,
+                        backgroundColor: !productsSelect ? Colors.orange : null,
                       ),
                     ],
                   ),

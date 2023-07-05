@@ -6,6 +6,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.read<AuthProvider>().authState.user;
+    final themeProvider = context.watch<ThemeProviderNotifier>();
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(15),
@@ -18,17 +19,33 @@ class Profile extends StatelessWidget {
               fontSize: 20,
               fontWeight: FontWeight.w700,
               padding: EdgeInsets.only(top: 10, bottom: 5),
-              lightThemeColor: Colors.deepPurple,
+              color: Colors.deepPurple,
             ),
-            subtitle(
+            subTitle(
                 'Dueño de la tienda',
                 "${authProvider!.client!.firstName} ${authProvider.client!.lastName}"
                     .toTitleCase()),
-            subtitle(
+            subTitle(
                 'Direccion', authProvider.client!.address1!.toCapitalize()),
             /* subtitle('Tipo de negocio',
                 authProvider.client!.store!.typeStore!.toCapitalize()), */
-            subtitle('Teléfono', authProvider.client!.phone!),
+            subTitle('Teléfono', authProvider.client!.phone!),
+            /* ListTile(
+              onTap: () {
+                themeProvider.toggleTheme();
+              },
+              title: const Text(
+                'Tema de la aplicación',
+              ),
+              trailing: Icon(
+                themeProvider.isDarkModeEnabled
+                    ? Icons.brightness_2
+                    : Icons.light_mode,
+                color: themeProvider.isDarkModeEnabled
+                    ? Colors.white
+                    : Colors.black,
+              ),
+            ) */
           ],
         ),
       ),
@@ -36,9 +53,9 @@ class Profile extends StatelessWidget {
   }
 }
 
-Widget subtitle(String title, String subtitle) {
+Widget subTitle(String title, String subtitle) {
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 5),
+    padding: const EdgeInsets.only(bottom: 5),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -47,10 +64,10 @@ Widget subtitle(String title, String subtitle) {
           fontSize: 16,
           fontWeight: FontWeight.w700,
           padding: const EdgeInsets.only(top: 5, bottom: 3),
-          lightThemeColor: Colors.deepPurple,
+          color: Colors.deepPurple,
         ),
-        SimpleText(
-          text: subtitle,
+        Text(
+          subtitle,
         ),
       ],
     ),

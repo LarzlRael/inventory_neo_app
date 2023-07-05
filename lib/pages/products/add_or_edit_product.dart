@@ -87,36 +87,34 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                   ),
                 ),
           body: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Column(
-                children: [
-                  selectProductState!.images.isEmpty
-                      ? const SizedBox()
-                      : SizedBox(
-                          height: 250,
-                          width: 600,
-                          child: ImageGallery(
-                            /* change this by the original */
-                            images: selectProductState.images,
-                            deleteImage: (image) {
-                              productProvider.deleteImageToUpload(image);
-                            },
-                          ),
+            child: Column(
+              children: [
+                selectProductState!.images.isEmpty
+                    ? const SizedBox()
+                    : SizedBox(
+                        height: 250,
+                        width: 600,
+                        child: ImageGallery(
+                          images: selectProductState.images,
+                          deleteImage: (image) {
+                            productProvider.deleteImageToUpload(image);
+                          },
                         ),
-                  const SizedBox(height: 10),
-                  FormBuilder(
-                    enabled: !isSaving,
-                    key: formKey,
-                    initialValue: {
-                      'name': selectProductState.name,
-                      'regular_price': selectProductState.price,
-                      'description': selectProductState.description,
-                      'category': selectProductState.category,
-                      'tags': selectProductState.idTags,
-                    },
-                    autovalidateMode: AutovalidateMode.disabled,
-                    skipDisabled: true,
+                      ),
+                FormBuilder(
+                  enabled: !isSaving,
+                  key: formKey,
+                  initialValue: {
+                    'name': selectProductState.name,
+                    'regular_price': selectProductState.price,
+                    'description': selectProductState.description,
+                    'category': selectProductState.category,
+                    'tags': selectProductState.idTags,
+                  },
+                  autovalidateMode: AutovalidateMode.disabled,
+                  skipDisabled: true,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Column(
                       children: [
                         CustomTextField(
@@ -161,8 +159,8 @@ class _AddOrEditCategoriesState extends State<AddOrEditProduct> {
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );

@@ -38,9 +38,7 @@ class CardItemInventoryVertical extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                   child: Image.network(
                     productModel.images.isEmpty
-                        ?
-                        /* Change this */
-                        'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930'
+                        ? 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930'
                         : productModel.images[0].src,
                     height: 100,
                     fit: BoxFit.cover,

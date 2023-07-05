@@ -415,11 +415,7 @@ class ImageProduct {
         dateCreatedGmt: DateTime.parse(json["date_created_gmt"]),
         dateModified: DateTime.parse(json["date_modified"]),
         dateModifiedGmt: DateTime.parse(json["date_modified_gmt"]),
-        /* TODO change this */
-        /* src: json["src"], */
-        src: json["src"].toString().contains('localhost')
-            ? 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930'
-            : json["src"],
+        src: json["src"],
         name: json["name"],
         alt: json["alt"],
       );

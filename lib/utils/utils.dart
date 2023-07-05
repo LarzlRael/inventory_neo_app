@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:moment_dart/moment_dart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simple_moment/simple_moment.dart';
 import 'package:inventory_app/models/models.dart';
 
 part 'time_utils.dart';

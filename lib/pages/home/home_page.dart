@@ -9,6 +9,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  final titles = [
+    'Inicio',
+    'Registro',
+    'Inventario',
+    'Perfil',
+  ];
+  String currentTitle = "Inicio";
   @override
   Widget build(BuildContext context) {
     final authProvider = context.read<AuthProvider>();
@@ -21,7 +28,13 @@ class _HomePageState extends State<HomePage> {
         /*   iconTheme: const IconThemeData(
           color: Colors.black, //change your color here
         ), */
-        /* title: appBarTitle(null, authProvider), */
+        title: Text(
+          currentTitle,
+          /* style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ), */
+        ),
         centerTitle: true,
         actions: [
           IconButton(
@@ -62,7 +75,7 @@ class _HomePageState extends State<HomePage> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Inicio',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.app_registration),
@@ -82,12 +95,11 @@ class _HomePageState extends State<HomePage> {
         onTap: (int index) {
           setState(() {
             _selectedIndex = index;
+            currentTitle = titles[index];
           });
         },
       ),
-      body: Center(
-        child: bottomItemsWithLogin.elementAt(_selectedIndex),
-      ),
+      body: bottomItemsWithLogin.elementAt(_selectedIndex),
     );
   }
 }

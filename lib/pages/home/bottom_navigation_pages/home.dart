@@ -12,13 +12,10 @@ class Home extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 0),
-              child: Text(
-                'Gestiona tu negocio',
-                style: textTheme.titleSmall!.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
+            SimpleText(
+              text: 'Gestiona tu negocio',
+              style: textTheme.titleSmall!.copyWith(
+                fontWeight: FontWeight.w700,
               ),
             ),
             Expanded(
@@ -67,6 +64,7 @@ class ManagementCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final colors = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: () {
         context.push(cardRoute);
@@ -84,12 +82,17 @@ class ManagementCards extends StatelessWidget {
               Icon(
                 cardIcon,
                 size: 25,
+                color: colors.primary,
               ),
               const SizedBox(height: 5),
-              Text(
-                cardTitle,
-                style: textTheme.titleSmall!.copyWith(
-                  fontSize: 13,
+              Hero(
+                tag: cardTitle,
+                child: Text(
+                  cardTitle,
+                  style: textTheme.titleSmall!.copyWith(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],

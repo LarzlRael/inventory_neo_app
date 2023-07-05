@@ -180,12 +180,15 @@ class CategoryCard extends StatelessWidget {
                 Positioned(
                   bottom: 10,
                   left: 10,
-                  child: SimpleText(
-                    padding: const EdgeInsets.only(top: 10),
-                    text: categoriesModel.name,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    lightThemeColor: Colors.white,
+                  child: Hero(
+                    tag: categoriesModel.name,
+                    child: SimpleText(
+                      padding: const EdgeInsets.only(top: 10),
+                      text: categoriesModel.name,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],

@@ -15,11 +15,11 @@ const months = [
   'Diciembre'
 ];
 String literalDate(DateTime date) {
-  Moment rawDate = Moment.fromDate(date);
+  Moment rawDate = Moment(date);
   return rawDate.format("dd-MM-yyyy");
 }
 
 String literalDateWithMount(DateTime date) {
-  Moment rawDate = Moment.fromDate(date);
+  Moment rawDate = Moment(date);
   return "${rawDate.format("dd")} de ${months[rawDate.month - 1]} del ${rawDate.format("yyyy")}";
 }

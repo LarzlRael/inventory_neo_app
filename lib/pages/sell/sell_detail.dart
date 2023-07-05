@@ -47,7 +47,7 @@ class _SellDetailState extends State<SellDetail> {
                   text:
                       '${widget.args.billing.firstName[0].toUpperCase()}${widget.args.billing.lastName[0].toUpperCase()}',
                   fontSize: 25,
-                  lightThemeColor: Colors.white,
+                  color: Colors.white,
                 ),
               ),
               const SizedBox(height: 5),
@@ -128,16 +128,14 @@ class _SellDetailState extends State<SellDetail> {
             ),
             SimpleText(
               text: '${widget.args.lineItems[index].price} bs.',
-              lightThemeColor: Colors.grey,
+              color: Colors.grey,
             ),
           ],
         ),
         leading: Image.network(
-          /* Change this */
           widget.args.lineItems[0].imageProduct!.src == ""
               ? "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
               : widget.args.lineItems[0].imageProduct!.src,
-          /* 'https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg', */
           width: 100,
           height: 100,
           fit: BoxFit.cover,

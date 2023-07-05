@@ -21,22 +21,26 @@ class AppBarWithBackIcon extends StatelessWidget
     final authProvider = context.read<AuthProvider>();
     return AppBar(
       elevation: 0,
-      backgroundColor: Colors.white,
-      centerTitle: true,
       title: showTitle
-          ? SimpleText(
-              text: title!,
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
+          ? Hero(
+              tag: title!,
+              child: Material(
+                child: Text(
+                  title!,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
             )
           : appBarTitle(subTitle, authProvider),
       leading: IconButton(
         icon: const Icon(
           Icons.chevron_left_rounded,
           size: 35,
-          /* color: Colors.black, */
         ),
-        onPressed: () => Navigator.pop(context),
+        onPressed: context.pop,
       ),
       actions: [
         ...?actions,
@@ -60,12 +64,23 @@ Widget appBarTitle(String? subTitle, AuthProvider? authProvider) {
       const SizedBox(
         height: 3,
       ),
-      SimpleText(
-        text: subTitle ?? 'Propietario',
-        lightThemeColor: Colors.black,
-        fontSize: 12,
-        fontWeight: FontWeight.normal,
+      Text(
+        subTitle ?? 'Propietario',
+        style: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.normal,
+        ),
       ),
     ],
+  );
+}
+
+Widget appBarWithTitle(String? subTitle, AuthProvider? authProvider) {
+  return Text(
+    subTitle ?? 'Propietario',
+    style: const TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.normal,
+    ),
   );
 }

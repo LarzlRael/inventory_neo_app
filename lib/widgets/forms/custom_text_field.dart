@@ -23,7 +23,7 @@ class CustomTextField extends StatelessWidget {
           SimpleText(
             text: label,
             fontSize: 15,
-            lightThemeColor: Colors.black87,
+            color: Colors.black87,
             padding: const EdgeInsets.only(bottom: 2),
             fontWeight: FontWeight.w600,
           ),

@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:inventory_app/widgets/widgets.dart';
 
 import '../models/models.dart';
 import '../pages/pages.dart';
@@ -32,22 +33,24 @@ final appRouter = GoRouter(
         path: '/item_detail',
         builder: (context, state) {
           ProductModel sample = state.extra as ProductModel;
-          return ItemDetailPage(
-            productModel: sample,
-          );
+          return ItemDetailPage(productModel: sample);
         }),
     GoRoute(
         path: '/list_category_items',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           CategoryTitle categoryTitle = state.extra as CategoryTitle;
-          return ListCategoryItems(
-            categoryTitle: categoryTitle,
+          return fadeInTransition(
+            child: ListCategoryItems(
+              categoryTitle: categoryTitle,
+            ),
           );
         }),
     /* clients */
     GoRoute(
       path: '/clients_page',
-      builder: (context, state) => const ClientsPage(),
+      pageBuilder: (context, state) => fadeInTransition(
+        child: const ClientsPage(),
+      ),
     ),
     GoRoute(
       path: '/client_profile',
@@ -79,7 +82,9 @@ final appRouter = GoRouter(
     /* Products Routes */
     GoRoute(
       path: '/sell_products',
-      builder: (context, state) => const SellProductsPage(),
+      pageBuilder: (context, state) => fadeInTransition(
+        child: const SellProductsPage(),
+      ),
     ),
     GoRoute(
       path: '/add_product',
@@ -102,11 +107,15 @@ final appRouter = GoRouter(
     /* Sell routes */
     GoRoute(
       path: '/sell_history',
-      builder: (context, state) => const SellHistory(),
+      pageBuilder: (context, state) => fadeInTransition(
+        child: const SellHistory(),
+      ),
     ),
     GoRoute(
       path: '/list_products_page',
-      builder: (context, state) => const ListProductsPage(),
+      pageBuilder: (context, state) => fadeInTransition(
+        child: const ListProductsPage(),
+      ),
     ),
     GoRoute(
       path: '/material_add_edit_page',

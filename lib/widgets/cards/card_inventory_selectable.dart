@@ -140,7 +140,7 @@ class _CardInventorySelectableState extends State<CardInventorySelectable> {
                 text: widget.productModel.price,
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
-                lightThemeColor: Colors.pink,
+                color: Colors.pink,
               ),
               trailing: Checkbox(
                 value: isSelectable,

@@ -34,9 +34,7 @@ class GenderSelector extends StatelessWidget {
         }).toList(),
         selected: {selectedGender},
         onSelectionChanged: (newSelection) {
-          onGenderChanged(
-            newSelection.first,
-          );
+          onGenderChanged(newSelection.first);
         },
       ),
     );

@@ -59,3 +59,9 @@ part 'form_generator/global_form.dart';
 /* Common widget */
 part 'common/stream_data_builder.dart';
 part 'buttons/selectable_items.dart';
+
+/* Animations widgets */
+
+part 'anim/fade_in_opacity.dart';
+part 'anim/fade_in_right.dart';
+part 'anim/fade_in_transition.dart';
