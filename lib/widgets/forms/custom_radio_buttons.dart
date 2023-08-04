@@ -41,7 +41,9 @@ class CustomRadioButtons extends StatelessWidget {
                   .map(
                     (tag) => FormBuilderFieldOption(
                       value: tag.id.toString(),
-                      child: MaterialItemCard(tag: tag),
+                      child: MaterialItemCard(
+                        tag: tag,
+                      ),
                     ),
                   )
                   .toList(growable: false),

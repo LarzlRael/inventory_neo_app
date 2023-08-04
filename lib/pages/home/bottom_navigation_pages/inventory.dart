@@ -64,6 +64,15 @@ class _InventoryState extends State<Inventory> {
                         itemCount: categories.categoriesList.length,
                         itemBuilder: (_, index) => CategoryCard(
                           categoriesModel: categories.categoriesList[index],
+                          onSelected: (categoryModelSelected) {
+                            context.push(
+                              '/list_category_items',
+                              extra: CategoryTitle(
+                                categoryId: categoryModelSelected.id,
+                                title: categoryModelSelected.name,
+                              ),
+                            );
+                          },
                         ),
                       ),
                     );
@@ -115,18 +124,19 @@ class _InventoryState extends State<Inventory> {
 
 class CategoryCard extends StatelessWidget {
   final CategorieModel categoriesModel;
-  final bool goToProductsByCategory;
+  final void Function(CategorieModel) onSelected;
   const CategoryCard({
+    required this.onSelected,
     Key? key,
     required this.categoriesModel,
-    this.goToProductsByCategory = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (goToProductsByCategory) {
+        onSelected(categoriesModel);
+        /* if (goToProductsByCategory) {
           context.push(
             '/add_categories_page',
             extra: CategoryForm(
@@ -145,7 +155,7 @@ class CategoryCard extends StatelessWidget {
               title: categoriesModel.name,
             ),
           );
-        }
+        } */
       },
       child: Container(
         /* width: 125, */
@@ -275,6 +285,9 @@ class ListCategoryItems extends StatelessWidget {
                   itemCount: products!.length,
                   itemBuilder: (context, index) => CardItemInventoryVertical(
                     productModel: products[index],
+                    onTap: (productModel) {
+                      context.push('/item_detail', extra: productModel.id);
+                    },
                   ),
                 ),
               );

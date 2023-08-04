@@ -2,7 +2,12 @@ part of '../widgets.dart';
 
 class CardItemInventory extends StatelessWidget {
   final ProductModel productModel;
-  const CardItemInventory({super.key, required this.productModel});
+  final void Function(ProductModel productModel)? onSelected;
+  const CardItemInventory({
+    super.key,
+    required this.productModel,
+    this.onSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -11,16 +16,9 @@ class CardItemInventory extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         /* Navigator.pushNamed(context, 'item_detail'); */
-        Navigator.push(
-          context,
-          PageTransition(
-            type: PageTransitionType.rightToLeft,
-            child: ItemDetailPage(
-              productModel: productModel,
-            ),
-            duration: const Duration(milliseconds: 400),
-          ),
-        );
+        if (onSelected != null) {
+          onSelected!(productModel);
+        }
       },
       child: Card(
         elevation: 2,

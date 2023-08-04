@@ -47,7 +47,27 @@ class _CategoriesPageState extends State<CategoriesPage> {
               itemBuilder: (context, index) {
                 return CategoryCard(
                   categoriesModel: categoriesList[index],
-                  goToProductsByCategory: true,
+                  onSelected: (categoryModel) {
+                    context.push(
+                      '/add_categories_page',
+                      extra: CategoryForm(
+                        id: categoryModel.id,
+                        name: categoryModel.name,
+                        image: categoryModel.image != null
+                            ? categoryModel.image!.src
+                            : null,
+                      ),
+                    );
+                    /* else {
+                      context.push(
+                        '/list_category_items',
+                        extra: CategoryTitle(
+                          categoryId: categoriesModel.id,
+                          title: categoriesModel.name,
+                        ),
+                      );
+                    } */
+                  },
                 );
               },
             ),

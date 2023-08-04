@@ -19,100 +19,105 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
     super.initState();
     clientsProvider = context.read<ClientsProvider>();
     globalProvider = context.read<GlobalProvider>();
-    clientsProvider.getClient(widget.idClient);
+    clientsProvider.setClientRequest(widget.idClient);
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ClientsProvider>(builder: (_, clientsProvider, __) {
       final clienteSeleccionado = clientsProvider.clientesState.clientSelected;
+      final isLoading = clientsProvider.clientesState.isLoading;
       return Scaffold(
-        appBar: AppBarWithBackIcon(
-          appBar: AppBar(),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.edit),
-              color: Colors.black,
-              tooltip: 'Editar cliente',
-              onPressed: () {
-                context.push(
-                  '/client_register_page',
-                  extra: clienteSeleccionado,
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.delete),
-              color: Colors.black,
-              tooltip: 'Eliminar cliente',
-              onPressed: () {
-                asyncShowConfirmDialog(context, 'Eliminar',
-                    '¿Estás seguro de eliminar este cliente?', () async {
-                  clientsProvider
-                      .deleteClient(clienteSeleccionado!.id!)
-                      .then((value) {
-                    if (value) {
-                      globalProvider.showSnackBar(
-                        context,
-                        "Cliente eliminado correctamente",
-                        backgroundColor: Colors.green,
+        appBar: isLoading
+            ? null
+            : AppBarWithBackIcon(
+                appBar: AppBar(),
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    color: Colors.black,
+                    tooltip: 'Editar cliente',
+                    onPressed: () {
+                      context.push(
+                        '/client_register_page',
+                        extra: clienteSeleccionado,
                       );
-                      context.pop();
-                    } else {
-                      globalProvider.showSnackBar(
-                        context,
-                        "Error al eliminar el cliente",
-                        backgroundColor: Colors.red,
-                      );
-                    }
-                  });
-                });
-              },
-            ),
-          ],
-        ),
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    color: Colors.black,
+                    tooltip: 'Eliminar cliente',
+                    onPressed: () {
+                      asyncShowConfirmDialog(context, 'Eliminar',
+                          '¿Estás seguro de eliminar este cliente?', () async {
+                        clientsProvider
+                            .deleteClient(clienteSeleccionado!.id!)
+                            .then((value) {
+                          if (value) {
+                            globalProvider.showSnackBar(
+                              context,
+                              "Cliente eliminado correctamente",
+                              backgroundColor: Colors.green,
+                            );
+                            context.pop();
+                          } else {
+                            globalProvider.showSnackBar(
+                              context,
+                              "Error al eliminar el cliente",
+                              backgroundColor: Colors.red,
+                            );
+                          }
+                        });
+                      });
+                    },
+                  ),
+                ],
+              ),
         backgroundColor: const Color(0xffcdd2f9),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.35,
-                color: Colors.deepPurple,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          child: isLoading
+              ? simpleLoading()
+              : Column(
                   children: [
-                    CircleAvatar(
-                        radius: 60,
-                        child: SimpleText(
-                          text:
-                              "${clienteSeleccionado!.firstName[0]}${clienteSeleccionado.lastName[0]}"
-                                  .toUpperCase(),
-                          fontSize: 35,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        )),
-                    SimpleText(
-                      text:
-                          '${clienteSeleccionado.firstName} ${clienteSeleccionado.lastName}'
-                              .toTitleCase(),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      padding: const EdgeInsets.only(top: 10, bottom: 5),
-                      color: Colors.white,
+                    Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.35,
+                      color: Colors.deepPurple,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                              radius: 60,
+                              child: SimpleText(
+                                text:
+                                    "${clienteSeleccionado!.firstName[0]}${clienteSeleccionado.lastName[0]}"
+                                        .toUpperCase(),
+                                fontSize: 35,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              )),
+                          SimpleText(
+                            text:
+                                '${clienteSeleccionado.firstName} ${clienteSeleccionado.lastName}'
+                                    .toTitleCase(),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            padding: const EdgeInsets.only(top: 10, bottom: 5),
+                            color: Colors.white,
+                          ),
+                          SimpleText(
+                            text: clienteSeleccionado.address1.toCapitalize(),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
                     ),
-                    SimpleText(
-                      text: clienteSeleccionado.address1.toCapitalize(),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w300,
-                      color: Colors.white,
-                    ),
+                    _tabSection(context),
                   ],
                 ),
-              ),
-              _tabSection(context),
-            ],
-          ),
         ),
       );
     });
@@ -172,11 +177,11 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
                     literalDateWithMount(clientModel.createdAt),
                     null,
                   ),
-                  cardInformation(
+                  /* cardInformation(
                     'Ultima compra realizada en',
                     '2020-01-02',
                     null,
-                  ),
+                  ), */
                 ]),
                 cardContainer(
                   'Historial de compras',
@@ -199,9 +204,15 @@ class _ClientProfilePageState extends State<ClientProfilePage> {
                         return Expanded(
                           child: ListView.builder(
                             itemCount: snapshot.data?.length,
-                            itemBuilder: (BuildContext context, int index) {
+                            itemBuilder: (_, int index) {
                               return SellHistoryCard(
                                 order: snapshot.data![index],
+                                onSelected: (order) {
+                                  context.push(
+                                    '/sell_detail',
+                                    extra: order,
+                                  );
+                                },
                               );
                             },
                           ),

@@ -38,11 +38,17 @@ class CircleButton extends StatelessWidget {
                 radius: 35.0,
                 child: Icon(icon, color: Colors.white, size: 30.0),
               ),
-              SimpleText(
-                text: text,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                padding: const EdgeInsets.only(top: 5),
+              Hero(
+                tag: text,
+                child: Material(
+                  color: Colors.transparent,
+                  child: SimpleText(
+                    text: text,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    padding: const EdgeInsets.only(top: 5),
+                  ),
+                ),
               ),
               const SizedBox(height: 5.0),
             ],

@@ -2,7 +2,8 @@ part of '../widgets.dart';
 
 class MaterialItemCard extends StatelessWidget {
   final TagModel tag;
-  const MaterialItemCard({super.key, required this.tag});
+  final void Function(TagModel tagModel)? onTap;
+  const MaterialItemCard({super.key, required this.tag, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,10 @@ class MaterialItemCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 5.0),
       child: ListTile(
           onTap: () {
-            context.push('/material_add_edit_page', extra: tag);
+            /* context.push('/material_add_edit_page', extra: tag); */
+            if (onTap != null) {
+              onTap!(tag);
+            }
           },
           leading: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),

@@ -2,15 +2,15 @@ part of '../widgets.dart';
 
 class ClientItem extends StatelessWidget {
   final ClientModel clientModel;
-  final Function? onTap;
   final Widget? trailing;
   final ClientsProvider? clientsProvider;
+  final void Function(ClientModel client)? onSelected;
   const ClientItem({
     super.key,
     required this.clientModel,
     required this.clientsProvider,
-    this.onTap,
     this.trailing,
+    this.onSelected,
   });
 
   @override
@@ -22,15 +22,16 @@ class ClientItem extends StatelessWidget {
       ),
       child: ListTile(
         onTap: () {
-          if (onTap != null) {
-            onTap!();
-          } else {
-            clientsProvider!.setClientSelected(clientModel);
+          if (onSelected != null) {
+            onSelected!(clientModel);
+          } /* else {
+            null;
+            /*  clientsProvider!.setClientSelected(clientModel);
             context.push(
               '/client_profile',
               extra: clientModel.id,
-            );
-          }
+            ); */
+          } */
         },
         leading: CircleAvatar(
           radius: 20,

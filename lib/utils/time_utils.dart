@@ -21,5 +21,5 @@ String literalDate(DateTime date) {
 
 String literalDateWithMount(DateTime date) {
   Moment rawDate = Moment(date);
-  return "${rawDate.format("dd")} de ${months[rawDate.month - 1]} del ${rawDate.format("yyyy")}";
+  return "${rawDate.format("d")} de ${months[rawDate.month - 1]} del ${rawDate.format("y")}";
 }

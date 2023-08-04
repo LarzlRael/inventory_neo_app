@@ -31,11 +31,15 @@ class _SellHistoryState extends State<SellHistory> {
             final orders = state.orderState.orders;
             return ListView.builder(
               itemCount: orders.length,
-              itemBuilder: (_, int index) {
-                return SellHistoryCard(
-                  order: orders[index],
-                );
-              },
+              itemBuilder: (_, int index) => SellHistoryCard(
+                order: orders[index],
+                onSelected: (order) {
+                  context.push(
+                    '/sell_detail',
+                    extra: order,
+                  );
+                },
+              ),
             );
           },
         ),
@@ -46,28 +50,30 @@ class _SellHistoryState extends State<SellHistory> {
 
 class SellHistoryCard extends StatelessWidget {
   final OrderModel order;
-  const SellHistoryCard({super.key, required this.order});
+  final Function(OrderModel order)? onSelected;
+  const SellHistoryCard({super.key, required this.order, this.onSelected});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 5),
       child: ListTile(
-        onTap: (() {
-          context.push(
-            '/sell_detail',
-            extra: order,
-          );
-        }),
-        leading: Image.network(
-          /* changed this */
-          /* order.lineItems[0].imageProduct!.src == ""
-              ? "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
-              : order.lineItems[0].imageProduct!.src, */
-          "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
-          width: 80,
-          height: 80,
-          fit: BoxFit.cover,
+        onTap: () {
+          if (onSelected != null) {
+            onSelected!(order);
+          }
+        },
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(5),
+          child: Image.network(
+            /* changed this */
+            order.lineItems[0].imageProduct!.src == ""
+                ? "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
+                : order.lineItems[0].imageProduct!.src,
+            width: 80,
+            height: 80,
+            fit: BoxFit.cover,
+          ),
         ),
         title: SimpleText(
           text: order.lineItems[0].name.length > 20
@@ -87,7 +93,7 @@ class SellHistoryCard extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
             SimpleText(
-              text: '${order.lineItems.length.toString()} artículos',
+              text: '${order.lineItems.length} artículos',
               color: Colors.grey,
               fontWeight: FontWeight.w600,
             ),

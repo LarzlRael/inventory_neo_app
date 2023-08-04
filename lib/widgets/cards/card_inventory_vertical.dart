@@ -2,9 +2,11 @@ part of '../widgets.dart';
 
 class CardItemInventoryVertical extends StatelessWidget {
   final ProductModel productModel;
+  final void Function(ProductModel productModel)? onTap;
   const CardItemInventoryVertical({
     super.key,
     required this.productModel,
+    this.onTap,
   });
 
   @override
@@ -12,8 +14,13 @@ class CardItemInventoryVertical extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return GestureDetector(
       onTap: () {
-        /* Navigator.pushNamed(context, 'item_detail'); */
-        /* Navigator.push(
+        if (onTap != null) {
+          onTap!(productModel);
+        }
+      },
+
+      /* Navigator.pushNamed(context, 'item_detail'); */
+      /* Navigator.push(
           context,
           PageTransition(
             type: PageTransitionType.rightToLeft,
@@ -21,8 +28,7 @@ class CardItemInventoryVertical extends StatelessWidget {
             duration: const Duration(milliseconds: 400),
           ),
         ); */
-        context.push('/item_detail', extra: productModel);
-      },
+
       child: Hero(
         tag: productModel.id,
         child: Container(

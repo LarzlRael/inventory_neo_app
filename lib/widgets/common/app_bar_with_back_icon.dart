@@ -27,9 +27,14 @@ class AppBarWithBackIcon extends StatelessWidget
               child: Material(
                 child: Text(
                   title!,
-                  style: const TextStyle(
+                  /* style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
+                  ), */
+                  style: GoogleFonts.montserratAlternates().copyWith(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    /* color: Colors.black, */
                   ),
                 ),
               ),

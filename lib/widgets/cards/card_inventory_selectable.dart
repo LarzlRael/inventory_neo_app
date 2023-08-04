@@ -9,6 +9,7 @@ class CardInventorySelectableItems extends StatelessWidget {
   Widget build(BuildContext context) {
     final productsProvider = context.read<ProductsProvider>();
     final cardInventoryProvider = context.watch<CardInventoryProvider>();
+    productsProvider.getProductsAllProducts();
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15),
       height: MediaQuery.of(context).size.height * 0.9,

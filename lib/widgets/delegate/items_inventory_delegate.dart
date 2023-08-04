@@ -54,8 +54,10 @@ class ItemsInventoryDelegate extends SearchDelegate {
             crossAxisSpacing: 1,
             itemCount: products!.length,
             itemBuilder: (context, index) => CardItemInventoryVertical(
-              productModel: products[index],
-            ),
+                productModel: products[index],
+                onTap: (productedSelected) {
+                  context.push('/item_detail', extra: productedSelected.id);
+                }),
           );
         },
       ),
@@ -74,14 +76,13 @@ class ItemsInventoryDelegate extends SearchDelegate {
   Widget allProducts() {
     return FutureBuilder(
       future: productsProvider.getAllProducts(),
-      builder:
-          (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshot) {
+      builder: (_, AsyncSnapshot<List<ProductModel>> snapshot) {
         if (!snapshot.hasData) {
           return simpleLoading();
         }
         if (snapshot.data!.isEmpty) {
           return const NoInformation(
-            text: 'No hay productos en esta categoria',
+            text: 'No hay productos registrados',
             icon: Icons.info_outline,
             showButton: false,
             iconButton: Icons.add,
@@ -97,6 +98,12 @@ class ItemsInventoryDelegate extends SearchDelegate {
             itemCount: products!.length,
             itemBuilder: (context, index) => CardItemInventoryVertical(
               productModel: products[index],
+              onTap: (productModel) {
+                context.push(
+                  '/item_detail',
+                  extra: productModel.id,
+                );
+              },
             ),
           ),
         );

@@ -38,7 +38,7 @@ class _ClientsPageSelectableState extends State<ClientsPageSelectable> {
                   return ClientItem(
                       clientModel: clients[index],
                       clientsProvider: clientsProvider,
-                      onTap: () {
+                      onSelected: (selectedClient) {
                         context.pop();
                         cardInventoryProvider.setClient = clients[index];
                       });

@@ -16,6 +16,10 @@ class ClientsProvider extends ChangeNotifier {
   setClientSelected(ClientModel clienteSelected) {
     clientesState = clientesState.copyWith(
       isLoading: true,
+    );
+    notifyListeners();
+    clientesState = clientesState.copyWith(
+      isLoading: false,
       clientSelected: clienteSelected,
     );
     notifyListeners();
@@ -86,13 +90,13 @@ class ClientsProvider extends ChangeNotifier {
     return clientsModelFromJson(clientRequest!.body);
   }
 
-  Future<void> getClient(int idClient) async {
+  Future<void> setClientRequest(int idClient) async {
     final clientRequest = await getAction(
       'client/$idClient',
       useAuxiliarUrl: true,
     );
-    clientesState = clientesState.copyWith(
-      clientSelected: clientModelFromJson(clientRequest!.body),
+    setClientSelected(
+      clientModelFromJson(clientRequest!.body),
     );
   }
 }

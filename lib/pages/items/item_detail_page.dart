@@ -1,11 +1,11 @@
 part of '../pages.dart';
 
 class ItemDetailPage extends StatefulWidget {
-  final ProductModel productModel;
+  final int productModelId;
 
   const ItemDetailPage({
     super.key,
-    required this.productModel,
+    required this.productModelId,
   });
 
   @override
@@ -14,18 +14,21 @@ class ItemDetailPage extends StatefulWidget {
 
 class _ItemDetailPageState extends State<ItemDetailPage> {
   late ProductProvider productProvider;
+  late CardInventoryProvider cardInventoryProvider;
+  late ProductsProvider productsProvider;
+  late GlobalProvider globalProvider;
   @override
   void initState() {
     super.initState();
     productProvider = context.read<ProductProvider>();
+    cardInventoryProvider = context.read<CardInventoryProvider>();
+    productsProvider = context.read<ProductsProvider>();
+    globalProvider = context.read<GlobalProvider>();
+    productProvider.loadProduct(widget.productModelId);
   }
 
   @override
   Widget build(BuildContext context) {
-    final cardInventoryProvider = context.read<CardInventoryProvider>();
-    final productsProvider = context.read<ProductsProvider>();
-    final globalProvider = context.read<GlobalProvider>();
-
     final textTheme = Theme.of(context).textTheme;
     final styleExtraInfo = textTheme.bodySmall!.copyWith(
       fontWeight: FontWeight.w500,

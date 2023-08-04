@@ -69,9 +69,16 @@ class _ListProductsPageState extends State<ListProductsPage> {
                     crossAxisSpacing: 35,
                     itemCount: products2.products.length,
                     itemBuilder: (context, index) {
-                      final product = products2.products[index];
                       return CardItemInventoryVertical(
-                        productModel: product,
+                        productModel: products2.products[index],
+                        onTap: (productModel) {
+                          /* context.push('/item_detail',
+                              extra: products2.products[index]); */
+                          context.push(
+                            '/item_detail',
+                            extra: productModel.id,
+                          );
+                        },
                       );
                     },
                   ),

@@ -4,7 +4,7 @@ class OrderProvider with ChangeNotifier {
   OrderState orderState = OrderState();
   getOrders() async {
     orderState = orderState.copyWith(isLoading: true);
-    final res = await getAction('/orders');
+    final res = await getAction('orders');
     final orders = ordersModelFromJson(res!.body);
     orderState = orderState.copyWith(
       orders: orders,

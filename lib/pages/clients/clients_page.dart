@@ -53,6 +53,12 @@ class _ClientsPageState extends State<ClientsPage> {
             itemCount: clients.length,
             itemBuilder: (_, int index) {
               return ClientItem(
+                onSelected: (clientModel) {
+                  context.push(
+                    '/client_profile',
+                    extra: clientModel.id,
+                  );
+                },
                 clientModel: clients[index],
                 clientsProvider: clientsProvider,
               );

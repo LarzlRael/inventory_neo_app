@@ -55,10 +55,12 @@ class FillButton extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
-        child: Text(
-          label,
-          style: textStyle,
-          textAlign: TextAlign.center,
+        child: Center(
+          child: Text(
+            label,
+            style: textStyle,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );

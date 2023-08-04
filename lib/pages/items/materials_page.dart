@@ -43,6 +43,9 @@ class _MaterialsPageState extends State<MaterialsPage> {
               itemBuilder: (_, int index) {
                 return MaterialItemCard(
                   tag: materials.materiales[index],
+                  onTap: (tag) {
+                    context.push('/material_add_edit_page', extra: tag);
+                  },
                 );
               },
             ),

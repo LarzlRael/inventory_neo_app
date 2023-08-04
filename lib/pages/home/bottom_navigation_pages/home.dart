@@ -33,13 +33,13 @@ class Home extends StatelessWidget {
                       return menuAdminItems[index];
                     },
                   ),
-                  /*  const SimpleText(
+                  const SimpleText(
                     text: 'Que tus clientes te conozcan',
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
-                    top: 5,
-                    bottom: 5,
-                  ), */
+                    /* top: 5,
+                    bottom: 5, */
+                  ),
                 ],
               ),
             ),

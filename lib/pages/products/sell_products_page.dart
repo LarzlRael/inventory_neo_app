@@ -113,7 +113,7 @@ class _SellProductsPageState extends State<SellProductsPage> {
                         fontWeight: FontWeight.w600,
                       ),
                       ClientItem(
-                        onTap: () {},
+                        onSelected: (clientSelected) {},
                         clientModel: cardInventoryProvider.getClient!,
                         clientsProvider: null,
                         trailing: IconButton(
@@ -140,6 +140,18 @@ class _SellProductsPageState extends State<SellProductsPage> {
                             cardInventoryProvider.getProducts[index];
                         return CardItemInventory(
                           productModel: product,
+                          onSelected: (productSelected) {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: ItemDetailPage(
+                                  productModelId: productSelected.id,
+                                ),
+                                duration: const Duration(milliseconds: 400),
+                              ),
+                            );
+                          },
                         );
                       },
                     ),

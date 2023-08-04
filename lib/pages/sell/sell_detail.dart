@@ -1,10 +1,10 @@
 part of '../pages.dart';
 
 class SellDetail extends StatefulWidget {
-  final OrderModel args;
+  final OrderModel orderModel;
   const SellDetail({
     super.key,
-    required this.args,
+    required this.orderModel,
   });
 
   @override
@@ -19,7 +19,7 @@ class _SellDetailState extends State<SellDetail> {
   @override
   void initState() {
     super.initState();
-    dropdownValue = statusList[widget.args.status]!;
+    dropdownValue = statusList[widget.orderModel.status]!;
     globalProvider = context.read<GlobalProvider>();
     orderProvider = context.read<OrderProvider>();
   }
@@ -37,15 +37,13 @@ class _SellDetailState extends State<SellDetail> {
           margin: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             children: [
-              tranlateStatus(widget.args.status),
-              const SizedBox(
-                height: 10,
-              ),
+              tranlateStatus(widget.orderModel.status),
+              const SizedBox(height: 10),
               CircleAvatar(
-                radius: 40,
+                radius: 45,
                 child: SimpleText(
                   text:
-                      '${widget.args.billing.firstName[0].toUpperCase()}${widget.args.billing.lastName[0].toUpperCase()}',
+                      '${widget.orderModel.billing.firstName[0].toUpperCase()}${widget.orderModel.billing.lastName[0].toUpperCase()}',
                   fontSize: 25,
                   color: Colors.white,
                 ),
@@ -53,17 +51,17 @@ class _SellDetailState extends State<SellDetail> {
               const SizedBox(height: 5),
               SimpleText(
                 text:
-                    '${widget.args.billing.firstName} ${widget.args.billing.lastName}'
+                    '${widget.orderModel.billing.firstName} ${widget.orderModel.billing.lastName}'
                         .toTitleCase(),
                 fontWeight: FontWeight.w600,
                 fontSize: 18,
               ),
               SimpleText(
-                text: widget.args.billing.address1.toCapitalize(),
+                text: widget.orderModel.billing.address1.toCapitalize(),
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
               ),
               SimpleText(
-                text: widget.args.billing.phone,
+                text: widget.orderModel.billing.phone,
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
               ),
               DropdownButton<String>(
@@ -80,65 +78,37 @@ class _SellDetailState extends State<SellDetail> {
                   setState(() {
                     dropdownValue = value!;
                   });
-                  await updateStatus(widget.args.id, value);
+                  await updateStatus(widget.orderModel.id, value);
                 },
                 items: statusListList
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
+                    .map<DropdownMenuItem<String>>(
+                        (String value) => DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            ))
+                    .toList(),
               ),
               SimpleText(
-                text: 'Productos: ${widget.args.lineItems.length}',
+                text:
+                    'Cantidad de productos: ${widget.orderModel.lineItems.length}',
                 fontWeight: FontWeight.bold,
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 10),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: widget.args.lineItems.length,
-                itemBuilder: (_, int index) => listTile(index),
+                itemCount: widget.orderModel.lineItems.length,
+                itemBuilder: (_, int index) => ItemDetailSell(
+                  lineItem: widget.orderModel.lineItems[index],
+                  onSelected: (lineItem) {
+                    context.push(
+                      '/item_detail',
+                      extra: lineItem.productId,
+                    );
+                  },
+                ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget listTile(int index) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 15),
-      child: ListTile(
-        title: SimpleText(
-          text: widget.args.lineItems[index].name.toCapitalize(),
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SimpleText(
-              text: 'Cantidad: ${widget.args.lineItems[index].quantity}',
-              padding: const EdgeInsets.only(top: 5, bottom: 5),
-              fontSize: 12,
-            ),
-            SimpleText(
-              text: '${widget.args.lineItems[index].price} bs.',
-              color: Colors.grey,
-            ),
-          ],
-        ),
-        leading: Image.network(
-          widget.args.lineItems[0].imageProduct!.src == ""
-              ? "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
-              : widget.args.lineItems[0].imageProduct!.src,
-          width: 100,
-          height: 100,
-          fit: BoxFit.cover,
         ),
       ),
     );
@@ -163,5 +133,59 @@ class _SellDetailState extends State<SellDetail> {
         );
       }
     });
+  }
+}
+
+class ItemDetailSell extends StatelessWidget {
+  final LineItem lineItem;
+  final void Function(LineItem lineItem)? onSelected;
+  const ItemDetailSell({
+    super.key,
+    required this.lineItem,
+    this.onSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      child: ListTile(
+        onTap: () {
+          if (onSelected != null) {
+            onSelected!(lineItem);
+          }
+        },
+        title: SimpleText(
+          text: lineItem.name.toCapitalize(),
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SimpleText(
+              text: 'Cantidad: ${lineItem.quantity}',
+              padding: const EdgeInsets.only(top: 5, bottom: 5),
+              fontSize: 12,
+            ),
+            SimpleText(
+              text: '${lineItem.price} bs.',
+              color: Colors.grey,
+            ),
+          ],
+        ),
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.network(
+            lineItem.imageProduct!.src == ""
+                ? "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
+                : lineItem.imageProduct!.src,
+            width: 100,
+            height: 100,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
   }
 }
